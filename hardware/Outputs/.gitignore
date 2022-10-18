@@ -1,0 +1,8 @@
+# Don't include anything
+/*
+# Except
+!.gitignore
+!OUTPUT-JOB.OutJob
+!PDF/
+!PCB 3D Print/
+!BOM/

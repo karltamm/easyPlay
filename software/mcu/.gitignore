@@ -1,0 +1,9 @@
+# CubeIDE folders
+.metadata
+.settings
+[Rr]elease
+[Dd]ebug
+
+# VS Code
+.vscode/*
+!.vscode/c_cpp_properties.json
