@@ -1,5 +1,7 @@
 #include <stdint.h>
 
+#include <queue.h>
+
 #ifndef USB_COMM_H
 #define USB_COMM_H
 
@@ -20,13 +22,19 @@ extern "C" {
 #define USB_MSG_HANDSHAKE_OUT (uint8_t*)"EP_POLO"
 #define USB_MSG_HANDSHAKE_OUT_SIZE 8
 
-/* STRUCTS */
+/* TYPEDEFS */
+typedef uint8_t USB_QueueStatus;
+
+/* ENUMS */
+enum { USB_QUEUE_OK, USB_QUEUE_FAIL };
 
 /* PUBLIC FUNCTIONS */
-void notify_about_usb_rx_msg(uint32_t* msg_size);
-void init_usb_rx_queue();
-void add_usb_rx_msg_to_queue();
-void process_usb_rx_queue();
+void notify_about_USB_RX_msg(uint32_t* msg_size);
+void init_USB_queues();
+USB_QueueStatus add_USB_RX_msg_to_queue();
+USB_QueueStatus add_USB_TX_msg_to_queue(Msg* msg);
+void process_USB_RX_queue();
+void process_USB_TX_queue();
 
 #if __cplusplus
 }
