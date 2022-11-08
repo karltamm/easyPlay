@@ -66,6 +66,8 @@ void process_USB_RX_queue() {
     if (strcmp(RX_msg, USB_MSG_HANDSHAKE_IN) == 0) {
       CDC_Transmit_FS(USB_MSG_HANDSHAKE_OUT, USB_MSG_HANDSHAKE_OUT_SIZE);
     }
+
+    // TODO: process LED commands
   }
 }
 
