@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 /* ENUMS */
-enum TIMER_FLAGS {
+enum TimerFlags {
   FLAG_1_MS = 1,
   FLAG_15_MS = 2,
   FLAG_55_MS = 4,

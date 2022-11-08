@@ -13,6 +13,14 @@ extern "C" {
 #define USB_RX_QUEUE_MAX_SIZE 5
 #define USB_TX_QUEUE_MAX_SIZE 10
 
+#define USB_MSG_SWITCH_A_PRESS "SW_A_PRESS"
+#define USB_MSG_SWITCH_B_PRESS "SW_B_PRESS"
+#define USB_MSG_SWITCH_C_PRESS "SW_C_PRESS"
+#define USB_MSG_SWITCH_D_PRESS "SW_D_PRESS"
+
+#define USB_MSG_KNOB_LEFT "KNOB_LEFT"
+#define USB_MSG_KNOB_RIGHT "KNOB_RIGHT"
+
 #define USB_MSG_SWITCH_A_LED_ON "SW_A_LED_ON"  // Turn on switch A LED
 #define USB_MSG_SWITCH_B_LED_ON "SW_B_LED_ON"  // Turn on switch B LED
 #define USB_MSG_SWITCH_C_LED_ON "SW_C_LED_ON"  // Turn on switch C LED
