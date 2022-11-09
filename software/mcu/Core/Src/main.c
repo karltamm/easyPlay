@@ -236,18 +236,18 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : BTN_A_Pin BTN_B_Pin BTN_C_Pin KNOB_BTN_Pin
-                           KNOB_B_Pin */
+                           KNOB_CH_B_Pin */
   GPIO_InitStruct.Pin = BTN_A_Pin|BTN_B_Pin|BTN_C_Pin|KNOB_BTN_Pin
-                          |KNOB_B_Pin;
+                          |KNOB_CH_B_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : KNOB_A_Pin */
-  GPIO_InitStruct.Pin = KNOB_A_Pin;
+  /*Configure GPIO pin : KNOB_CH_A_Pin */
+  GPIO_InitStruct.Pin = KNOB_CH_A_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(KNOB_A_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(KNOB_CH_A_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : DEBUG_LED_A_Pin DEBUG_LED_B_Pin */
   GPIO_InitStruct.Pin = DEBUG_LED_A_Pin|DEBUG_LED_B_Pin;
