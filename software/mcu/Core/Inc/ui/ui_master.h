@@ -8,9 +8,7 @@
 extern "C" {
 #endif
 
-/* CONSTANTS */
-
-/* STRUCTS */
+// TODO: replace "switch" with "sw"
 
 /* ENUMS */
 enum SwitchFlags {

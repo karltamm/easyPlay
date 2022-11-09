@@ -22,10 +22,8 @@ extern "C" {
 #define USB_MSG_KNOB_LEFT "KNOB_LEFT"
 #define USB_MSG_KNOB_RIGHT "KNOB_RIGHT"
 
-#define USB_MSG_SWITCH_A_LED_ON "SW_A_LED_ON"  // Turn on switch A LED
-#define USB_MSG_SWITCH_B_LED_ON "SW_B_LED_ON"  // Turn on switch B LED
-#define USB_MSG_SWITCH_C_LED_ON "SW_C_LED_ON"  // Turn on switch C LED
-#define USB_MSG_SWITCH_D_LED_ON "SW_D_LED_ON"  // Turn on switch D LED
+#define USB_MSG_SW_LED_START "SW_LED_"
+#define USB_MSG_SW_LED_OFFSET 7  // strlen("SW_LED_") = 7
 
 #define USB_MSG_HANDSHAKE_IN "EP_MARCO"
 #define USB_MSG_HANDSHAKE_OUT (uint8_t*)"EP_POLO"

@@ -5,25 +5,25 @@
 #include <ui_master.h>
 
 /* GLOBAL VARIABLES */
-uint8_t g_active_sw_flag_group = 0;
+uint8_t g_switch_press_flag_group = 0;
 
 /* HAL */
 void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
   switch (input_pin) {
     case SWITCH_A_Pin:
-      set_flag(g_active_sw_flag_group, SWITCH_A_FLAG);
+      set_flag(g_switch_press_flag_group, SWITCH_A_FLAG);
       break;
 
     case SWITCH_B_Pin:
-      set_flag(g_active_sw_flag_group, SWITCH_B_FLAG);
+      set_flag(g_switch_press_flag_group, SWITCH_B_FLAG);
       break;
 
     case SWITCH_C_Pin:
-      set_flag(g_active_sw_flag_group, SWITCH_C_FLAG);
+      set_flag(g_switch_press_flag_group, SWITCH_C_FLAG);
       break;
 
     case SWITCH_D_Pin:
-      set_flag(g_active_sw_flag_group, SWITCH_D_FLAG);
+      set_flag(g_switch_press_flag_group, SWITCH_D_FLAG);
       break;
 
     case KNOB_A_Pin:

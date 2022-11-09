@@ -1,6 +1,8 @@
 #include <queue.h>
 #include <stddef.h>
 
+// TODO: make sure that circular buffer can be overwritten
+
 /* PUBLIC FUNCTIONS */
 void init_queue(Queue* queue, uint8_t max_size, Msg* messages) {
   queue->max_size = max_size;

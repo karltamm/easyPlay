@@ -9,6 +9,7 @@ extern "C" {
 
 /* PUBLIC FUNCTIONS */
 void handle_switch_press();
+void handle_switches_LED_state();
 
 #if __cplusplus
 }
