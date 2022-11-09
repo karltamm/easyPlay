@@ -49,10 +49,10 @@ void handle_btns_LED_state(const char* LEDs_state_msg) {
   uint8_t LED_C_state = get_LED_state_from_msg(LEDs_state_msg, 2);
   uint8_t LED_D_state = get_LED_state_from_msg(LEDs_state_msg, 3);
 
-  HAL_GPIO_WritePin(SWITCH_A_LED_GPIO_Port, SWITCH_A_LED_Pin, LED_A_state);
-  HAL_GPIO_WritePin(SWITCH_B_LED_GPIO_Port, SWITCH_B_LED_Pin, LED_B_state);
-  HAL_GPIO_WritePin(SWITCH_C_LED_GPIO_Port, SWITCH_C_LED_Pin, LED_C_state);
-  HAL_GPIO_WritePin(SWITCH_D_LED_GPIO_Port, SWITCH_D_LED_Pin, LED_D_state);
+  HAL_GPIO_WritePin(BTN_A_LED_GPIO_Port, BTN_A_LED_Pin, LED_A_state);
+  HAL_GPIO_WritePin(BTN_B_LED_GPIO_Port, BTN_B_LED_Pin, LED_B_state);
+  HAL_GPIO_WritePin(BTN_C_LED_GPIO_Port, BTN_C_LED_Pin, LED_C_state);
+  HAL_GPIO_WritePin(BTN_D_LED_GPIO_Port, BTN_D_LED_Pin, LED_D_state);
 }
 
 /* PRIVATE FUNCTIONS */

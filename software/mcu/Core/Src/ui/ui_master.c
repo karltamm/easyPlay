@@ -10,19 +10,19 @@ uint8_t g_btn_press_flag_group = 0;
 /* HAL */
 void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
   switch (input_pin) {
-    case SWITCH_A_Pin:
+    case BTN_A_Pin:
       set_flag(g_btn_press_flag_group, BTN_A_FLAG);
       break;
 
-    case SWITCH_B_Pin:
+    case BTN_B_Pin:
       set_flag(g_btn_press_flag_group, BTN_B_FLAG);
       break;
 
-    case SWITCH_C_Pin:
+    case BTN_C_Pin:
       set_flag(g_btn_press_flag_group, BTN_C_FLAG);
       break;
 
-    case SWITCH_D_Pin:
+    case BTN_D_Pin:
       set_flag(g_btn_press_flag_group, BTN_D_FLAG);
       break;
 
@@ -32,6 +32,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
 
     case KNOB_B_Pin:
       // TODO: handle knob B channel
+      break;
+
+    case KNOB_BTN_Pin:
+      // TODO: handle knob button press
       break;
 
     default:
