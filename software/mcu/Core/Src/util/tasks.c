@@ -1,5 +1,4 @@
 #include <main.h>
-#include <stdbool.h>
 
 #include <flags.h>
 #include <switches.h>
@@ -14,6 +13,7 @@ static void blink_debug_LED();
 
 /* HAL */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
+  /* Callback is called based on the configured timer (CubeMX) every 1 ms */
   static uint16_t time_ms = 0;
   if (time_ms == 5000) {
     time_ms = 0;
@@ -36,7 +36,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
   time_ms++;
 }
 
-/* FUNCTIONS */
+/* PUBLIC FUNCTIONS */
 void run_schedule() {
   add_USB_RX_msg_to_queue();
   handle_switch_press();
@@ -54,6 +54,7 @@ void run_schedule() {
   }
 }
 
+/* PRIVATE FUNCTIONS */
 static void blink_debug_LED() {
   HAL_GPIO_TogglePin(DEBUG_LED_B_GPIO_Port, DEBUG_LED_B_Pin);
 }

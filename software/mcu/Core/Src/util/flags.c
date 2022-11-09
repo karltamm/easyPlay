@@ -3,7 +3,7 @@
 /* PRIVATE FUNCTION PROTOTYPES */
 static void clear_flag(uint8_t flag_group, uint8_t flag);
 
-/* FUNCTIONS */
+/* PUBLIC FUNCTIONS */
 bool is_flag_up(uint8_t flag_group, uint8_t flag) {
   if (flag_group & flag) {
     clear_flag(flag_group, flag);

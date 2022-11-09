@@ -3,9 +3,6 @@
 
 #include <USB_comm.h>
 
-/* ABBREVIATIONS */
-// TODO: Add list
-
 /* GLOBAL VARIABLES */
 extern uint8_t UserRxBufferFS[APP_RX_DATA_SIZE];  // In a file USBd_cdc_if.c
 
@@ -16,7 +13,7 @@ static Queue g_USB_RX_queue;
 static Msg g_USB_TX_msgs[USB_TX_QUEUE_MAX_SIZE];
 static Queue g_USB_TX_queue;
 
-/* FUNCTIONS */
+/* PUBLIC FUNCTIONS */
 void notify_about_USB_RX_msg(uint32_t* msg_size) {
   g_USB_RX_msg_size = *msg_size;
 }
