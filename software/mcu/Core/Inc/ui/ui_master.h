@@ -19,8 +19,7 @@ enum BtnFlags {
 enum KnobFlags { KNOB_CW_FLAG = 1, KNOB_CCW_FLAG = 2, KNOB_BTN_FLAG = 4 };
 
 /* PUBLIC FUNCTIONS */
-USB_QueueStatus send_user_action_to_PC(const char* action_msg,
-                                       uint8_t msg_size);
+USB_QueueStatus send_user_action_to_PC(const char* action_msg);
 
 #if __cplusplus
 }

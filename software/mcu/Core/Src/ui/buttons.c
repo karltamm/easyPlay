@@ -19,13 +19,13 @@ void handle_btn_presses() {
   }
 
   if (is_flag_up(g_btn_press_flag_group, BTN_A_FLAG)) {
-    send_user_action_to_PC(USB_MSG_BTN_A_PRESS, USB_MSG_BTN_PRESS_SIZE);
+    send_user_action_to_PC(USB_MSG_BTN_A_PRESS);
   } else if (is_flag_up(g_btn_press_flag_group, BTN_B_FLAG)) {
-    send_user_action_to_PC(USB_MSG_BTN_B_PRESS, USB_MSG_BTN_PRESS_SIZE);
+    send_user_action_to_PC(USB_MSG_BTN_B_PRESS);
   } else if (is_flag_up(g_btn_press_flag_group, BTN_C_FLAG)) {
-    send_user_action_to_PC(USB_MSG_BTN_C_PRESS, USB_MSG_BTN_PRESS_SIZE);
+    send_user_action_to_PC(USB_MSG_BTN_C_PRESS);
   } else if (is_flag_up(g_btn_press_flag_group, BTN_D_FLAG)) {
-    send_user_action_to_PC(USB_MSG_BTN_D_PRESS, USB_MSG_BTN_PRESS_SIZE);
+    send_user_action_to_PC(USB_MSG_BTN_D_PRESS);
   }
 }
 

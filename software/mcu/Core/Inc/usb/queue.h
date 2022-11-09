@@ -12,7 +12,7 @@ extern "C" {
 
 /* STRUCTS */
 typedef struct Msg {
-  uint8_t data[MSG_MAX_SIZE];
+  char data[MSG_MAX_SIZE];
 } Msg;
 
 typedef struct Queue {

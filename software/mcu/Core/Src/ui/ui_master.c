@@ -59,9 +59,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
 }
 
 /* PUBLIC FUNCTIONS */
-USB_QueueStatus send_user_action_to_PC(const char* action_msg,
-                                       uint8_t msg_size) {
+USB_QueueStatus send_user_action_to_PC(const char* action_msg) {
   Msg msg;
+  uint8_t msg_size = strlen(action_msg) + 1;  // + 1 because '\0'
   memcpy(msg.data, action_msg, msg_size);
   return add_USB_TX_msg_to_queue(&msg);
 }

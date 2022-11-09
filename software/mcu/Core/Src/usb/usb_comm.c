@@ -17,6 +17,7 @@ static Queue g_USB_TX_queue;
 
 /* PRIVATE FUNCTION PROTOTYPES */
 static bool is_RX_msg_about_btns_LED(const char* RX_msg);
+static uint8_t send_USB_msg(const char* msg);
 
 /* PUBLIC FUNCTIONS */
 void notify_about_USB_RX_msg(uint32_t* msg_size) {
@@ -61,31 +62,41 @@ USB_QueueStatus add_USB_TX_msg_to_queue(Msg* msg) {
 }
 
 void process_USB_RX_queue() {
-  char* RX_msg;
+  Msg* RX_msg;
   while (g_USB_RX_queue.cur_size > 0) {
-    RX_msg = (char*)(get_msg_from_queue(&g_USB_RX_queue)->data);
+    RX_msg = get_msg_from_queue(&g_USB_RX_queue);
+    if (!RX_msg) {
+      return;
+    }
 
-    if (strcmp(RX_msg, USB_MSG_HANDSHAKE_IN) == 0) {
-      CDC_Transmit_FS(USB_MSG_HANDSHAKE_OUT, USB_MSG_HANDSHAKE_OUT_SIZE);
-    } else if (is_RX_msg_about_btns_LED(RX_msg)) {
-      handle_btns_LED_state(RX_msg);
+    if (strcmp(RX_msg->data, USB_MSG_HANDSHAKE_IN) == 0) {
+      send_USB_msg(USB_MSG_HANDSHAKE_OUT);
+    } else if (is_RX_msg_about_btns_LED(RX_msg->data)) {
+      handle_btns_LED_state(RX_msg->data);
     }
   }
 }
 
 void process_USB_TX_queue() {
+  Msg* TX_msg;
   while (g_USB_TX_queue.cur_size > 0) {
-    uint8_t* TX_msg = get_msg_from_queue(&g_USB_TX_queue)->data;
-    uint16_t msg_size = strlen((const char*)TX_msg);
-    while (CDC_Transmit_FS(TX_msg, msg_size) != USBD_OK) {
-      // TODO: implement fail check to avoid infinite loop
+    TX_msg = get_msg_from_queue(&g_USB_RX_queue);
+    if (!TX_msg) {
+      return;
+    }
+
+    uint32_t start_time_ms = HAL_GetTick();
+    while (send_USB_msg(TX_msg->data) != USBD_OK) {
+      if (HAL_GetTick() - start_time_ms > USB_TX_TIMEOUT_MS) {
+        break;
+      }
     }
   }
 }
 
 /* PRIVATE FUNCTIONS */
 static bool is_RX_msg_about_btns_LED(const char* RX_msg) {
-  if (strlen(RX_msg) < USB_MSG_BTN_LED_OFFSET) {
+  if (strlen(RX_msg) != USB_MSG_BTN_LED_LEN) {
     return false;
   }
 
@@ -98,4 +109,7 @@ static bool is_RX_msg_about_btns_LED(const char* RX_msg) {
   return true;
 }
 
-// TODO: function for sending USB messages
+static uint8_t send_USB_msg(const char* msg) {
+  uint8_t msg_size = strlen(msg) + 1;  // + 1 because '\0'
+  return CDC_Transmit_FS((uint8_t*)msg, msg_size);
+}

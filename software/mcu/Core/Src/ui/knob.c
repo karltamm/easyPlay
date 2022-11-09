@@ -16,10 +16,10 @@ void handle_knob_actions() {
   }
 
   if (is_flag_up(g_knob_flag_group, KNOB_BTN_FLAG)) {
-    send_user_action_to_PC(USB_MSG_KNOB_PRESS, USB_MSG_KNOB_PRESS_SIZE);
+    send_user_action_to_PC(USB_MSG_KNOB_PRESS);
   } else if (is_flag_up(g_knob_flag_group, KNOB_CW_FLAG)) {
-    send_user_action_to_PC(USB_MSG_KNOB_CW, USB_MSG_KNOB_CW_SIZE);
+    send_user_action_to_PC(USB_MSG_KNOB_CW);
   } else if (is_flag_up(g_knob_flag_group, KNOB_CCW_FLAG)) {
-    send_user_action_to_PC(USB_MSG_KNOB_CCW, USB_MSG_KNOB_CCW_SIZE);
+    send_user_action_to_PC(USB_MSG_KNOB_CCW);
   }
 }

@@ -17,21 +17,19 @@ extern "C" {
 #define USB_MSG_BTN_B_PRESS "BTN_B_PRESS"
 #define USB_MSG_BTN_C_PRESS "BTN_C_PRESS"
 #define USB_MSG_BTN_D_PRESS "BTN_D_PRESS"
-#define USB_MSG_BTN_PRESS_SIZE 12
 
 #define USB_MSG_BTN_LED_START "BTN_LED_"
 #define USB_MSG_BTN_LED_OFFSET 8  // strlen("BTN_LED_") = 8
+#define USB_MSG_BTN_LED_LEN 12    // strlen("BTN_LED_xxxx") = 12
 
 #define USB_MSG_KNOB_CW "KNOB_CW"    // ClockWise
 #define USB_MSG_KNOB_CCW "KNOB_CCW"  // CounterClockWise
 #define USB_MSG_KNOB_PRESS "KNOB_PRESS"
-#define USB_MSG_KNOB_CW_SIZE 8
-#define USB_MSG_KNOB_CCW_SIZE 9
-#define USB_MSG_KNOB_PRESS_SIZE 11
 
 #define USB_MSG_HANDSHAKE_IN "EP_MARCO"
-#define USB_MSG_HANDSHAKE_OUT (uint8_t*)"EP_POLO"
-#define USB_MSG_HANDSHAKE_OUT_SIZE 8
+#define USB_MSG_HANDSHAKE_OUT "EP_POLO"
+
+#define USB_TX_TIMEOUT_MS 1  // Millisecond
 
 /* TYPEDEFS */
 typedef uint8_t USB_QueueStatus;
