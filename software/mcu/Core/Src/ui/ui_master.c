@@ -9,7 +9,6 @@ uint8_t g_btn_press_flag_group = 0;
 uint8_t g_knob_flag_group = 0;
 
 /* HAL */
-// TODO: set interrupt edges
 void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
   switch (input_pin) {
     case BTN_A_Pin:
@@ -28,24 +27,24 @@ void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
       set_flag(g_btn_press_flag_group, BTN_D_FLAG);
       break;
 
-    case KNOB_A_Pin:
+    case KNOB_CH_A_Pin:
       /* Knob channel A is pulled up by default.
        * Channel A interrupt is triggered on falling edge.
        * If channel A drops (falling edge) and channel B is still high,
        * then knob is rotated clockwise (CW).
        */
-      if (HAL_GPIO_ReadPin(KNOB_B_GPIO_Port, KNOB_B_Pin) == 1) {
+      if (HAL_GPIO_ReadPin(KNOB_CH_B_GPIO_Port, KNOB_CH_B_Pin) == 1) {
         set_flag(g_knob_flag_group, KNOB_CW_FLAG);
       }
       break;
 
-    case KNOB_B_Pin:
+    case KNOB_CH_B_Pin:
       /* Knob channel B is pulled up by default.
        * Channel B interrupt is triggered on falling edge.
        * If channel B drops (falling edge) and channel A is still high,
        * then knob is rotated counterclockwise (CCW).
        */
-      if (HAL_GPIO_ReadPin(KNOB_A_GPIO_Port, KNOB_A_Pin) == 1) {
+      if (HAL_GPIO_ReadPin(KNOB_CH_A_GPIO_Port, KNOB_CH_A_Pin) == 1) {
         set_flag(g_knob_flag_group, KNOB_CCW_FLAG);
       }
       break;
