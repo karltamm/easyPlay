@@ -1,15 +1,15 @@
 #include <stdint.h>
 
-#ifndef SWITCHES_H
-#define SWITCHES_H
+#ifndef BUTTONS_H
+#define BUTTONS_H
 
 #if __cplusplus
 extern "C" {
 #endif
 
 /* PUBLIC FUNCTIONS */
-void handle_switch_press();
-void handle_switches_LED_state();
+void handle_btn_presses();
+void handle_btns_LED_state();
 
 #if __cplusplus
 }

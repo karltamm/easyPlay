@@ -1,41 +1,41 @@
 #include <main.h>
 
+#include <buttons.h>
 #include <flags.h>
-#include <switches.h>
 #include <ui_master.h>
 
 /* GLOBAL VARIABLES */
-extern uint8_t g_switch_press_flag_group;
+extern uint8_t g_btn_press_flag_group;
 
 /* PRIVATE FUNCTION PROTOTYPES */
 static uint8_t get_LED_state_from_msg(const char* LEDs_state_msg,
                                       uint8_t LED_index);
 
 /* PUBLIC FUNCTIONS */
-void handle_switch_press() {
-  if (g_switch_press_flag_group == 0) {
-    /* No switch presses to deal with */
+void handle_btn_presses() {
+  if (g_btn_press_flag_group == 0) {
+    /* No button presses to deal with */
     return;
   }
 
-  if (is_flag_up(g_switch_press_flag_group, SWITCH_A_FLAG)) {
-    send_user_action_to_PC(USB_MSG_SWITCH_A_PRESS, USB_MSG_SWITCH_PRESS_SIZE);
+  if (is_flag_up(g_btn_press_flag_group, BTN_A_FLAG)) {
+    send_user_action_to_PC(USB_MSG_BTN_A_PRESS, USB_MSG_BTN_PRESS_SIZE);
   }
 
-  if (is_flag_up(g_switch_press_flag_group, SWITCH_B_FLAG)) {
-    send_user_action_to_PC(USB_MSG_SWITCH_B_PRESS, USB_MSG_SWITCH_PRESS_SIZE);
+  if (is_flag_up(g_btn_press_flag_group, BTN_B_FLAG)) {
+    send_user_action_to_PC(USB_MSG_BTN_B_PRESS, USB_MSG_BTN_PRESS_SIZE);
   }
 
-  if (is_flag_up(g_switch_press_flag_group, SWITCH_C_FLAG)) {
-    send_user_action_to_PC(USB_MSG_SWITCH_C_PRESS, USB_MSG_SWITCH_PRESS_SIZE);
+  if (is_flag_up(g_btn_press_flag_group, BTN_C_FLAG)) {
+    send_user_action_to_PC(USB_MSG_BTN_C_PRESS, USB_MSG_BTN_PRESS_SIZE);
   }
 
-  if (is_flag_up(g_switch_press_flag_group, SWITCH_D_FLAG)) {
-    send_user_action_to_PC(USB_MSG_SWITCH_D_PRESS, USB_MSG_SWITCH_PRESS_SIZE);
+  if (is_flag_up(g_btn_press_flag_group, BTN_D_FLAG)) {
+    send_user_action_to_PC(USB_MSG_BTN_D_PRESS, USB_MSG_BTN_PRESS_SIZE);
   }
 }
 
-void handle_switches_LED_state(const char* LEDs_state_msg) {
+void handle_btns_LED_state(const char* LEDs_state_msg) {
   /*
    * This function can control every LEDs state with one message.
    * Example message:
@@ -63,6 +63,6 @@ static uint8_t get_LED_state_from_msg(const char* LEDs_state_msg,
    * B = 1
    * etc
    */
-  char LED_state = LEDs_state_msg[USB_MSG_SW_LED_OFFSET + LED_index];
+  char LED_state = LEDs_state_msg[USB_MSG_BTN_LED_OFFSET + LED_index];
   return LED_state == '1' ? 1 : 0;
 }

@@ -2,7 +2,7 @@
 #include <string.h>
 #include <usbd_cdc_if.h>
 
-#include <switches.h>
+#include <buttons.h>
 #include <usb_comm.h>
 
 /* GLOBAL VARIABLES */
@@ -16,7 +16,7 @@ static Msg g_USB_TX_msgs[USB_TX_QUEUE_MAX_SIZE];
 static Queue g_USB_TX_queue;
 
 /* PRIVATE FUNCTION PROTOTYPES */
-static bool is_RX_msg_about_sw_LEDs(const char* RX_msg);
+static bool is_RX_msg_about_btns_LED(const char* RX_msg);
 
 /* PUBLIC FUNCTIONS */
 void notify_about_USB_RX_msg(uint32_t* msg_size) {
@@ -67,8 +67,8 @@ void process_USB_RX_queue() {
 
     if (strcmp(RX_msg, USB_MSG_HANDSHAKE_IN) == 0) {
       CDC_Transmit_FS(USB_MSG_HANDSHAKE_OUT, USB_MSG_HANDSHAKE_OUT_SIZE);
-    } else if (is_RX_msg_about_sw_LEDs(RX_msg)) {
-      handle_switches_LED_state(RX_msg);
+    } else if (is_RX_msg_about_btns_LED(RX_msg)) {
+      handle_btns_LED_state(RX_msg);
     }
   }
 }
@@ -84,13 +84,13 @@ void process_USB_TX_queue() {
 }
 
 /* PRIVATE FUNCTIONS */
-static bool is_RX_msg_about_sw_LEDs(const char* RX_msg) {
-  if (strlen(RX_msg) < USB_MSG_SW_LED_OFFSET) {
+static bool is_RX_msg_about_btns_LED(const char* RX_msg) {
+  if (strlen(RX_msg) < USB_MSG_BTN_LED_OFFSET) {
     return false;
   }
 
-  for (uint8_t i = 0; i < USB_MSG_SW_LED_OFFSET; i++) {
-    if (RX_msg[i] != USB_MSG_SW_LED_START[i]) {
+  for (uint8_t i = 0; i < USB_MSG_BTN_LED_OFFSET; i++) {
+    if (RX_msg[i] != USB_MSG_BTN_LED_START[i]) {
       return false;
     }
   }

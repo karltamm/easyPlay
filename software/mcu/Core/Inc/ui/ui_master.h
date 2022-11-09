@@ -8,14 +8,12 @@
 extern "C" {
 #endif
 
-// TODO: replace "switch" with "sw"
-
 /* ENUMS */
-enum SwitchFlags {
-  SWITCH_A_FLAG = 1,
-  SWITCH_B_FLAG = 2,
-  SWITCH_C_FLAG = 4,
-  SWITCH_D_FLAG = 8
+enum BtnFlags {
+  BTN_A_FLAG = 1,
+  BTN_B_FLAG = 2,
+  BTN_C_FLAG = 4,
+  BTN_D_FLAG = 8
 };
 
 /* PUBLIC FUNCTIONS */
