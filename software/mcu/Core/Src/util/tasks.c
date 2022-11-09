@@ -2,6 +2,7 @@
 
 #include <buttons.h>
 #include <flags.h>
+#include <knob.h>
 #include <tasks.h>
 #include <usb_comm.h>
 
@@ -40,6 +41,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
 void run_schedule() {
   add_USB_RX_msg_to_queue();
   handle_btn_presses();
+  handle_knob_actions();
 
   if (is_flag_up(g_timer_flag_group, FLAG_15_MS)) {
     process_USB_TX_queue();
