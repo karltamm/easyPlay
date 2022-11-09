@@ -83,7 +83,7 @@ GenerateClassCluster=0
 DocumentUniqueId=QTAOIAMD
 
 [Document3]
-DocumentPath=Schematics\CONTROL-SWITCHES.SchDoc
+DocumentPath=Schematics\CONTROLS.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -202,7 +202,7 @@ GenerateClassCluster=0
 DocumentUniqueId=UOSUXEKR
 
 [GeneratedDocument1]
-DocumentPath=Project Outputs for EasyPlay\Design Rule Check - PCB.html
+DocumentPath=Outputs\Design Rule Check - PCB.html
 DItemRevisionGUID=
 
 [Configuration1]
