@@ -34,7 +34,7 @@ USB_QueueStatus add_USB_RX_msg_to_queue() {
     return USB_QUEUE_FAIL;
   }
 
-  Msg* msg_slot = get_queue_empty_slot(&g_USB_RX_queue);
+  Msg* msg_slot = get_queue_input_slot(&g_USB_RX_queue);
 
   if (msg_slot == NULL || g_USB_RX_msg_size > MSG_MAX_SIZE) {
     g_USB_RX_msg_size = 0;
@@ -48,7 +48,7 @@ USB_QueueStatus add_USB_RX_msg_to_queue() {
 }
 
 USB_QueueStatus add_USB_TX_msg_to_queue(Msg* msg) {
-  Msg* msg_slot = get_queue_empty_slot(&g_USB_TX_queue);
+  Msg* msg_slot = get_queue_input_slot(&g_USB_TX_queue);
   if (msg_slot == NULL) {
     return USB_QUEUE_FAIL;
   }
@@ -64,7 +64,7 @@ USB_QueueStatus add_USB_TX_msg_to_queue(Msg* msg) {
 void process_USB_RX_queue() {
   Msg* RX_msg;
   while (g_USB_RX_queue.cur_size > 0) {
-    RX_msg = get_msg_from_queue(&g_USB_RX_queue);
+    RX_msg = get_queue_output_slot(&g_USB_RX_queue);
     if (!RX_msg) {
       return;
     }
@@ -80,7 +80,7 @@ void process_USB_RX_queue() {
 void process_USB_TX_queue() {
   Msg* TX_msg;
   while (g_USB_TX_queue.cur_size > 0) {
-    TX_msg = get_msg_from_queue(&g_USB_RX_queue);
+    TX_msg = get_queue_output_slot(&g_USB_RX_queue);
     if (!TX_msg) {
       return;
     }

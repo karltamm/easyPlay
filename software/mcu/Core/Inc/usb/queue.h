@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdint.h>
 
 #ifndef QUEUE_H
@@ -6,6 +7,9 @@
 #if __cplusplus
 extern "C" {
 #endif
+
+/* CONFIGURATION */
+#define OVERWRITE_QUEUE false
 
 /* CONSTANTS */
 #define MSG_MAX_SIZE 15  // Num of bytes message can contain
@@ -16,7 +20,7 @@ typedef struct Msg {
 } Msg;
 
 typedef struct Queue {
-  /* Circular FIFO queue without overwriting messages */
+  /* Circular queue */
   uint8_t max_size;  // How many message can be stored
   uint8_t cur_size;  // How many message are currently stored
   uint8_t out;       // From which slot to take a message
@@ -26,8 +30,8 @@ typedef struct Queue {
 
 /* PUBLIC FUNCTIONS */
 void init_queue(Queue* queue, uint8_t max_size, Msg* messages);
-Msg* get_queue_empty_slot(Queue* queue);
-Msg* get_msg_from_queue(Queue* queue);
+Msg* get_queue_input_slot(Queue* queue);
+Msg* get_queue_output_slot(Queue* queue);
 
 #if __cplusplus
 }
