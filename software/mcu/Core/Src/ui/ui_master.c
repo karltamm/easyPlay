@@ -12,19 +12,19 @@ uint8_t g_knob_flag_group = 0;
 void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
   switch (input_pin) {
     case BTN_A_Pin:
-      set_flag(g_btn_press_flag_group, BTN_A_FLAG);
+      set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
       break;
 
     case BTN_B_Pin:
-      set_flag(g_btn_press_flag_group, BTN_B_FLAG);
+      set_flag(&g_btn_press_flag_group, BTN_B_FLAG);
       break;
 
     case BTN_C_Pin:
-      set_flag(g_btn_press_flag_group, BTN_C_FLAG);
+      set_flag(&g_btn_press_flag_group, BTN_C_FLAG);
       break;
 
     case BTN_D_Pin:
-      set_flag(g_btn_press_flag_group, BTN_D_FLAG);
+      set_flag(&g_btn_press_flag_group, BTN_D_FLAG);
       break;
 
     case KNOB_CH_A_Pin:
@@ -34,7 +34,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
        * then knob is rotated clockwise (CW).
        */
       if (HAL_GPIO_ReadPin(KNOB_CH_B_GPIO_Port, KNOB_CH_B_Pin) == 1) {
-        set_flag(g_knob_flag_group, KNOB_CW_FLAG);
+        set_flag(&g_knob_flag_group, KNOB_CW_FLAG);
       }
       break;
 
@@ -45,12 +45,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
        * then knob is rotated counterclockwise (CCW).
        */
       if (HAL_GPIO_ReadPin(KNOB_CH_A_GPIO_Port, KNOB_CH_A_Pin) == 1) {
-        set_flag(g_knob_flag_group, KNOB_CCW_FLAG);
+        set_flag(&g_knob_flag_group, KNOB_CCW_FLAG);
       }
       break;
 
     case KNOB_BTN_Pin:
-      set_flag(g_knob_flag_group, KNOB_BTN_FLAG);
+      set_flag(&g_knob_flag_group, KNOB_BTN_FLAG);
       break;
 
     default:

@@ -9,8 +9,8 @@ extern "C" {
 #endif
 
 /* PUBLIC FUNCTIONS */
-bool is_flag_up(uint8_t flag_group, uint8_t flag);
-void set_flag(uint8_t flag_group, uint8_t flag);
+bool is_flag_up(uint8_t* flag_group, uint8_t flag);
+void set_flag(uint8_t* flag_group, uint8_t flag);
 
 #if __cplusplus
 }

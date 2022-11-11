@@ -20,18 +20,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
     time_ms = 0;
   }
 
-  set_flag(g_timer_flag_group, FLAG_1_MS);
+  set_flag(&g_timer_flag_group, FLAG_1_MS);
 
   if (time_ms % 15 == 0) {
-    set_flag(g_timer_flag_group, FLAG_15_MS);
+    set_flag(&g_timer_flag_group, FLAG_15_MS);
   }
 
   if (time_ms % 55 == 0) {
-    set_flag(g_timer_flag_group, FLAG_55_MS);
+    set_flag(&g_timer_flag_group, FLAG_55_MS);
   }
 
   if (time_ms % 1000 == 0) {
-    set_flag(g_timer_flag_group, FLAG_1000_MS);
+    set_flag(&g_timer_flag_group, FLAG_1000_MS);
   }
 
   time_ms++;
@@ -43,15 +43,15 @@ void run_schedule() {
   handle_btn_presses();
   handle_knob_actions();
 
-  if (is_flag_up(g_timer_flag_group, FLAG_15_MS)) {
+  if (is_flag_up(&g_timer_flag_group, FLAG_15_MS)) {
     process_USB_TX_queue();
   }
 
-  if (is_flag_up(g_timer_flag_group, FLAG_55_MS)) {
+  if (is_flag_up(&g_timer_flag_group, FLAG_55_MS)) {
     process_USB_RX_queue();
   }
 
-  if (is_flag_up(g_timer_flag_group, FLAG_1000_MS)) {
+  if (is_flag_up(&g_timer_flag_group, FLAG_1000_MS)) {
     blink_debug_LED();
   }
 }
