@@ -56,6 +56,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern PCD_HandleTypeDef hpcd_USB_FS;
+extern TIM_HandleTypeDef htim2;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -148,8 +149,8 @@ void EXTI0_1_IRQHandler(void)
   /* USER CODE BEGIN EXTI0_1_IRQn 0 */
 
   /* USER CODE END EXTI0_1_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(SWITCH_A_LED_Pin);
-  HAL_GPIO_EXTI_IRQHandler(SWITCH_A_Pin);
+  HAL_GPIO_EXTI_IRQHandler(BTN_A_LED_Pin);
+  HAL_GPIO_EXTI_IRQHandler(BTN_A_Pin);
   /* USER CODE BEGIN EXTI0_1_IRQn 1 */
 
   /* USER CODE END EXTI0_1_IRQn 1 */
@@ -163,7 +164,7 @@ void EXTI2_3_IRQHandler(void)
   /* USER CODE BEGIN EXTI2_3_IRQn 0 */
 
   /* USER CODE END EXTI2_3_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(SWITCH_B_Pin);
+  HAL_GPIO_EXTI_IRQHandler(BTN_B_Pin);
   /* USER CODE BEGIN EXTI2_3_IRQn 1 */
 
   /* USER CODE END EXTI2_3_IRQn 1 */
@@ -177,13 +178,27 @@ void EXTI4_15_IRQHandler(void)
   /* USER CODE BEGIN EXTI4_15_IRQn 0 */
 
   /* USER CODE END EXTI4_15_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(SWITCH_C_Pin);
-  HAL_GPIO_EXTI_IRQHandler(KNOB_SWITCH_Pin);
-  HAL_GPIO_EXTI_IRQHandler(KNOB_B_Pin);
-  HAL_GPIO_EXTI_IRQHandler(SWITCH_D_Pin);
+  HAL_GPIO_EXTI_IRQHandler(BTN_C_Pin);
+  HAL_GPIO_EXTI_IRQHandler(KNOB_BTN_Pin);
+  HAL_GPIO_EXTI_IRQHandler(KNOB_CH_B_Pin);
+  HAL_GPIO_EXTI_IRQHandler(BTN_D_Pin);
   /* USER CODE BEGIN EXTI4_15_IRQn 1 */
 
   /* USER CODE END EXTI4_15_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM2 global interrupt.
+  */
+void TIM2_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM2_IRQn 0 */
+
+  /* USER CODE END TIM2_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim2);
+  /* USER CODE BEGIN TIM2_IRQn 1 */
+
+  /* USER CODE END TIM2_IRQn 1 */
 }
 
 /**
