@@ -31,7 +31,7 @@ void init_USB_queues() {
 
 USB_QueueStatus add_USB_RX_msg_to_queue() {
   if (g_USB_RX_msg_size == 0) {
-    return USB_QUEUE_FAIL;
+    return USB_QUEUE_OK;
   }
 
   Msg* msg_slot = get_queue_input_slot(&g_USB_RX_queue);
