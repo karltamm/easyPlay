@@ -42,6 +42,7 @@ void run_schedule() {
   add_USB_RX_msg_to_queue();
   handle_btn_presses();
   handle_knob_actions();
+  // TODO: create periodical check if PC app is connected to device using USB
 
   if (is_flag_up(&g_timer_flag_group, FLAG_15_MS)) {
     process_USB_TX_queue();
