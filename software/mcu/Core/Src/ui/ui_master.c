@@ -8,85 +8,92 @@
 uint8_t g_btn_press_flag_group = 0;
 uint8_t g_knob_flag_group = 0;
 
-void handle_btn_press2() {
-  // TODO: #define IO_HIGH 1
+DebounceData g_switches_debounce_data[SWITCHES_COUNT];
 
-  static uint8_t btn_press_happening = 0;
-  static uint8_t btn_last_state = 1;
-  static uint32_t btn_state_change_time_ms = 0;
+/* PRIVATE FUNCTION PROTOTYPES */
+static void init_debounce_data(DebounceData* data,
+                               uint8_t min_stable_period_ms);
+static void debounce_switch(DebounceData* data, uint8_t switch_val);
 
-  uint8_t btn_cur_state = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
+// void handle_btn_press2() {
+//   // TODO: #define IO_HIGH 1
 
-  if (!btn_press_happening && btn_cur_state == 0) {
-    set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
-    btn_press_happening = 1;
-  }
+//   static uint8_t btn_press_happening = 0;
+//   static uint8_t btn_last_state = 1;
+//   static uint32_t btn_state_change_time_ms = 0;
 
-  uint32_t cur_time = HAL_GetTick();
-  if (btn_cur_state != btn_last_state) {
-    btn_state_change_time_ms = cur_time;
-  }
+//   uint8_t btn_cur_state = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
 
-  btn_last_state = btn_cur_state;
+//   if (!btn_press_happening && btn_cur_state == 0) {
+//     set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
+//     btn_press_happening = 1;
+//   }
 
-  if (btn_cur_state != 1) {
-    return;
-  }
+//   uint32_t cur_time = HAL_GetTick();
+//   if (btn_cur_state != btn_last_state) {
+//     btn_state_change_time_ms = cur_time;
+//   }
 
-  if (cur_time - btn_state_change_time_ms < 10) {
-    return;
-  }
+//   btn_last_state = btn_cur_state;
 
-  btn_press_happening = 0;
+//   if (btn_cur_state != 1) {
+//     return;
+//   }
 
-  // static uint8_t btn_a_last_state = 1;
-  // static uint32_t btn_state_change_time_ms = 0;
-  // static uint8_t btn_press_happened = 0;
+//   if (cur_time - btn_state_change_time_ms < 10) {
+//     return;
+//   }
 
-  // uint8_t btn_a_cur_state = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
-  // uint32_t cur_time = HAL_GetTick();
+//   btn_press_happening = 0;
 
-  // if (btn_a_cur_state != btn_a_last_state) {
-  //   btn_state_change_time_ms = cur_time;
-  //   btn_press_happened = 1;
-  //   btn_a_last_state = btn_a_cur_state;
-  // }
+//   // static uint8_t btn_a_last_state = 1;
+//   // static uint32_t btn_state_change_time_ms = 0;
+//   // static uint8_t btn_press_happened = 0;
 
-  // if (!btn_press_happened) {
-  //   return;
-  // }
+//   // uint8_t btn_a_cur_state = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
+//   // uint32_t cur_time = HAL_GetTick();
 
-  // if (cur_time - btn_state_change_time_ms < 50) {
-  //   return;
-  // }
+//   // if (btn_a_cur_state != btn_a_last_state) {
+//   //   btn_state_change_time_ms = cur_time;
+//   //   btn_press_happened = 1;
+//   //   btn_a_last_state = btn_a_cur_state;
+//   // }
 
-  // btn_press_happened = 0;
-  // set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
+//   // if (!btn_press_happened) {
+//   //   return;
+//   // }
 
-  // static uint8_t btn_a_last_state = 1;
-  // static uint32_t btn_state_change_time_ms = 0;
-  // static uint8_t btn_press_happened = 0;
+//   // if (cur_time - btn_state_change_time_ms < 50) {
+//   //   return;
+//   // }
 
-  // uint8_t btn_a_cur_state = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
-  // uint32_t cur_time = HAL_GetTick();
+//   // btn_press_happened = 0;
+//   // set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
 
-  // if (btn_a_cur_state != btn_a_last_state) {
-  //   btn_state_change_time_ms = cur_time;
-  //   btn_press_happened = 1;
-  //   btn_a_last_state = btn_a_cur_state;
-  // }
+//   // static uint8_t btn_a_last_state = 1;
+//   // static uint32_t btn_state_change_time_ms = 0;
+//   // static uint8_t btn_press_happened = 0;
 
-  // if (!btn_press_happened) {
-  //   return;
-  // }
+//   // uint8_t btn_a_cur_state = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
+//   // uint32_t cur_time = HAL_GetTick();
 
-  // if (cur_time - btn_state_change_time_ms < 50) {
-  //   return;
-  // }
+//   // if (btn_a_cur_state != btn_a_last_state) {
+//   //   btn_state_change_time_ms = cur_time;
+//   //   btn_press_happened = 1;
+//   //   btn_a_last_state = btn_a_cur_state;
+//   // }
 
-  // btn_press_happened = 0;
-  // set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
-}
+//   // if (!btn_press_happened) {
+//   //   return;
+//   // }
+
+//   // if (cur_time - btn_state_change_time_ms < 50) {
+//   //   return;
+//   // }
+
+//   // btn_press_happened = 0;
+//   // set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
+// }
 
 /* HAL */
 void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
@@ -147,9 +154,74 @@ void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
 }
 
 /* PUBLIC FUNCTIONS */
+void init_switches_debounce_data() {
+  /* Keyboard switches */
+  init_debounce_data(&g_switches_debounce_data[BTN_A_ID],
+                     BTN_MIN_STABLE_PERIOD_MS);
+  init_debounce_data(&g_switches_debounce_data[BTN_B_ID],
+                     BTN_MIN_STABLE_PERIOD_MS);
+  init_debounce_data(&g_switches_debounce_data[BTN_C_ID],
+                     BTN_MIN_STABLE_PERIOD_MS);
+  init_debounce_data(&g_switches_debounce_data[BTN_D_ID],
+                     BTN_MIN_STABLE_PERIOD_MS);
+
+  /* Knob */
+  init_debounce_data(&g_switches_debounce_data[KNOB_CH_A_ID],
+                     KNOB_MIN_STABLE_PERIOD_MS);
+  init_debounce_data(&g_switches_debounce_data[KNOB_CH_B_ID],
+                     KNOB_MIN_STABLE_PERIOD_MS);
+  init_debounce_data(&g_switches_debounce_data[KNOB_BTN_ID],
+                     BTN_MIN_STABLE_PERIOD_MS);
+}
+
 USB_QueueStatus send_user_action_to_PC(const char* action_msg) {
   Msg msg;
   uint8_t msg_size = strlen(action_msg) + 1;  // + 1 because '\0'
   memcpy(msg.data, action_msg, msg_size);
   return add_USB_TX_msg_to_queue(&msg);
+}
+
+bool switch_was_used(DebounceData* data, uint8_t switch_val) {
+  /* This function must be called every 1 ms to handle debounce correctly */
+  if (!data->debounce_happening && switch_val == SWITCH_ON) {
+    debounce_switch(data, switch_val);
+    return true;
+  }
+
+  if (data->debounce_happening) {
+    debounce_switch(data, switch_val);
+  }
+
+  return false;
+}
+
+/* PRIVATE FUNCTIONS */
+static void init_debounce_data(DebounceData* data,
+                               uint8_t min_stable_period_ms) {
+  data->debounce_happening = 0;
+  data->switch_last_val = SWITCH_OFF;
+  data->min_stable_period_ms = min_stable_period_ms;
+  data->val_change_time_ms = 0;
+}
+
+static void debounce_switch(DebounceData* data, uint8_t switch_val) {
+  data->debounce_happening = true;
+
+  uint32_t cur_time = HAL_GetTick();
+
+  if (switch_val != data->switch_last_val) {
+    data->val_change_time_ms = cur_time;
+  }
+
+  data->switch_last_val = switch_val;
+
+  if (switch_val != SWITCH_OFF) {
+    return;
+  }
+
+  if (cur_time - data->val_change_time_ms < data->min_stable_period_ms) {
+    return;
+  }
+
+  data->debounce_happening = false;
 }
