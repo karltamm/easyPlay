@@ -8,6 +8,9 @@
 extern "C" {
 #endif
 
+/* CONSTANTS */
+#define DEBOUNCE_PERIOD_MS 10
+
 /* ENUMS */
 enum BtnFlags {
   BTN_A_FLAG = 1,

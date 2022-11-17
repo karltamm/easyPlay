@@ -10,6 +10,13 @@ uint8_t g_knob_flag_group = 0;
 
 /* HAL */
 void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
+  /* Debounce for knob */
+  static uint32_t input_start_time = 0;
+  if (HAL_GetTick() - input_start_time < DEBOUNCE_PERIOD_MS) {
+    return;
+  }
+  input_start_time = HAL_GetTick();
+
   switch (input_pin) {
     case BTN_A_Pin:
       set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
