@@ -26,11 +26,10 @@ extern "C" {
 #define USB_MSG_KNOB_CCW "KNOB_CCW"  // CounterClockWise
 #define USB_MSG_KNOB_PRESS "KNOB_PRESS"
 
-#define USB_MSG_HANDSHAKE_IN "EP_MARCO"
-#define USB_MSG_HANDSHAKE_OUT "EP_POLO"
 #define USB_MSG_HEARTBEAT "EP_HEARTBEAT"
 
-#define USB_TX_TIMEOUT_MS 1  // Millisecond
+#define USB_CONN_TIMEOUT_MS 3000
+#define USB_TX_TIMEOUT_MS 1
 
 /* TYPEDEFS */
 typedef uint8_t USB_QueueStatus;
@@ -45,6 +44,7 @@ USB_QueueStatus add_USB_RX_msg_to_queue();
 USB_QueueStatus add_USB_TX_msg_to_queue(Msg* msg);
 void process_USB_RX_queue();
 void process_USB_TX_queue();
+void check_usb_conn();
 
 #if __cplusplus
 }

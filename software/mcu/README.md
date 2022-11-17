@@ -3,6 +3,7 @@
 - btn - button
 - CCW - counterclockwise
 - comm - communication
+- conn - connection
 - cur - current
 - CW - clockwise
 - g\_ - global (variable naming)

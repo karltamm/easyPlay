@@ -1,6 +1,7 @@
 #include <main.h>
 
 #include <buttons.h>
+#include <debug_leds.h>
 #include <flags.h>
 #include <knob.h>
 #include <tasks.h>
@@ -8,9 +9,6 @@
 
 /* GLOBAL VARIABLES */
 static uint8_t g_timer_flag_group;  // Every bit represents different flag
-
-/* PRIVATE FUNCTION PROTOTYPES */
-static void blink_debug_LED();
 
 /* HAL */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
@@ -42,22 +40,16 @@ void run_schedule() {
   add_USB_RX_msg_to_queue();
   handle_btn_presses();
   handle_knob_actions();
-  // TODO: create periodical check if PC app is connected to device using USB
+
+  if (is_flag_up(&g_timer_flag_group, FLAG_1_MS)) {
+    check_usb_conn();
+  }
 
   if (is_flag_up(&g_timer_flag_group, FLAG_15_MS)) {
     process_USB_TX_queue();
-  }
-
-  if (is_flag_up(&g_timer_flag_group, FLAG_55_MS)) {
+  } else if (is_flag_up(&g_timer_flag_group, FLAG_55_MS)) {
     process_USB_RX_queue();
+  } else if (is_flag_up(&g_timer_flag_group, FLAG_1000_MS)) {
+    toggle_heartbeat_LED();
   }
-
-  if (is_flag_up(&g_timer_flag_group, FLAG_1000_MS)) {
-    blink_debug_LED();
-  }
-}
-
-/* PRIVATE FUNCTIONS */
-static void blink_debug_LED() {
-  HAL_GPIO_TogglePin(DEBUG_LED_B_GPIO_Port, DEBUG_LED_B_Pin);
 }
