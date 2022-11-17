@@ -89,7 +89,7 @@ void process_USB_TX_queue() {
 
   Msg* TX_msg;
   while (g_USB_TX_queue.cur_size > 0) {
-    TX_msg = get_queue_output_slot(&g_USB_RX_queue);
+    TX_msg = get_queue_output_slot(&g_USB_TX_queue);
     if (!TX_msg) {
       return;
     }
