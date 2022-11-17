@@ -16,6 +16,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
     return;
   }
   input_start_time = HAL_GetTick();
+  // TODO: improved debounce algorithm
 
   switch (input_pin) {
     case BTN_A_Pin:

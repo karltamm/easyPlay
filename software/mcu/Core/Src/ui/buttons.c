@@ -33,7 +33,7 @@ void handle_btns_LED_state(const char* LEDs_state_msg) {
   /*
    * This function can control every LEDs state with one message.
    * Example message:
-   * LEDs_state_msg = "LED_1001" =>
+   * LEDs_state_msg = "BTN_LED_1001" =>
    * => A =  1; B =   0; C =   0; D =  1 =>
    * => A = ON; B = OFF; C = OFF; D = ON
    */
