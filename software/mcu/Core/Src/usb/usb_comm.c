@@ -69,8 +69,9 @@ void process_USB_RX_queue() {
       return;
     }
 
-    if (strcmp(RX_msg->data, USB_MSG_HANDSHAKE_IN) == 0) {
-      send_USB_msg(USB_MSG_HANDSHAKE_OUT);
+    if (strcmp(RX_msg->data, USB_MSG_HEARTBEAT) == 0) {
+      send_USB_msg("TODO");
+      // TODO: develop USB connection check based on heartbeat from PC
     } else if (is_RX_msg_about_btns_LED(RX_msg->data)) {
       handle_btns_LED_state(RX_msg->data);
     }
