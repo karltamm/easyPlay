@@ -236,10 +236,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BTN_A_Pin BTN_B_Pin BTN_C_Pin KNOB_BTN_Pin
-                           KNOB_CH_B_Pin */
-  GPIO_InitStruct.Pin = BTN_A_Pin|BTN_B_Pin|BTN_C_Pin|KNOB_BTN_Pin
-                          |KNOB_CH_B_Pin;
+  /*Configure GPIO pin : BTN_A_Pin */
+  GPIO_InitStruct.Pin = BTN_A_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(BTN_A_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : BTN_B_Pin BTN_C_Pin KNOB_BTN_Pin KNOB_CH_B_Pin */
+  GPIO_InitStruct.Pin = BTN_B_Pin|BTN_C_Pin|KNOB_BTN_Pin|KNOB_CH_B_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);

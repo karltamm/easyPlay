@@ -8,6 +8,86 @@
 uint8_t g_btn_press_flag_group = 0;
 uint8_t g_knob_flag_group = 0;
 
+void handle_btn_press2() {
+  // TODO: #define IO_HIGH 1
+
+  static uint8_t btn_press_happening = 0;
+  static uint8_t btn_last_state = 1;
+  static uint32_t btn_state_change_time_ms = 0;
+
+  uint8_t btn_cur_state = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
+
+  if (!btn_press_happening && btn_cur_state == 0) {
+    set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
+    btn_press_happening = 1;
+  }
+
+  uint32_t cur_time = HAL_GetTick();
+  if (btn_cur_state != btn_last_state) {
+    btn_state_change_time_ms = cur_time;
+  }
+
+  btn_last_state = btn_cur_state;
+
+  if (btn_cur_state != 1) {
+    return;
+  }
+
+  if (cur_time - btn_state_change_time_ms < 10) {
+    return;
+  }
+
+  btn_press_happening = 0;
+
+  // static uint8_t btn_a_last_state = 1;
+  // static uint32_t btn_state_change_time_ms = 0;
+  // static uint8_t btn_press_happened = 0;
+
+  // uint8_t btn_a_cur_state = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
+  // uint32_t cur_time = HAL_GetTick();
+
+  // if (btn_a_cur_state != btn_a_last_state) {
+  //   btn_state_change_time_ms = cur_time;
+  //   btn_press_happened = 1;
+  //   btn_a_last_state = btn_a_cur_state;
+  // }
+
+  // if (!btn_press_happened) {
+  //   return;
+  // }
+
+  // if (cur_time - btn_state_change_time_ms < 50) {
+  //   return;
+  // }
+
+  // btn_press_happened = 0;
+  // set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
+
+  // static uint8_t btn_a_last_state = 1;
+  // static uint32_t btn_state_change_time_ms = 0;
+  // static uint8_t btn_press_happened = 0;
+
+  // uint8_t btn_a_cur_state = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
+  // uint32_t cur_time = HAL_GetTick();
+
+  // if (btn_a_cur_state != btn_a_last_state) {
+  //   btn_state_change_time_ms = cur_time;
+  //   btn_press_happened = 1;
+  //   btn_a_last_state = btn_a_cur_state;
+  // }
+
+  // if (!btn_press_happened) {
+  //   return;
+  // }
+
+  // if (cur_time - btn_state_change_time_ms < 50) {
+  //   return;
+  // }
+
+  // btn_press_happened = 0;
+  // set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
+}
+
 /* HAL */
 void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
   /* Debounce for knob */
@@ -19,9 +99,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t input_pin) {
   // TODO: improved debounce algorithm
 
   switch (input_pin) {
-    case BTN_A_Pin:
-      set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
-      break;
+      // case BTN_A_Pin:
+      //   set_flag(&g_btn_press_flag_group, BTN_A_FLAG);
+      //   break;
 
     case BTN_B_Pin:
       set_flag(&g_btn_press_flag_group, BTN_B_FLAG);

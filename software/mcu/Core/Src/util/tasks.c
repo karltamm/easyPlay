@@ -5,6 +5,7 @@
 #include <flags.h>
 #include <knob.h>
 #include <tasks.h>
+#include <ui_master.h>
 #include <usb_comm.h>
 
 /* GLOBAL VARIABLES */
@@ -40,6 +41,7 @@ void run_schedule() {
   add_USB_RX_msg_to_queue();
   handle_btn_presses();
   handle_knob_actions();
+  handle_btn_press2();
 
   if (is_flag_up(&g_timer_flag_group, FLAG_1_MS)) {
     check_usb_conn();
