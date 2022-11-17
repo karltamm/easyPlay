@@ -5,8 +5,7 @@
 #include <ui_master.h>
 
 /* GLOBAL VARIABLES */
-extern uint8_t g_btn_press_flag_group;
-extern DebounceData g_switches_debounce_data[SWITCHES_COUNT];
+extern DebounceData g_sws_debounce_data[SWS_COUNT];
 
 /* PRIVATE FUNCTION PROTOTYPES */
 static uint8_t get_LED_state_from_msg(const char* LEDs_state_msg,
@@ -14,25 +13,18 @@ static uint8_t get_LED_state_from_msg(const char* LEDs_state_msg,
 
 /* PUBLIC FUNCTIONS */
 void handle_btn_presses() {
-  // if (g_btn_press_flag_group == 0) {
-  //   /* No button presses to deal with */
-  //   return;
-  // }
+  uint8_t btn_A_state = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
+  uint8_t btn_B_state = HAL_GPIO_ReadPin(BTN_B_GPIO_Port, BTN_B_Pin);
+  uint8_t btn_C_state = HAL_GPIO_ReadPin(BTN_C_GPIO_Port, BTN_C_Pin);
+  uint8_t btn_D_state = HAL_GPIO_ReadPin(BTN_D_GPIO_Port, BTN_D_Pin);
 
-  uint8_t btn_A_val = HAL_GPIO_ReadPin(BTN_A_GPIO_Port, BTN_A_Pin);
-  uint8_t btn_B_val = HAL_GPIO_ReadPin(BTN_B_GPIO_Port, BTN_B_Pin);
-  uint8_t btn_C_val = HAL_GPIO_ReadPin(BTN_C_GPIO_Port, BTN_C_Pin);
-  uint8_t btn_D_val = HAL_GPIO_ReadPin(BTN_D_GPIO_Port, BTN_D_Pin);
-
-  if (switch_was_used(&g_switches_debounce_data[BTN_A_ID], btn_A_val)) {
+  if (sw_was_used(&g_sws_debounce_data[BTN_A_ID], btn_A_state)) {
     send_user_action_to_PC(USB_MSG_BTN_A_PRESS);
-  }
-
-  else if (is_flag_up(&g_btn_press_flag_group, BTN_B_FLAG)) {
+  } else if (sw_was_used(&g_sws_debounce_data[BTN_B_ID], btn_B_state)) {
     send_user_action_to_PC(USB_MSG_BTN_B_PRESS);
-  } else if (is_flag_up(&g_btn_press_flag_group, BTN_C_FLAG)) {
+  } else if (sw_was_used(&g_sws_debounce_data[BTN_C_ID], btn_C_state)) {
     send_user_action_to_PC(USB_MSG_BTN_C_PRESS);
-  } else if (is_flag_up(&g_btn_press_flag_group, BTN_D_FLAG)) {
+  } else if (sw_was_used(&g_sws_debounce_data[BTN_D_ID], btn_D_state)) {
     send_user_action_to_PC(USB_MSG_BTN_D_PRESS);
   }
 }

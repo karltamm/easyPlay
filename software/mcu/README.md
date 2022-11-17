@@ -15,3 +15,4 @@
 - RX - receive
 - TX - transmit
 - UI - user interface
+- sw - switch

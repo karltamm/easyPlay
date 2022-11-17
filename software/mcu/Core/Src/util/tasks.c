@@ -40,10 +40,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
 void run_schedule() {
   add_USB_RX_msg_to_queue();
 
-  handle_knob_actions();
-
   if (is_flag_up(&g_timer_flag_group, FLAG_1_MS)) {
     handle_btn_presses();
+    handle_knob_actions();
     check_usb_conn();
   }
 
