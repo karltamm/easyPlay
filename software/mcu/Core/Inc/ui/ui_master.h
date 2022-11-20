@@ -14,7 +14,7 @@ extern "C" {
 #define SW_OFF 1  // Switches pulled up by default
 #define SW_ON 0
 
-#define BTN_MIN_STABLE_PERIOD_MS 50
+#define BTN_MIN_STABLE_PERIOD_MS 100
 #define KNOB_MIN_STABLE_PERIOD_MS 10
 
 /* STRUCTS */
