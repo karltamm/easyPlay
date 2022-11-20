@@ -49,6 +49,20 @@ void handle_btns_LED_state(const char* LEDs_state_msg) {
   HAL_GPIO_WritePin(BTN_D_LED_GPIO_Port, BTN_D_LED_Pin, LED_D_state);
 }
 
+void toggle_all_btns_LEDs() {
+  HAL_GPIO_TogglePin(BTN_A_LED_GPIO_Port, BTN_A_LED_Pin);
+  HAL_GPIO_TogglePin(BTN_B_LED_GPIO_Port, BTN_B_LED_Pin);
+  HAL_GPIO_TogglePin(BTN_C_LED_GPIO_Port, BTN_C_LED_Pin);
+  HAL_GPIO_TogglePin(BTN_D_LED_GPIO_Port, BTN_D_LED_Pin);
+}
+
+void turn_off_all_btns_LEDs() {
+  HAL_GPIO_WritePin(BTN_A_LED_GPIO_Port, BTN_A_LED_Pin, 0);
+  HAL_GPIO_WritePin(BTN_B_LED_GPIO_Port, BTN_B_LED_Pin, 0);
+  HAL_GPIO_WritePin(BTN_C_LED_GPIO_Port, BTN_C_LED_Pin, 0);
+  HAL_GPIO_WritePin(BTN_D_LED_GPIO_Port, BTN_D_LED_Pin, 0);
+}
+
 /* PRIVATE FUNCTIONS */
 static uint8_t get_LED_state_from_msg(const char* LEDs_state_msg,
                                       uint8_t LED_index) {

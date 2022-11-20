@@ -22,7 +22,7 @@ static uint16_t g_usb_conn_timeout_timer = 0;
 /* PRIVATE FUNCTION PROTOTYPES */
 static bool is_RX_msg_about_btns_LED(const char* RX_msg);
 static uint8_t send_USB_msg(const char* msg);
-static void set_usb_connection_active();
+static void set_usb_conn_active();
 
 /* PUBLIC FUNCTIONS */
 void notify_about_USB_RX_msg(uint32_t* msg_size) {
@@ -75,7 +75,7 @@ void process_USB_RX_queue() {
     }
 
     if (strcmp(RX_msg->data, USB_MSG_HEARTBEAT) == 0) {
-      set_usb_connection_active();
+      set_usb_conn_active();
     } else if (is_RX_msg_about_btns_LED(RX_msg->data)) {
       handle_btns_LED_state(RX_msg->data);
     }
@@ -105,18 +105,31 @@ void process_USB_TX_queue() {
 
 void check_usb_conn() {
   /* This function has to be called every 1 ms */
+  if (!g_is_usb_conn_active) {
+    return;
+  }
+
   if (g_usb_conn_timeout_timer == 0) {
+    turn_off_all_btns_LEDs();  // This is necessary to toggle LEDs
     g_is_usb_conn_active = false;
-    set_problem_LED_state(1);
   } else {
-    set_problem_LED_state(0);
     g_usb_conn_timeout_timer--;
   }
 }
 
+void indicate_USB_conn() {
+  if (!g_is_usb_conn_active) {
+    toggle_all_btns_LEDs();
+  }
+}
+
 /* PRIVATE FUNCTIONS */
-static void set_usb_connection_active() {
-  g_is_usb_conn_active = true;
+static void set_usb_conn_active() {
+  if (!g_is_usb_conn_active) {
+    /* This is necessary to reset "no USB connection" indicator */
+    turn_off_all_btns_LEDs();
+    g_is_usb_conn_active = true;
+  }
   g_usb_conn_timeout_timer = USB_CONN_TIMEOUT_MS;
 }
 

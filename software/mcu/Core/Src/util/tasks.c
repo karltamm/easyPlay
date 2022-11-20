@@ -52,5 +52,6 @@ void run_schedule() {
     process_USB_RX_queue();
   } else if (is_flag_up(&g_timer_flag_group, FLAG_1000_MS)) {
     toggle_heartbeat_LED();
+    indicate_USB_conn();
   }
 }

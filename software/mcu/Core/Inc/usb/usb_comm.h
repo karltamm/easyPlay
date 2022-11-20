@@ -45,6 +45,7 @@ USB_QueueStatus add_USB_TX_msg_to_queue(Msg* msg);
 void process_USB_RX_queue();
 void process_USB_TX_queue();
 void check_usb_conn();
+void indicate_USB_conn();
 
 #if __cplusplus
 }
