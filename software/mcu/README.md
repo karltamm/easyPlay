@@ -1,16 +1,18 @@
 # Abbreviations used in source code
 
 - btn - button
-- UI - user interface
-- CW - clockwise
 - CCW - counterclockwise
+- comm - communication
+- conn - connection
+- cur - current
+- CW - clockwise
+- g\_ - global (variable naming)
+- init - initialize
+- len - length
+- ms - millisecond
 - msg - message
 - PC - personal computer
-- cur - current
-- init - initialize
-- comm - communication
 - RX - receive
 - TX - transmit
-- len - length
-- g\_ - global (variable naming)
-- ms - millisecond
+- UI - user interface
+- sw - switch

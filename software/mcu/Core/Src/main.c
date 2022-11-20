@@ -22,8 +22,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "tasks.h"
-#include "usb_comm.h"
+#include <tasks.h>
+#include <ui_master.h>
+#include <usb_comm.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -33,6 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define STABILIZING_PERIOD_MS 100
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -92,6 +94,8 @@ int main(void) {
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   init_USB_queues();
+  init_sws_debounce_data();
+  HAL_Delay(STABILIZING_PERIOD_MS);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -215,7 +219,7 @@ static void MX_GPIO_Init(void) {
 
   /*Configure GPIO pin : BTN_D_Pin */
   GPIO_InitStruct.Pin = BTN_D_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BTN_D_GPIO_Port, &GPIO_InitStruct);
 
@@ -227,16 +231,16 @@ static void MX_GPIO_Init(void) {
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : BTN_A_Pin BTN_B_Pin BTN_C_Pin KNOB_BTN_Pin
-   KNOB_CH_B_Pin */
+                           KNOB_CH_B_Pin */
   GPIO_InitStruct.Pin =
       BTN_A_Pin | BTN_B_Pin | BTN_C_Pin | KNOB_BTN_Pin | KNOB_CH_B_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : KNOB_CH_A_Pin */
   GPIO_InitStruct.Pin = KNOB_CH_A_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(KNOB_CH_A_GPIO_Port, &GPIO_InitStruct);
 
@@ -246,16 +250,6 @@ static void MX_GPIO_Init(void) {
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI0_1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI2_3_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
