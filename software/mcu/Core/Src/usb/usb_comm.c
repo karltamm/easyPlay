@@ -135,6 +135,6 @@ static bool is_RX_msg_about_btns_LED(const char* RX_msg) {
 }
 
 static uint8_t send_USB_msg(const char* msg) {
-  uint8_t msg_size = strlen(msg) + 1;  // + 1 because '\0'
+  uint8_t msg_size = strlen(msg);
   return CDC_Transmit_FS((uint8_t*)msg, msg_size);
 }
