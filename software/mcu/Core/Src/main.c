@@ -34,6 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define STABILIZING_PERIOD_MS 100
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -94,6 +95,7 @@ int main(void) {
   /* USER CODE BEGIN 2 */
   init_USB_queues();
   init_sws_debounce_data();
+  HAL_Delay(STABILIZING_PERIOD_MS);
   /* USER CODE END 2 */
 
   /* Infinite loop */
