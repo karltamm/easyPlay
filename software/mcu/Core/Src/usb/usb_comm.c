@@ -53,6 +53,10 @@ USB_QueueStatus add_USB_RX_msg_to_queue() {
 }
 
 USB_QueueStatus add_USB_TX_msg_to_queue(Msg* msg) {
+  if (!g_is_usb_conn_active) {
+    return USB_QUEUE_REJECTION;
+  }
+
   Msg* msg_slot = get_queue_input_slot(&g_USB_TX_queue);
   if (msg_slot == NULL) {
     return USB_QUEUE_FAIL;
