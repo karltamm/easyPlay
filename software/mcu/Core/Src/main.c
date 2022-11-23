@@ -22,6 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <debug_leds.h>
 #include <tasks.h>
 #include <ui_master.h>
 #include <usb_comm.h>
@@ -265,6 +266,7 @@ void Error_Handler(void) {
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1) {
+    set_problem_LED_state(1);
   }
   /* USER CODE END Error_Handler_Debug */
 }

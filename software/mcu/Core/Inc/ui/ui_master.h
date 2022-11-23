@@ -14,8 +14,8 @@ extern "C" {
 #define SW_OFF 1  // Switches pulled up by default
 #define SW_ON 0
 
-#define BTN_MIN_STABLE_PERIOD_MS 50
-#define KNOB_MIN_STABLE_PERIOD_MS 10
+#define BTN_MIN_STABLE_PERIOD_MS 80
+#define KNOB_MIN_STABLE_PERIOD_MS 20
 
 /* STRUCTS */
 typedef struct DebounceData {

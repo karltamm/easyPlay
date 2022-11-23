@@ -35,7 +35,7 @@ extern "C" {
 typedef uint8_t USB_QueueStatus;
 
 /* ENUMS */
-enum { USB_QUEUE_OK, USB_QUEUE_FAIL };
+enum { USB_QUEUE_OK, USB_QUEUE_FAIL, USB_QUEUE_REJECTION };
 
 /* PUBLIC FUNCTIONS */
 void notify_about_USB_RX_msg(uint32_t* msg_size);
@@ -45,6 +45,7 @@ USB_QueueStatus add_USB_TX_msg_to_queue(Msg* msg);
 void process_USB_RX_queue();
 void process_USB_TX_queue();
 void check_usb_conn();
+void indicate_USB_conn();
 
 #if __cplusplus
 }
