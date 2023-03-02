@@ -1,0 +1,7 @@
+{
+  "name": "easyPlay",
+  "description": "EasyPlay",
+  "path": "C:\\Users\\Karl\\Documents\\repos\\EasyPlay\\software\\driver\\dist\\EasyPlay.exe",
+  "type": "stdio",
+  "allowed_extensions": ["easyPlay@easyPlay"]
+}
