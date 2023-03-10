@@ -6,16 +6,27 @@ import DeviceButton from "./deviceButton";
 import NotificationsHandler from "./notifications/notificationsHandler";
 import VideoSpeed from "./videoSpeed";
 
-// TODO: create classes for handling YouTube and Echo360
+// TODO: reset video speed on page load
+// TODO: use custom font
 
 export default class VideoHandler {
-  private videoContainer: HTMLElement;
+  private static readonly VIDEO_FINDER_INTERVAL_MS = 250;
+  private static readonly VIDEO_FINDER_MAX_CYCLES = 30000 / VideoHandler.VIDEO_FINDER_INTERVAL_MS;
+
+  private videoElementPath: string;
   private video: HTMLVideoElement;
   private videoSpeed = VideoSpeed.NORMAL;
   private bookmarksHandler: BookmarksHandler;
 
-  constructor() {
-    this.setYouTubeElements();
+  constructor(videoElementPath: string) {
+    this.videoElementPath = videoElementPath;
+  }
+
+  public async setUp() {
+    if (!(await this.findVideoElement())) {
+      console.error("Couldn't set up VideoHandler");
+      return;
+    }
     this.setUpBookmarksHandler();
     this.setDeviceButtonsLights();
     this.handleMessages();
@@ -23,16 +34,16 @@ export default class VideoHandler {
     NotificationsHandler.setUpPopup();
   }
 
-  private setYouTubeElements(): void {
-    this.videoContainer = document.getElementById("movie_player");
-    if (!this.videoContainer) {
-      console.error("Can't retrieve YouTube video container HTML element");
-      return;
-    }
-    this.video = this.videoContainer.querySelector("video");
-    if (!this.video) {
-      console.error("Can't retrieve YouTube video HTML element");
-      return;
+  private async findVideoElement(): Promise<boolean> {
+    let cycleCount = 0;
+    while (true) {
+      if ((this.video = document.querySelector(this.videoElementPath))) {
+        return true;
+      }
+      await new Promise((r) => window.setTimeout(r, VideoHandler.VIDEO_FINDER_INTERVAL_MS));
+      if (++cycleCount == VideoHandler.VIDEO_FINDER_MAX_CYCLES) {
+        return false;
+      }
     }
   }
 

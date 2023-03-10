@@ -18,14 +18,13 @@ export default class DeviceCommunicator {
         console.error("Message from native app doesn't have 'message' key");
         return;
       }
-      this.sendMessageToYouTubeTab(data["message"]);
+      this.sendMessageToVideoTab(data["message"]);
     });
   }
 
-  private sendMessageToYouTubeTab(message: string): void {
-    browser.tabs.query({ active: true, currentWindow: true, url: "https://www.youtube.com/watch*" }).then((tabs) => {
+  private sendMessageToVideoTab(message: string): void {
+    browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
       if (!tabs[0]?.id) {
-        console.info("YouTube tab is not open to send message");
         return;
       }
       browser.tabs.sendMessage(tabs[0].id, message);

@@ -2,6 +2,7 @@ export default class ContentScriptHandler {
   public static readonly TAB_UPDATE_EVENT = "tab-updated";
 
   private static readonly YOUTUBE_URL_REGEX = /^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/;
+  private static readonly COURSERA_URL_REGEX = /https?:\/\/(www\.)?coursera\.org\/.*/;
 
   private currentUrl: string;
 
@@ -10,22 +11,25 @@ export default class ContentScriptHandler {
   }
 
   private setUpEventHandlers(): void {
-    browser.webNavigation.onDOMContentLoaded.addListener(this.handlePageLoad.bind(this));
+    browser.webNavigation.onCompleted.addListener(this.handlePageLoad.bind(this));
     browser.tabs.onUpdated.addListener(this.handleTabUpdate.bind(this));
   }
 
   private handlePageLoad(e: browser.webNavigation._OnDOMContentLoadedDetails): void {
-    if (!this.isYoutubeVideo(e.url)) {
-      return;
+    if (this.urlMatch(e.url, ContentScriptHandler.YOUTUBE_URL_REGEX)) {
+      this.currentUrl = e.url;
+      browser.scripting.executeScript({ files: ["dist/youtubeHandler.js"], target: { tabId: e.tabId } });
+    } else if (this.urlMatch(e.url, ContentScriptHandler.COURSERA_URL_REGEX)) {
+      this.currentUrl = e.url;
+      browser.scripting.executeScript({ files: ["dist/courseraHandler.js"], target: { tabId: e.tabId } });
     }
-    browser.scripting.executeScript({ files: ["dist/content.js"], target: { tabId: e.tabId } });
   }
 
   private handleTabUpdate(tabId: number, changeInfo: browser.tabs._OnUpdatedChangeInfo): void {
     if (!changeInfo?.url) {
       return;
     }
-    if (!this.isYoutubeVideo(changeInfo.url)) {
+    if (!this.isSupportedSite(changeInfo.url)) {
       return;
     }
     if (changeInfo.url === this.currentUrl) {
@@ -35,10 +39,20 @@ export default class ContentScriptHandler {
     browser.tabs.sendMessage(tabId, ContentScriptHandler.TAB_UPDATE_EVENT);
   }
 
-  private isYoutubeVideo(url: string): boolean {
-    if (!url) {
+  private urlMatch(url: string, regex: RegExp): boolean {
+    if (url === undefined) {
       return false;
     }
-    return url.match(ContentScriptHandler.YOUTUBE_URL_REGEX).length > 0;
+    if (!regex.exec(url)?.length) {
+      return false;
+    }
+    return true;
+  }
+
+  private isSupportedSite(url: string): boolean {
+    return (
+      this.urlMatch(url, ContentScriptHandler.YOUTUBE_URL_REGEX) || //
+      this.urlMatch(url, ContentScriptHandler.COURSERA_URL_REGEX)
+    );
   }
 }
