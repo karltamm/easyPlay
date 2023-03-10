@@ -1,0 +1,26 @@
+@use "global" as *;
+
+#ep-cheat-sheet {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: $grey;
+  padding: $pad-min;
+  border-radius: $border-rad-min;
+}
+
+.ep-cheat-sheet-item {
+  display: flex;
+  align-items: center;
+}
+
+.ep-cheat-sheet-item:not(:last-child) {
+  margin-bottom: $marg-min;
+}
+
+.ep-keycap-icon {
+  width: 50px;
+  margin-right: $marg-min;
+}
