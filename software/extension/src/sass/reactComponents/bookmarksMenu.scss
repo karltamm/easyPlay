@@ -1,0 +1,92 @@
+@use "global" as *;
+
+/* Menu */
+#ep-bookmarks-menu {
+  height: 100%;
+  padding: $pad-min;
+  display: flex;
+  flex-direction: column;
+  align-items: center; // Horizontal
+  justify-content: center; // Vertical
+  background-color: rgba(0, 0, 0, 0.85);
+  pointer-events: all;
+}
+
+/* List */
+#ep-bookmarks-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#ep-bookmarks-list-selection-info {
+  padding: $pad-min;
+  margin-bottom: $marg-norm;
+  background: $grey;
+  border-radius: $border-rad-min;
+}
+
+#ep-bookmarks-list-selected-bookmark-index {
+  font-size: $h2-size;
+  font-weight: bold;
+}
+
+#ep-bookmarks-list {
+  height: 420px; // Actual height is set by Javascript based on screen height and list header height
+  overflow-y: hidden;
+  position: relative;
+}
+
+#ep-no-bookmarks-message {
+  position: relative;
+  top: 50%;
+  font-weight: bold;
+  font-size: $h2-size;
+}
+
+.ep-bookmark {
+  position: relative;
+  margin-bottom: $marg-norm;
+  background-color: $dark;
+  border: 3px solid $blue;
+  border-radius: $border-rad-min;
+  transition: border, background-color 0.3s ease-out;
+}
+
+.ep-selected-bookmark {
+  background-color: $dark-green;
+  border-color: $green;
+}
+
+.ep-bookmark-img {
+  border-radius: $border-rad-min $border-rad-min 0 0;
+}
+
+.ep-bookmark-time {
+  padding: $pad-min;
+}
+
+/* Creation dialog */
+.ep-bookmark-dialog {
+  display: flex;
+  flex-direction: column;
+}
+
+.ep-bookmark-dialog h2 {
+  margin-bottom: $marg-far;
+}
+
+.ep-bookmark-dialog-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.ep-bookmark-dialog-btns {
+  margin-left: $marg-min;
+  display: flex;
+  flex-direction: column;
+}
+
+.ep-bookmark-dialog .ep-btn {
+  margin-bottom: $marg-min;
+}

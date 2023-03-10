@@ -1,0 +1,29 @@
+{
+  "name": "easyplay-extension",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "clean": "rimraf ./dist/",
+    "build": "webpack --config webpack.config.js",
+    "ext": "web-ext run --keep-profile-changes --firefox-profile=ext --no-reload --start-url https://www.youtube.com/watch?v=tYeNtnxhZ74",
+    "all": "npm run build && npm run ext"
+  },
+  "devDependencies": {
+    "@types/firefox-webext-browser": "^109.0.0",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "css-loader": "^6.7.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^4.1.0",
+    "sass": "^1.58.0",
+    "sass-loader": "^13.2.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.4",
+    "web-ext": "^7.4.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}

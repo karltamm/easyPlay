@@ -1,0 +1,23 @@
+@use "global" as *;
+
+#ep-notification-popup-root {
+  z-index: 999999;
+}
+
+#ep-notifications-list {
+  padding: $pad-far;
+}
+
+.ep-notification {
+  list-style: none;
+  padding: $pad-norm;
+  margin-bottom: $marg-min;
+  background: $dark-green;
+  border-radius: $border-rad-min;
+  display: inline-block;
+  box-shadow: 0 0 11px 3px $dark;
+}
+
+.ep-error-notification {
+  background: $dark-red;
+}

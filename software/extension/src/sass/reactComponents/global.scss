@@ -1,0 +1,104 @@
+$marg-max: 60px;
+$marg-far: 30px;
+$marg-norm: 20px;
+$marg-min: 10px;
+
+$pad-far: 30px;
+$pad-norm: 20px;
+$pad-min: 10px;
+
+$border-rad-max: 30px;
+$border-rad-norm: 15px;
+$border-rad-min: 10px;
+
+$blue: #3437ff;
+$dark-blue: #000282;
+$red: #e9420f;
+$dark-red: #a92700;
+$yellow: #ffc71f;
+$dark-yellow: #b08300;
+$green: #00ff1c;
+$dark-green: #0f731a;
+$dark: #131313;
+$dark-grey: #202020;
+$grey: #313131;
+
+$body-font: "Roboto", Arial, Helvetica Neue, Helvetica, sans-serif;
+$heading-font: "Roboto Slab", Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif;
+
+$h1-size: 2em;
+$h2-size: 1.5em;
+
+/* Basic */
+.ep-root,
+.ep-root * {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.ep-root {
+  color: white;
+  font-weight: 300;
+  font-family: $body-font;
+  font-size: calc(17px + (20 - 17) * ((100vw - 300px) / (1600 - 300)));
+  /* font-size: calc([minimum size] + ([maximum size] - [minimum size]) * ((100vw - [minimum viewport width]) / ([maximum viewport width] - [minimum viewport width])); */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  height: 100%;
+  width: 100%;
+  pointer-events: none; // Allows to click trough the HTML element
+}
+
+/* Headings */
+.ep-h1,
+.ep-h2 {
+  line-height: 1;
+  display: block;
+  margin-bottom: $marg-norm;
+  font-family: $heading-font;
+}
+
+.ep-h1 {
+  font-size: $h1-size;
+  font-weight: 700;
+}
+
+.ep-h2 {
+  font-size: $h2-size;
+  font-weight: 500;
+}
+
+/* Buttons */
+.ep-btn {
+  padding: $pad-min;
+  border: 0;
+  border-radius: $border-rad-min;
+  color: white;
+  font-weight: 300;
+  background-color: $dark-grey;
+  border: 2px solid $blue;
+  height: 44px;
+  transition: border, background-color 0.3s ease-out;
+}
+
+.ep-active-btn {
+  background-color: $dark-blue;
+}
+
+.ep-red-btn {
+  border-color: $red;
+}
+
+.ep-red-btn.ep-active-btn {
+  background-color: $dark-red;
+}
+
+.ep-yellow-btn {
+  border-color: $yellow;
+}
+
+.ep-yellow-btn.ep-active-btn {
+  background-color: $dark-yellow;
+}
