@@ -62,6 +62,12 @@
   border-radius: $border-rad-min $border-rad-min 0 0;
 }
 
+.ep-bookmark-img-error {
+  border-radius: 0;
+  padding: 0 $pad-min;
+  font-weight: 500;
+}
+
 .ep-bookmark-time {
   padding: $pad-min;
 }
@@ -89,4 +95,12 @@
 
 .ep-bookmark-dialog .ep-btn {
   margin-bottom: $marg-min;
+}
+
+/* Bookmark thumbnail canvas */
+#ep-canvas {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
