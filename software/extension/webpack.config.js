@@ -1,14 +1,18 @@
 const path = require("path");
 
-const tsDirPath = path.join(__dirname, "src", "typescript");
-const outputDirPath = path.join(__dirname, "dist");
+const DIRS = {
+  typescript: path.join(__dirname, "src", "typescript"),
+  siteHandlers: path.join(__dirname, "src", "typescript", "contentScripts", "siteHandlers"),
+  output: path.join(__dirname, "dist"),
+};
 
 module.exports = {
   mode: "development",
   devtool: false,
   entry: {
-    background: path.join(tsDirPath, "backgroundScripts", "background.ts"),
-    content: path.join(tsDirPath, "contentScripts", "content.ts"),
+    background: path.join(DIRS.typescript, "backgroundScripts", "background.ts"),
+    youtubeHandler: path.join(DIRS.siteHandlers, "youtubeHandler.ts"),
+    courseraHandler: path.join(DIRS.siteHandlers, "courseraHandler.ts"),
   },
   module: {
     rules: [
@@ -31,7 +35,10 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    path: outputDirPath,
+    path: DIRS.output,
     filename: "[name].js",
+  },
+  experiments: {
+    topLevelAwait: true,
   },
 };
