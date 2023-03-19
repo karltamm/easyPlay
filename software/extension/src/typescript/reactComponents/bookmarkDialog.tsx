@@ -38,7 +38,7 @@ export default abstract class BookmarkDialog extends React.Component<Props, Stat
     return (
       this.props.open && (
         <div className="ep-bookmark-dialog">
-          <h2>{this.dialogTitle}</h2>
+          <div className="ep-h1">{this.dialogTitle}</div>
           <div className="ep-bookmark-dialog-body">
             <BookmarkOption data={this.props.bookmarkData} selected={true} />
             <div className="ep-bookmark-dialog-btns">
