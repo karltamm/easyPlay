@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;900&display=swap");
+
 $marg-max: 60px;
 $marg-far: 30px;
 $marg-norm: 20px;
@@ -23,8 +25,7 @@ $dark: #131313;
 $dark-grey: #202020;
 $grey: #313131;
 
-$body-font: "Roboto", Arial, Helvetica Neue, Helvetica, sans-serif;
-$heading-font: "Roboto Slab", Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif;
+$font: "Roboto", Arial, Helvetica Neue, Helvetica, sans-serif;
 
 $h1-size: 2em;
 $h2-size: 1.5em;
@@ -34,12 +35,13 @@ $h2-size: 1.5em;
 .ep-root * {
   box-sizing: border-box;
   user-select: none;
+  font-family: inherit;
 }
 
 .ep-root {
   color: white;
   font-weight: 300;
-  font-family: $body-font;
+  font-family: $font;
   font-size: calc(17px + (20 - 17) * ((100vw - 300px) / (1600 - 300)));
   /* font-size: calc([minimum size] + ([maximum size] - [minimum size]) * ((100vw - [minimum viewport width]) / ([maximum viewport width] - [minimum viewport width])); */
   position: fixed;
@@ -57,12 +59,11 @@ $h2-size: 1.5em;
   line-height: 1;
   display: block;
   margin-bottom: $marg-norm;
-  font-family: $heading-font;
 }
 
 .ep-h1 {
   font-size: $h1-size;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .ep-h2 {

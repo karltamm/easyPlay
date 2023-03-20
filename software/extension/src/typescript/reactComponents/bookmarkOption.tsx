@@ -18,10 +18,17 @@ export default class BookmarkOption extends React.Component<Props> {
     }
     return (
       <div className={className} ref={this.props.bookmarkRef}>
-        <img className="ep-bookmark-img" src={this.props.data.img} />
+        {this.getThumbnail()}
         <div className="ep-bookmark-time">{this.formatTime()}</div>
       </div>
     );
+  }
+
+  private getThumbnail(): JSX.Element {
+    if (this.props.data.img) {
+      return <img className="ep-bookmark-img" src={this.props.data.img} />;
+    }
+    return <img className="ep-bookmark-img ep-bookmark-img-error" src="" alt="No thumbnail available" />;
   }
 
   private formatTime(): string {

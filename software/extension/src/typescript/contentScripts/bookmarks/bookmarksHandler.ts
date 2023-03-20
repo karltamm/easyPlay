@@ -118,7 +118,13 @@ export default class BookmarksHandler {
     this.thumbnailCanvas.height = thumbnailHeight;
 
     this.thumbnailCanvasContext.drawImage(this.video, 0, 0, BookmarksHandler.THUMBNAIL_WIDTH_PX, thumbnailHeight);
-    return this.thumbnailCanvas.toDataURL();
+    try {
+      return this.thumbnailCanvas.toDataURL();
+    } catch (error) {
+      // Probably because of cross origin security problem
+      console.warn("Couldn't create bookmark thumbnail:", error);
+      return "";
+    }
   }
 
   private addBookmark(): boolean {
