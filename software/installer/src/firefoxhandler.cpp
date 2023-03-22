@@ -1,6 +1,6 @@
 #include "firefoxhandler.h"
 
-#include <QDebug>
+#include <logger.h>
 #include <QFile>
 
 FirefoxHandler::FirefoxHandler(QObject* parent)

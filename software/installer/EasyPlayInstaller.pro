@@ -12,12 +12,14 @@ INCLUDEPATH += src/
 SOURCES += \
     src/artifactshandler.cpp \
     src/firefoxhandler.cpp \
+    src/logger.cpp \
     src/main.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
     src/artifactshandler.h \
     src/firefoxhandler.h \
+    src/logger.h \
     src/mainwindow.h
 
 FORMS += \

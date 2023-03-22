@@ -1,5 +1,5 @@
 #include "artifactshandler.h"
-#include <QDebug>
+#include <logger.h>
 #include <QDir>
 #include <QFile>
 
