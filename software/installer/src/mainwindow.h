@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <artifactshandler.h>
 #include <firefoxhandler.h>
 #include <QMainWindow>
 
@@ -20,5 +21,6 @@ class MainWindow : public QMainWindow {
  private:
   Ui::MainWindow* ui;
   FirefoxHandler* firefoxHandler;
+  ArtifactsHandler* artifactsHandler;
 };
 #endif  // MAINWINDOW_H

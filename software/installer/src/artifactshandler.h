@@ -2,18 +2,20 @@
 #define ARTIFACTSHANDLER_H
 
 #include <QObject>
+#include <QString>
 
-#define DRIVER_PATH "./assets/EasyPlay.exe"
+#define DRIVER_EXE_FILE_NAME          "EasyPlay.exe"
+#define NATIVE_APP_MANIFEST_FILE_NAME "easyplay-native-app-manifest.json"
 
 class ArtifactsHandler : public QObject {
   Q_OBJECT
  public:
   explicit ArtifactsHandler(QObject* parent = nullptr);
+  void copyAllArtifactsToDestDir(QString destDirAbsPath);
 
- signals:
+ private:
+  bool copyToDestDir(QString destDirAbsPath, QString artifactFileName);
+  QString getArtifactAbsPath(QString artifactFileName);
 };
-
-// TODO: rename to artifactsHandler
-// TODO: change build directory and add this to gitignore
 
 #endif  // ARTIFACTSHANDLER_H
