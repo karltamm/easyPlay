@@ -23,6 +23,6 @@ class FirefoxHandler : public QObject {
   QSettings* mozillaRegistry;
 };
 
-// TODO: make easyplay-native-app-manifest.json exe path relative
+// TODO: test easyplay-native-app-manifest.json having relative exe path
 
 #endif  // FIREFOXHANDLER_H
