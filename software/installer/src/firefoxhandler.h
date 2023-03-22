@@ -5,8 +5,9 @@
 #include <QSettings>
 #include <QString>
 
-#define FIREFOX_REG_PATH        R"(HKEY_LOCAL_MACHINE\SOFTWARE\Mozilla)"
-#define FIREFOX_PATH_VALUE_NAME "PathToExe"
+#define FIREFOX_KEY                        R"(HKEY_LOCAL_MACHINE\SOFTWARE\Mozilla Firefox)"
+#define FIREFOX_NATIVE_MESSAGING_HOSTS_KEY "NativeMessagingHosts"
+#define EASYPLAY_NATIVE_APP_KEY_NAME       "easyPlay"  // Must be same as native manifest JSON "name" field
 
 class FirefoxHandler : public QObject {
   Q_OBJECT
@@ -15,10 +16,12 @@ class FirefoxHandler : public QObject {
   ~FirefoxHandler();
 
   bool isFirefoxInstalled();
-  QString getFirefoxPath();  // TODO: rm
+  void addNativeAppManifest(QString manifestAbsPath);
 
  private:
   QSettings* firefoxReg;
 };
+
+// TODO: make easyplay-native-app-manifest.json exe path relative
 
 #endif  // FIREFOXHANDLER_H
