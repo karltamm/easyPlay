@@ -8,23 +8,23 @@ QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:level=\'requireAdministrator\'
 
 ### SOURCE FILES
 INCLUDEPATH += src/
+INCLUDEPATH += src/utils
+INCLUDEPATH += src/wizard
 
 SOURCES += \
     src/artifactshandler.cpp \
     src/firefoxhandler.cpp \
-    src/logger.cpp \
+    src/utils/logger.cpp \
     src/main.cpp \
-    src/mainwindow.cpp
+    src/wizard/setupwizard.cpp
 
 HEADERS += \
     src/artifactshandler.h \
     src/firefoxhandler.h \
-    src/logger.h \
-    src/mainwindow.h
+    src/utils/logger.h \
+    src/wizard/setupwizard.h
 
-FORMS += \
-    forms/mainwindow.ui \
-    forms/welcomescreen.ui
+FORMS +=
 
 ### BUILD
 DESTDIR = $$PWD/build
