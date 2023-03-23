@@ -1,7 +1,0 @@
-{
-  "name": "easyPlay",
-  "description": "EasyPlay",
-  "path": "./EasyPlay.exe",
-  "type": "stdio",
-  "allowed_extensions": ["easyPlay@easyPlay"]
-}
