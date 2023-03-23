@@ -21,7 +21,7 @@ ArtifactsHandler::~ArtifactsHandler() {
 
 void ArtifactsHandler::setUpCopyHandler() {
   if (copyThread->isRunning()) {
-    // TODO Karl: log
+    // TODO: log
     return;
   }
   copyHandler->moveToThread(copyThread);

@@ -11,5 +11,3 @@ int main(int argc, char* argv[]) {
   Logger::stop();
   return result;
 }
-
-// TODO: make constructor use {}

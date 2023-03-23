@@ -13,7 +13,6 @@ SetupWizard::SetupWizard(QWidget* parent)
   addPage(copyPage);
 }
 
-// TODO: rename install to dest
 // TODO: check if java is installed. if not, abort the installer and show message
 // TODO: when installing program, save installation path to registry value
 // TODO: pass installation path to firefox handler, so it could add needed key/value to registry

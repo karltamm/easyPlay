@@ -20,7 +20,7 @@ class FirefoxHandler : public QObject {
   void addNativeAppManifest(QString manifestAbsPath);
 
  private:
-  QSettings* mozillaRegistry;  // TODO: make it non pointer
+  QSettings* mozillaRegistry;
 };
 
 // TODO: test easyplay-native-app-manifest.json having relative exe path

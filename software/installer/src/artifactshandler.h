@@ -21,7 +21,7 @@ class ArtifactsHandler : public QObject {
   explicit ArtifactsHandler(QObject* parent = nullptr);
   ~ArtifactsHandler();
 
-  // TODO Karl: use signal installPathSelected to
+  // TODO: use signal installPathSelected to
   // (1) check if prevInstallExists
   // (2) removePrevInstallArtifacts() (if user wants it)
   // (3) saveDestDirToReg

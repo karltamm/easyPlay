@@ -23,9 +23,6 @@ class InstallationDestPage : public QWizardPage {
   void setUpGui();
   void handleEvents();
   bool validatePage();
-  bool useExistingDir();
 };
-
-// TODO: make so that user cant go back to this page
 
 #endif  // INSTALLATIONDESTPAGE_H

@@ -2,15 +2,13 @@
 
 #include <logger.h>
 
-// TODO: remove // from constructor
-
 IntroPage::IntroPage(FirefoxHandler* firefoxHandler, QWidget* parent)
-    : QWizardPage{parent},                         //
-      firefoxHandler{firefoxHandler},              //
-      layout{new QVBoxLayout(this)},               //
-      label_intro{new QLabel(this)},               //
-      label_requirementsHeader{new QLabel(this)},  //
-      label_requirements{new QLabel(this)},        //
+    : QWizardPage{parent},
+      firefoxHandler{firefoxHandler},
+      layout{new QVBoxLayout(this)},
+      label_intro{new QLabel(this)},
+      label_requirementsHeader{new QLabel(this)},
+      label_requirements{new QLabel(this)},
       messageBox{new QMessageBox(this)} {
   setUpGui();
 }

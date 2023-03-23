@@ -8,15 +8,17 @@
 
 InstallationDestPage::InstallationDestPage(QWidget* parent)
     : QWizardPage{parent},
-      layout(new QGridLayout(this)),
-      label_dirPickerHeader(new QLabel(this)),
-      label_selectedDirPath(new QLabel(this)),
-      btn_selectDestDir(new QPushButton(this)) {
+      layout{new QGridLayout(this)},
+      label_dirPickerHeader{new QLabel(this)},
+      label_selectedDirPath{new QLabel(this)},
+      btn_selectDestDir{new QPushButton(this)} {
   setUpGui();
   handleEvents();
 
   registerField(SELECTED_DIR_PATH_FIELD, label_selectedDirPath, "text");
   setField(SELECTED_DIR_PATH_FIELD, QVariant(DEFAULT_DEST_DIR_PATH));
+
+  setCommitPage(true);
 }
 
 void InstallationDestPage::setUpGui() {
@@ -63,25 +65,14 @@ bool InstallationDestPage::validatePage() {
     return true;
   }
   if (!destDir.isEmpty()) {
-    // TODO: dont allow dirs that are not empty
-    return useExistingDir();
+    QMessageBox msgBox;
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.setText("Selected folder is not empty");
+    msgBox.setInformativeText("Select empty folder");
+    msgBox.exec();
+    return false;
   }
   return true;
-}
-
-bool InstallationDestPage::useExistingDir() {
-  QMessageBox msgBox;
-  msgBox.setIcon(QMessageBox::Warning);
-
-  msgBox.setText("Selected folder is not empty");
-  msgBox.setInformativeText("Select new folder?");
-
-  QPushButton* btn_continue = msgBox.addButton("Use Selected", QMessageBox::RejectRole);
-  QPushButton* btn_chooseDir = msgBox.addButton("Select New", QMessageBox::AcceptRole);
-  msgBox.setDefaultButton(btn_chooseDir);
-
-  msgBox.exec();
-  return msgBox.clickedButton() == btn_continue;
 }
 
 // TODO: add uninstall option
