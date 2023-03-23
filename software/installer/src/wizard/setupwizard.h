@@ -3,6 +3,7 @@
 
 #include <artifactshandler.h>
 #include <firefoxhandler.h>
+#include <intropage.h>
 #include <QWizard>
 
 class SetupWizard : public QWizard {
@@ -13,6 +14,7 @@ class SetupWizard : public QWizard {
  private:
   FirefoxHandler* firefoxHandler;
   ArtifactsHandler* artifactsHandler;
+  IntroPage* introPage;
 };
 
 // TODO: rm "?" from GUI

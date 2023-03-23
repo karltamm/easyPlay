@@ -1,13 +1,15 @@
 #include "intropage.h"
 
-#include <QPushButton>  // TODO: rm
+#include <logger.h>
 
-IntroPage::IntroPage(QWidget* parent)
+IntroPage::IntroPage(FirefoxHandler* firefoxHandler, QWidget* parent)
     : QWizardPage{parent},                         //
+      firefoxHandler{firefoxHandler},              //
       layout{new QVBoxLayout(this)},               //
       label_intro{new QLabel(this)},               //
       label_requirementsHeader{new QLabel(this)},  //
-      label_requirements{new QLabel(this)} {
+      label_requirements{new QLabel(this)},        //
+      messageBox{new QMessageBox(this)} {
   setUpGui();
 }
 
@@ -33,4 +35,19 @@ void IntroPage::setUpGui() {
   layout->addWidget(label_requirementsHeader);
   layout->addWidget(label_requirements);
   setLayout(layout);
+}
+
+bool IntroPage::validatePage() {
+  if (!firefoxHandler->isFirefoxInstalled()) {
+    showErrorMessage("Install Firefox to continue");
+    return false;
+  }
+  // TODO: check if Java is installed
+  return true;
+}
+
+void IntroPage::showErrorMessage(QString message) {
+  messageBox->setIcon(QMessageBox::Critical);
+  messageBox->setText(message);
+  messageBox->exec();
 }
