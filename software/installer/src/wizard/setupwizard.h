@@ -15,4 +15,6 @@ class SetupWizard : public QWizard {
   ArtifactsHandler* artifactsHandler;
 };
 
+// TODO: rm "?" from GUI
+
 #endif  // SETUPWIZARD_H
