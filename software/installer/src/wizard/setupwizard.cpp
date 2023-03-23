@@ -1,12 +1,14 @@
 #include "setupwizard.h"
 
 SetupWizard::SetupWizard(QWidget* parent)
-    : QWizard{parent},                               //
-      firefoxHandler{new FirefoxHandler(this)},      //
-      artifactsHandler{new ArtifactsHandler(this)},  //
-      introPage{new IntroPage(firefoxHandler, this)} {
-  addPage(introPage);
+    : QWizard{parent},                                 //
+      firefoxHandler{new FirefoxHandler(this)},        //
+      artifactsHandler{new ArtifactsHandler(this)},    //
+      introPage{new IntroPage(firefoxHandler, this)},  //
+      installationDestPage{new InstallationDestPage(this)} {
   setWindowTitle("EasyPlay Driver Installer");
+  addPage(introPage);
+  addPage(installationDestPage);
 }
 
 // TODO: rename install to dest

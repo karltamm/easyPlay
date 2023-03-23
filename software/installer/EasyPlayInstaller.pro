@@ -16,6 +16,7 @@ SOURCES += \
     src/firefoxhandler.cpp \
     src/utils/logger.cpp \
     src/main.cpp \
+    src/wizard/installationdestpage.cpp \
     src/wizard/intropage.cpp \
     src/wizard/setupwizard.cpp
 
@@ -23,6 +24,7 @@ HEADERS += \
     src/artifactshandler.h \
     src/firefoxhandler.h \
     src/utils/logger.h \
+    src/wizard/installationdestpage.h \
     src/wizard/intropage.h \
     src/wizard/setupwizard.h
 
