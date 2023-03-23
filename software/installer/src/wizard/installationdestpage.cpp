@@ -1,18 +1,22 @@
 #include "installationdestpage.h"
 
 #include <logger.h>
+#include <setupwizard.h>
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
 
 InstallationDestPage::InstallationDestPage(QWidget* parent)
-    : QWizardPage{parent},                      //
-      layout(new QGridLayout(this)),            //
-      label_dirPickerHeader(new QLabel(this)),  //
-      label_selectedDirPath(new QLabel(this)),  //
+    : QWizardPage{parent},
+      layout(new QGridLayout(this)),
+      label_dirPickerHeader(new QLabel(this)),
+      label_selectedDirPath(new QLabel(this)),
       btn_selectDestDir(new QPushButton(this)) {
   setUpGui();
   handleEvents();
+
+  registerField(SELECTED_DIR_PATH_FIELD, label_selectedDirPath, "text");
+  setField(SELECTED_DIR_PATH_FIELD, QVariant(DEFAULT_DEST_DIR_PATH));
 }
 
 void InstallationDestPage::setUpGui() {
@@ -42,6 +46,7 @@ void InstallationDestPage::handleEvents() {
       return;
     }
     label_selectedDirPath->setText(destDir);
+    setField(SELECTED_DIR_PATH_FIELD, QVariant(destDir));
   });
 }
 
@@ -57,7 +62,8 @@ bool InstallationDestPage::validatePage() {
     }
     return true;
   }
-  if (destDir.count() > 0) {
+  if (!destDir.isEmpty()) {
+    // TODO: dont allow dirs that are not empty
     return useExistingDir();
   }
   return true;

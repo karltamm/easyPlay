@@ -26,4 +26,6 @@ class InstallationDestPage : public QWizardPage {
   bool useExistingDir();
 };
 
+// TODO: make so that user cant go back to this page
+
 #endif  // INSTALLATIONDESTPAGE_H

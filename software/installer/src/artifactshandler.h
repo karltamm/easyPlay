@@ -1,7 +1,9 @@
 #ifndef ARTIFACTSHANDLER_H
 #define ARTIFACTSHANDLER_H
 
+#include <copyhandler.h>
 #include <QObject>
+#include <QPointer>
 #include <QSettings>
 #include <QString>
 
@@ -14,26 +16,22 @@
 class ArtifactsHandler : public QObject {
   Q_OBJECT
  public:
-  explicit ArtifactsHandler(QObject* parent = nullptr);
+  CopyHandler* copyHandler;
 
-  void copyAllArtifactsToDestDir(QString destDirAbsPath);
+  explicit ArtifactsHandler(QObject* parent = nullptr);
+  ~ArtifactsHandler();
 
   // TODO Karl: use signal installPathSelected to
   // (1) check if prevInstallExists
   // (2) removePrevInstallArtifacts() (if user wants it)
   // (3) saveDestDirToReg
 
- signals:
-  void prevInstallExists(QString installDirPath);
-
  private:
-  QSettings appRegistry;  // TODO: make it pointer
+  QSettings* appRegistry;
+  QThread* copyThread;
 
-  bool copyToDestDir(QString destDirAbsPath, QString artifactFileName);
-  QString getArtifactAbsPath(QString artifactFileName);
-  bool prevInstallExists();
-  void removePrevInstallArtifacts();
-  void saveDestDirToReg(QString destDirAbsPath);
+  void setUpCopyHandler();
+  void saveDestDirToReg(QString destDirPath);
 };
 
 #endif  // ARTIFACTSHANDLER_H

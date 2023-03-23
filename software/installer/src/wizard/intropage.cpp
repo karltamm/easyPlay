@@ -2,6 +2,8 @@
 
 #include <logger.h>
 
+// TODO: remove // from constructor
+
 IntroPage::IntroPage(FirefoxHandler* firefoxHandler, QWidget* parent)
     : QWizardPage{parent},                         //
       firefoxHandler{firefoxHandler},              //

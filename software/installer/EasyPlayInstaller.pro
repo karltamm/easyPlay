@@ -3,7 +3,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 ### CONFIG
 CONFIG += c++17
-
 QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:level=\'requireAdministrator\'
 
 ### SOURCE FILES
@@ -13,17 +12,21 @@ INCLUDEPATH += src/wizard
 
 SOURCES += \
     src/artifactshandler.cpp \
+    src/copyhandler.cpp \
     src/firefoxhandler.cpp \
     src/utils/logger.cpp \
     src/main.cpp \
+    src/wizard/copypage.cpp \
     src/wizard/installationdestpage.cpp \
     src/wizard/intropage.cpp \
     src/wizard/setupwizard.cpp
 
 HEADERS += \
     src/artifactshandler.h \
+    src/copyhandler.h \
     src/firefoxhandler.h \
     src/utils/logger.h \
+    src/wizard/copypage.h \
     src/wizard/installationdestpage.h \
     src/wizard/intropage.h \
     src/wizard/setupwizard.h

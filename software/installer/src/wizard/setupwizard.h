@@ -2,10 +2,13 @@
 #define SETUPWIZARD_H
 
 #include <artifactshandler.h>
+#include <copypage.h>
 #include <firefoxhandler.h>
 #include <installationdestpage.h>
 #include <intropage.h>
 #include <QWizard>
+
+#define SELECTED_DIR_PATH_FIELD "selectedDirPath"
 
 class SetupWizard : public QWizard {
   Q_OBJECT
@@ -17,6 +20,7 @@ class SetupWizard : public QWizard {
   ArtifactsHandler* artifactsHandler;
   IntroPage* introPage;
   InstallationDestPage* installationDestPage;
+  CopyPage* copyPage;
 };
 
 // TODO: rm "?" from GUI

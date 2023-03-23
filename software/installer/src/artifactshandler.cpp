@@ -1,48 +1,38 @@
 #include "artifactshandler.h"
+
 #include <logger.h>
 #include <QDir>
 #include <QFile>
+#include <QtConcurrent/QtConcurrent>
 
 ArtifactsHandler::ArtifactsHandler(QObject* parent)
-    : QObject{parent}, appRegistry(QSettings(APP_REG_KEY)) {
+    : QObject{parent},
+      copyHandler{new CopyHandler()},
+      appRegistry{new QSettings(APP_REG_KEY, QString(), this)},
+      copyThread{new QThread(this)} {
+  setUpCopyHandler();
 }
 
-void ArtifactsHandler::copyAllArtifactsToDestDir(QString destDirAbsPath) {
-  copyToDestDir(destDirAbsPath, DRIVER_EXE_FILE_NAME);
-  copyToDestDir(destDirAbsPath, NATIVE_APP_MANIFEST_FILE_NAME);
+ArtifactsHandler::~ArtifactsHandler() {
+  copyHandler->deleteLater();
+  copyThread->quit();
+  QThread::msleep(100);  // Necessary that copyThread can exit without problems
 }
 
-bool ArtifactsHandler::copyToDestDir(QString destDirAbsPath, QString artifactFileName) {
-  if (!QDir(destDirAbsPath).exists()) {
-    qCritical() << "Artifacts destination folder doesn't exist:" << destDirAbsPath;
-    return false;
+void ArtifactsHandler::setUpCopyHandler() {
+  if (copyThread->isRunning()) {
+    // TODO Karl: log
+    return;
   }
-  QFile file(getArtifactAbsPath(artifactFileName));
-  if (!file.exists()) {
-    qCritical() << "Artifact doesn't exist:" << file.fileName();
-    return false;
-  }
-  return file.copy(QDir::cleanPath(destDirAbsPath + QDir::separator() + artifactFileName));
+  copyHandler->moveToThread(copyThread);
+  connect(copyThread, &QThread::started, copyHandler, &CopyHandler::run);
+  copyThread->start();
 }
 
-QString ArtifactsHandler::getArtifactAbsPath(QString artifactFileName) {
-  return QDir::cleanPath(QDir::currentPath() + QDir::separator() + artifactFileName);
-}
-
-bool ArtifactsHandler::prevInstallExists() {
-  qDebug() << "applicationName:" << appRegistry.applicationName();       // TODO: rm
-  qDebug() << "path:" << appRegistry.value(ARTIFACTS_DEST_DIR_REG_KEY);  // TODO: fix
-  return false;                                                          // TODO: return path
-}
-
-// TODO: remove previous installation files after new files are installed
-
-void ArtifactsHandler::removePrevInstallArtifacts() {}
-
-void ArtifactsHandler::saveDestDirToReg(QString destDirAbsPath) {
-  destDirAbsPath = QDir::cleanPath(destDirAbsPath);
-  if (!QDir(destDirAbsPath).exists()) {
+void ArtifactsHandler::saveDestDirToReg(QString destDirPath) {
+  destDirPath = QDir::cleanPath(destDirPath);
+  if (!QDir(destDirPath).exists()) {
     // TODO: log warning
   }
-  appRegistry.setValue(ARTIFACTS_DEST_DIR_REG_KEY, destDirAbsPath);
+  appRegistry->setValue(ARTIFACTS_DEST_DIR_REG_KEY, destDirPath);
 }
