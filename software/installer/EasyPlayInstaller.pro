@@ -23,7 +23,8 @@ HEADERS += \
     src/mainwindow.h
 
 FORMS += \
-    forms/mainwindow.ui
+    forms/mainwindow.ui \
+    forms/welcomescreen.ui
 
 ### BUILD
 DESTDIR = $$PWD/build

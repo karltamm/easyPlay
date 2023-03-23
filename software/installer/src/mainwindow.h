@@ -18,9 +18,14 @@ class MainWindow : public QMainWindow {
   MainWindow(QWidget* parent = nullptr);
   ~MainWindow();
 
+ signals:
+  void installPathSelected(QString path);
+
  private:
   Ui::MainWindow* ui;
   FirefoxHandler* firefoxHandler;
   ArtifactsHandler* artifactsHandler;
+
+  void handleEvents();
 };
 #endif  // MAINWINDOW_H

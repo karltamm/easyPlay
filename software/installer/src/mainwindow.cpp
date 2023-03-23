@@ -10,7 +10,12 @@ MainWindow::MainWindow(QWidget* parent)
   ui->setupUi(this);
   qDebug() << "isFirefoxInstalled:" << firefoxHandler->isFirefoxInstalled();  // TODO: rm
   artifactsHandler->copyAllArtifactsToDestDir("C:\\Users\\Karl\\Downloads");  // TODO: rm
+  //  artifactsHandler->
+
+  //  emit installPathSelected("C:\\Users\\Karl\\Downloads");
 }
+
+// TODO: rename install to dest
 
 MainWindow::~MainWindow() {
   delete ui;
