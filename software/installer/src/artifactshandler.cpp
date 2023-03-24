@@ -1,9 +1,8 @@
 #include "artifactshandler.h"
 
 #include <logger.h>
-#include <QDir>
 #include <QFile>
-#include <QtConcurrent/QtConcurrent>
+#include <QtConcurrent/QtConcurrent>  // TODO: rm
 
 ArtifactsHandler::ArtifactsHandler(QObject* parent)
     : QObject{parent},
@@ -20,8 +19,16 @@ ArtifactsHandler::~ArtifactsHandler() {
   QThread::msleep(100);  // Necessary that copyThread can exit without problems
 }
 
-QString ArtifactsHandler::getPreviousInstallationDir() {
-  return appRegistry->value(ARTIFACTS_DEST_DIR_REG_KEY).toString();
+QDir ArtifactsHandler::getPreviousInstallationDir() {
+  return QDir(appRegistry->value(ARTIFACTS_DEST_DIR_REG_KEY).toString());
+}
+
+bool ArtifactsHandler::deletePreviousInstallation() {
+  QDir prevDir = getPreviousInstallationDir();
+  if (!prevDir.exists()) {
+    return false;
+  }
+  return prevDir.removeRecursively();
 }
 
 void ArtifactsHandler::setUpCopyHandler() {

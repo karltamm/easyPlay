@@ -20,7 +20,6 @@ class IntroPage : public QWizardPage {
   QLabel* label_intro;
   QLabel* label_requirementsHeader;
   QLabel* label_requirements;
-  QMessageBox* messageBox;
 
   void setUpGui();
   bool validatePage();

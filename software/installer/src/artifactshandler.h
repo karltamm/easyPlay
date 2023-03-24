@@ -2,6 +2,7 @@
 #define ARTIFACTSHANDLER_H
 
 #include <copyhandler.h>
+#include <QDir>
 #include <QObject>
 #include <QPointer>
 #include <QSettings>
@@ -22,7 +23,8 @@ class ArtifactsHandler : public QObject {
   explicit ArtifactsHandler(QObject* parent = nullptr);
   ~ArtifactsHandler();
 
-  QString getPreviousInstallationDir();
+  QDir getPreviousInstallationDir();
+  bool deletePreviousInstallation();
 
  signals:
   void copyArtifacts(QString destDir);

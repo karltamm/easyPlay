@@ -40,7 +40,7 @@ void CopyPage::setUpGui() {
   movie_loader->start();
 
   layout->addWidget(label_loader);
-  layout->setAlignment(label_loader, Qt::AlignCenter);
+  layout->setAlignment(label_loader, Qt::AlignCenter | Qt::AlignVCenter);
   setLayout(layout);
 }
 

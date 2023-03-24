@@ -1,15 +1,16 @@
 #include "intropage.h"
 
 #include <logger.h>
+#include <QPushButton>
 
-IntroPage::IntroPage(FirefoxHandler* firefoxHandler, QWidget* parent)
+IntroPage::IntroPage(ArtifactsHandler* artifactsHandler, FirefoxHandler* firefoxHandler, QWidget* parent)
     : QWizardPage{parent},
+      artifactsHandler{artifactsHandler},
       firefoxHandler{firefoxHandler},
       layout{new QVBoxLayout(this)},
       label_intro{new QLabel(this)},
       label_requirementsHeader{new QLabel(this)},
-      label_requirements{new QLabel(this)},
-      messageBox{new QMessageBox(this)} {
+      label_requirements{new QLabel(this)} {
   setUpGui();
 }
 
@@ -50,29 +51,35 @@ bool IntroPage::validatePage() {
 }
 
 void IntroPage::showErrorMessage(QString message) {
-  // TODO: use local scoped Messagebox
-  messageBox->setIcon(QMessageBox::Critical);
-  messageBox->setText(message);
-  messageBox->exec();
+  QMessageBox msgBox;
+  msgBox.setIcon(QMessageBox::Critical);
+  msgBox.setTextFormat(Qt::RichText);
+  msgBox.setText(QString("<b>%1<b>").arg(message));  // TODO: set bold every message box
+  msgBox.exec();
 }
 
 bool IntroPage::handlePrevInstallation() {
-  QString prevDir = artifactsHandler->getPreviousInstallationDir();
-  if (prevDir.isEmpty()) {
+  QDir prevDir = artifactsHandler->getPreviousInstallationDir();
+  if (!prevDir.exists()) {
     return true;
   }
   QMessageBox msgBox;
   msgBox.setIcon(QMessageBox::Warning);
 
   msgBox.setTextFormat(Qt::RichText);
-  msgBox.setText("<b>Detected previous installation</b>");
-  msgBox.setDetailedText()  //   TODO: use detailedText
-      msgBox.setInformativeText("Delete previous installation?");
+  msgBox.setText("Detected previous installation");
+  msgBox.setDetailedText(QString("Installed at %1").arg(prevDir.path()));
+  msgBox.setInformativeText("<b>Delete previous installation?</b>");
 
-  QPushButton* btn_keep = msgBox.addButton("Keep", QMessageBox::RejectRole);  // TODO: update
-  QPushButton* btn_delete = msgBox.addButton("Delete", QMessageBox::AcceptRole);
-  msgBox.setDefaultButton(btn_keep);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+  msgBox.setDefaultButton(QMessageBox::Yes);
 
-  msgBox.exec();
-  return msgBox.clickedButton() == btn_delete;
+  if (msgBox.exec() == QMessageBox::No) {
+    return false;
+  }
+  if (!artifactsHandler->deletePreviousInstallation()) {
+    showErrorMessage("Couldn't delete previous installation");
+    return false;
+  }
+  return true;
 }
