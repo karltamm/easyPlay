@@ -7,7 +7,7 @@
 
     <groupId>org.easyplay</groupId>
     <artifactId>easyPlay</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,7 +21,7 @@
         <project.jarName>${project.artifactId}-${project.version}</project.jarName>
         <project.exeName>${project.name}</project.exeName>
         <project.distFolder>dist</project.distFolder>
-        <project.releaseVersion>0.0.0.1</project.releaseVersion>
+        <project.releaseVersion>${project.version}.0</project.releaseVersion>
         <project.minJreVersion>17.0.0</project.minJreVersion>
     </properties>
 
@@ -107,7 +107,7 @@
                             <classPath>
                                 <mainClass>${project.mainClass}</mainClass>
                             </classPath>
-                            <icon></icon> <!--TODO: add icon-->
+                            <icon></icon>
                             <restartOnCrash/>
                             <singleInstance>
                                 <mutexName>${project.name}</mutexName>
@@ -121,7 +121,7 @@
                                 <fileVersion>${project.releaseVersion}</fileVersion>
                                 <txtFileVersion>${project.releaseVersion}</txtFileVersion>
                                 <fileDescription>${project.name}</fileDescription>
-                                <copyright>2023 © ${project.organization.name}. All rights reserved.</copyright> <!--TODO: add variable year -->
+                                <copyright>2023 © ${project.organization.name}. All rights reserved.</copyright>
                                 <productVersion>${project.releaseVersion}</productVersion>
                                 <txtProductVersion>${project.releaseVersion}</txtProductVersion>
                                 <productName>${project.name}</productName>
