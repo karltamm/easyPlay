@@ -14,6 +14,7 @@ SOURCES += \
     src/artifactshandler.cpp \
     src/copyhandler.cpp \
     src/firefoxhandler.cpp \
+    src/javahandler.cpp \
     src/utils/logger.cpp \
     src/main.cpp \
     src/wizard/copypage.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     src/artifactshandler.h \
     src/copyhandler.h \
     src/firefoxhandler.h \
+    src/javahandler.h \
     src/utils/logger.h \
     src/wizard/copypage.h \
     src/wizard/endpage.h \

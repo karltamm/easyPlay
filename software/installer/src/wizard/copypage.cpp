@@ -22,6 +22,7 @@ CopyPage::CopyPage(ArtifactsHandler* artifactsHandler, FirefoxHandler* firefoxHa
 void CopyPage::initializePage() {
   emit artifactsHandler->copyArtifacts(field(SELECTED_DIR_PATH_FIELD).toString());
   setUpCopyTimer();
+  setCommitPage(true);
 }
 
 bool CopyPage::isComplete() const {

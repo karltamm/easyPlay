@@ -7,6 +7,7 @@ IntroPage::IntroPage(ArtifactsHandler* artifactsHandler, FirefoxHandler* firefox
     : QWizardPage{parent},
       artifactsHandler{artifactsHandler},
       firefoxHandler{firefoxHandler},
+      javaHandler{new JavaHandler(this)},
       layout{new QVBoxLayout(this)},
       label_intro{new QLabel(this)},
       label_requirementsHeader{new QLabel(this)},
@@ -26,11 +27,11 @@ void IntroPage::setUpGui() {
   label_requirementsHeader->setStyleSheet("font-weight:bold");
 
   label_requirements->setTextFormat(Qt::RichText);
-  label_requirements->setText(
-      "<ul>"
-      "<li>Firefox Browser</li>"
-      "<li>Java Runtime Environment</li>"  // TODO: check which JRE version is correct
-      "</ul>");
+  label_requirements->setText(QString("<ul>"
+                                      "<li>Firefox Browser</li>"
+                                      "<li>Java Runtime Environment %1</li>"  // TODO: check which JRE version is correct
+                                      "</ul>")
+                                  .arg(JRE_MIN_VERSION));
 
   layout->addWidget(label_intro);
   layout->addWidget(label_requirementsHeader);
@@ -46,7 +47,10 @@ bool IntroPage::validatePage() {
   if (!handlePrevInstallation()) {
     return false;
   }
-  // TODO: check if Java is installed
+  if (!javaHandler->isSuitableJreInstalled(JRE_MIN_VERSION)) {
+    showErrorMessage(QString("Install Java Runtime Environment %1 or later").arg(JRE_MIN_VERSION));
+    return false;
+  }
   return true;
 }
 

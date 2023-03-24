@@ -3,6 +3,7 @@
 
 #include <artifactshandler.h>
 #include <firefoxhandler.h>
+#include <javahandler.h>
 #include <QLabel>
 #include <QMessageBox>
 #include <QVBoxLayout>
@@ -14,6 +15,7 @@ class IntroPage : public QWizardPage {
   explicit IntroPage(ArtifactsHandler* artifactsHandler, FirefoxHandler* firefoxHandler, QWidget* parent = nullptr);
 
  private:
+  JavaHandler* javaHandler;
   ArtifactsHandler* artifactsHandler;
   FirefoxHandler* firefoxHandler;
   QVBoxLayout* layout;
