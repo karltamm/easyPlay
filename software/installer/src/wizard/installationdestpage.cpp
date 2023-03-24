@@ -76,4 +76,3 @@ bool InstallationDestPage::validatePage() {
 }
 
 // TODO: add uninstall option
-// TODO: handle events where artifacts couldn't be copied to selected folder

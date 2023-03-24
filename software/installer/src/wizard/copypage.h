@@ -2,6 +2,7 @@
 #define COPYPAGE_H
 
 #include <artifactshandler.h>
+#include <firefoxhandler.h>
 #include <QLabel>
 #include <QMovie>
 #include <QTimer>
@@ -14,13 +15,14 @@
 class CopyPage : public QWizardPage {
   Q_OBJECT
  public:
-  explicit CopyPage(ArtifactsHandler* artifactsHandler, QWidget* parent = nullptr);
+  explicit CopyPage(ArtifactsHandler* artifactsHandler, FirefoxHandler* firefoxHandler, QWidget* parent = nullptr);
 
  signals:
   void copyFinished(bool success);
 
  private:
   ArtifactsHandler* artifactsHandler;
+  FirefoxHandler* firefoxHandler;
   bool filesCopied;
   QTimer* copyTimer;
   quint64 elapsedTime;

@@ -7,10 +7,11 @@
 
 ArtifactsHandler::ArtifactsHandler(QObject* parent)
     : QObject{parent},
-      copyHandler{new CopyHandler()},
-      appRegistry{new QSettings(APP_REG_KEY, QString(), this)},
+      copyHandler{new CopyHandler()},  // Without parent to allow moveToThread
+      appRegistry{new QSettings(EASYPLAY_ORG_REG_KEY, EASYPLAY_REG_KEY, this)},
       copyThread{new QThread(this)} {
   setUpCopyHandler();
+  handleCopyRequest();
 }
 
 ArtifactsHandler::~ArtifactsHandler() {
@@ -21,7 +22,7 @@ ArtifactsHandler::~ArtifactsHandler() {
 
 void ArtifactsHandler::setUpCopyHandler() {
   if (copyThread->isRunning()) {
-    // TODO: log
+    qWarning() << "Copy handler is already set up";
     return;
   }
   copyHandler->moveToThread(copyThread);
@@ -29,10 +30,17 @@ void ArtifactsHandler::setUpCopyHandler() {
   copyThread->start();
 }
 
+void ArtifactsHandler::handleCopyRequest() {
+  connect(this, &ArtifactsHandler::copyArtifacts, this, [this](QString destDir) {
+    emit copyHandler->requestCopy({DRIVER_EXE_FILE_NAME, NATIVE_APP_MANIFEST_FILE_NAME}, destDir);
+    saveDestDirToReg(destDir);
+  });
+}
+
 void ArtifactsHandler::saveDestDirToReg(QString destDirPath) {
   destDirPath = QDir::cleanPath(destDirPath);
   if (!QDir(destDirPath).exists()) {
-    // TODO: log warning
+    qWarning() << "Destination directory doesn't exist";
   }
   appRegistry->setValue(ARTIFACTS_DEST_DIR_REG_KEY, destDirPath);
 }

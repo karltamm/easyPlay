@@ -10,7 +10,8 @@
 #define DRIVER_EXE_FILE_NAME          "EasyPlay.exe"
 #define NATIVE_APP_MANIFEST_FILE_NAME "easyplay-native-app-manifest.json"
 
-#define APP_REG_KEY                "EasyPlay"
+#define EASYPLAY_ORG_REG_KEY       "EasyPlayOrg"
+#define EASYPLAY_REG_KEY           "EasyPlay"
 #define ARTIFACTS_DEST_DIR_REG_KEY "installationDirPath"
 
 class ArtifactsHandler : public QObject {
@@ -21,16 +22,15 @@ class ArtifactsHandler : public QObject {
   explicit ArtifactsHandler(QObject* parent = nullptr);
   ~ArtifactsHandler();
 
-  // TODO: use signal installPathSelected to
-  // (1) check if prevInstallExists
-  // (2) removePrevInstallArtifacts() (if user wants it)
-  // (3) saveDestDirToReg
+ signals:
+  void copyArtifacts(QString destDir);
 
  private:
   QSettings* appRegistry;
   QThread* copyThread;
 
   void setUpCopyHandler();
+  void handleCopyRequest();
   void saveDestDirToReg(QString destDirPath);
 };
 

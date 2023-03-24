@@ -2,10 +2,12 @@
 
 #include <logger.h>
 #include <setupwizard.h>
+#include <QDir>
 
-CopyPage::CopyPage(ArtifactsHandler* artifactsHandler, QWidget* parent)
+CopyPage::CopyPage(ArtifactsHandler* artifactsHandler, FirefoxHandler* firefoxHandler, QWidget* parent)
     : QWizardPage{parent},
       artifactsHandler{artifactsHandler},
+      firefoxHandler{firefoxHandler},
       filesCopied{false},
       copyTimer{new QTimer(this)},
       elapsedTime{0},
@@ -18,10 +20,7 @@ CopyPage::CopyPage(ArtifactsHandler* artifactsHandler, QWidget* parent)
 }
 
 void CopyPage::initializePage() {
-  QStringList files = {DRIVER_EXE_FILE_NAME, NATIVE_APP_MANIFEST_FILE_NAME};
-  // TODO: update firefox registry
-  // TODO: update artifacts registry
-  emit artifactsHandler->copyHandler->requestCopy(files, field(SELECTED_DIR_PATH_FIELD).toString());
+  emit artifactsHandler->copyArtifacts(field(SELECTED_DIR_PATH_FIELD).toString());
   setUpCopyTimer();
 }
 
@@ -57,6 +56,11 @@ void CopyPage::handleEvents() {
   connect(this, &CopyPage::copyFinished, this, [this](bool success) {
     copyTimer->stop();
     setField(INSTALLATION_FEEDBACK_FIELD, QVariant(success));
+    if (success) {
+      QString destDir = field(SELECTED_DIR_PATH_FIELD).toString();
+      QString manifestPath = QDir::cleanPath(destDir + QDir::separator() + NATIVE_APP_MANIFEST_FILE_NAME);
+      firefoxHandler->addNativeAppManifest(manifestPath);
+    }
     wizard()->next();
   });
 }

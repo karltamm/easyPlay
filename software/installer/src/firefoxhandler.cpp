@@ -16,7 +16,7 @@ bool FirefoxHandler::isFirefoxInstalled() {
 }
 
 void FirefoxHandler::addNativeAppManifest(QString manifestAbsPath) {
-  if (!QFile::exists("manifestAbsPath")) {
+  if (!QFile::exists(manifestAbsPath)) {
     qWarning() << "Native app manifest file doesn't exists:" << manifestAbsPath;
   }
   mozillaRegistry->setValue(EASYPLAY_NATIVE_APP_KEY_NAME, manifestAbsPath);
