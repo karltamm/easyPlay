@@ -7,6 +7,7 @@
 #include <QPointer>
 #include <QSettings>
 #include <QString>
+#include <QThread>
 
 #define DRIVER_EXE_FILE_NAME          "EasyPlay.exe"
 #define NATIVE_APP_MANIFEST_FILE_NAME "easyplay-native-app-manifest.json"

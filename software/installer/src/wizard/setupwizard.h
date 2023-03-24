@@ -26,6 +26,4 @@ class SetupWizard : public QWizard {
   EndPage* endPage;
 };
 
-// TODO: rm "?" from GUI
-
 #endif  // SETUPWIZARD_H

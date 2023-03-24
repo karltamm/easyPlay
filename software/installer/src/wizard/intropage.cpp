@@ -29,7 +29,7 @@ void IntroPage::setUpGui() {
   label_requirements->setTextFormat(Qt::RichText);
   label_requirements->setText(QString("<ul>"
                                       "<li>Firefox Browser</li>"
-                                      "<li>Java Runtime Environment %1</li>"  // TODO: check which JRE version is correct
+                                      "<li>Java Runtime Environment %1</li>"
                                       "</ul>")
                                   .arg(JRE_MIN_VERSION));
 
@@ -58,7 +58,7 @@ void IntroPage::showErrorMessage(QString message) {
   QMessageBox msgBox;
   msgBox.setIcon(QMessageBox::Critical);
   msgBox.setTextFormat(Qt::RichText);
-  msgBox.setText(QString("<b>%1<b>").arg(message));  // TODO: set bold every message box
+  msgBox.setText(QString("<b>%1<b>").arg(message));
   msgBox.exec();
 }
 

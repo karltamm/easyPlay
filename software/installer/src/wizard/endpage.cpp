@@ -18,6 +18,7 @@ void EndPage::initializePage() {
 }
 
 void EndPage::setUpGui() {
+  setTitle("Done");
   label_feedback->setTextFormat(Qt::RichText);
   layout->addWidget(label_feedback);
   setLayout(layout);

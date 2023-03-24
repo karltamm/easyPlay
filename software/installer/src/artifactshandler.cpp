@@ -2,7 +2,6 @@
 
 #include <logger.h>
 #include <QFile>
-#include <QtConcurrent/QtConcurrent>  // TODO: rm
 
 ArtifactsHandler::ArtifactsHandler(QObject* parent)
     : QObject{parent},

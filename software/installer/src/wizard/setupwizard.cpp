@@ -8,7 +8,12 @@ SetupWizard::SetupWizard(QWidget* parent)
       installationDestPage{new InstallationDestPage(this)},
       copyPage{new CopyPage(artifactsHandler, firefoxHandler, this)},
       endPage{new EndPage(this)} {
+  setWizardStyle(QWizard::ModernStyle);
   setWindowTitle("EasyPlay Driver Installer");
+  setOption(QWizard::NoCancelButtonOnLastPage);
+  setOption(QWizard::NoBackButtonOnStartPage);
+  setOption(QWizard::NoBackButtonOnLastPage);
+  setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
   addPage(introPage);
   addPage(installationDestPage);

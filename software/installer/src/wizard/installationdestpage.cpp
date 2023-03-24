@@ -57,8 +57,9 @@ bool InstallationDestPage::validatePage() {
   if (!destDir.exists()) {
     if (!destDir.mkpath(label_selectedDirPath->text())) {
       QMessageBox msgBox;
+      msgBox.setTextFormat(Qt::RichText);
       msgBox.setIcon(QMessageBox::Critical);
-      msgBox.setText("Couldn't create installation folder");
+      msgBox.setText("<b>Couldn't create installation folder</b>");
       msgBox.exec();
       return false;
     }
@@ -66,13 +67,12 @@ bool InstallationDestPage::validatePage() {
   }
   if (!destDir.isEmpty()) {
     QMessageBox msgBox;
+    msgBox.setTextFormat(Qt::RichText);
     msgBox.setIcon(QMessageBox::Critical);
     msgBox.setText("Selected folder is not empty");
-    msgBox.setInformativeText("Select empty folder");
+    msgBox.setInformativeText("<b>Select empty folder</b>");
     msgBox.exec();
     return false;
   }
   return true;
 }
-
-// TODO: add uninstall option
