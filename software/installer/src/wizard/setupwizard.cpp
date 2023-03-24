@@ -6,11 +6,14 @@ SetupWizard::SetupWizard(QWidget* parent)
       artifactsHandler{new ArtifactsHandler(this)},
       introPage{new IntroPage(firefoxHandler, this)},
       installationDestPage{new InstallationDestPage(this)},
-      copyPage{new CopyPage(artifactsHandler, this)} {
+      copyPage{new CopyPage(artifactsHandler, this)},
+      endPage{new EndPage(this)} {
   setWindowTitle("EasyPlay Driver Installer");
+
   addPage(introPage);
   addPage(installationDestPage);
   addPage(copyPage);
+  addPage(endPage);
 }
 
 // TODO: check if java is installed. if not, abort the installer and show message
