@@ -20,6 +20,10 @@ ArtifactsHandler::~ArtifactsHandler() {
   QThread::msleep(100);  // Necessary that copyThread can exit without problems
 }
 
+QString ArtifactsHandler::getPreviousInstallationDir() {
+  return appRegistry->value(ARTIFACTS_DEST_DIR_REG_KEY).toString();
+}
+
 void ArtifactsHandler::setUpCopyHandler() {
   if (copyThread->isRunning()) {
     qWarning() << "Copy handler is already set up";

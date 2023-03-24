@@ -22,6 +22,8 @@ class ArtifactsHandler : public QObject {
   explicit ArtifactsHandler(QObject* parent = nullptr);
   ~ArtifactsHandler();
 
+  QString getPreviousInstallationDir();
+
  signals:
   void copyArtifacts(QString destDir);
 

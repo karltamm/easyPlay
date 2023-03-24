@@ -42,12 +42,37 @@ bool IntroPage::validatePage() {
     showErrorMessage("Install Firefox to continue");
     return false;
   }
+  if (!handlePrevInstallation()) {
+    return false;
+  }
   // TODO: check if Java is installed
   return true;
 }
 
 void IntroPage::showErrorMessage(QString message) {
+  // TODO: use local scoped Messagebox
   messageBox->setIcon(QMessageBox::Critical);
   messageBox->setText(message);
   messageBox->exec();
+}
+
+bool IntroPage::handlePrevInstallation() {
+  QString prevDir = artifactsHandler->getPreviousInstallationDir();
+  if (prevDir.isEmpty()) {
+    return true;
+  }
+  QMessageBox msgBox;
+  msgBox.setIcon(QMessageBox::Warning);
+
+  msgBox.setTextFormat(Qt::RichText);
+  msgBox.setText("<b>Detected previous installation</b>");
+  msgBox.setDetailedText()  //   TODO: use detailedText
+      msgBox.setInformativeText("Delete previous installation?");
+
+  QPushButton* btn_keep = msgBox.addButton("Keep", QMessageBox::RejectRole);  // TODO: update
+  QPushButton* btn_delete = msgBox.addButton("Delete", QMessageBox::AcceptRole);
+  msgBox.setDefaultButton(btn_keep);
+
+  msgBox.exec();
+  return msgBox.clickedButton() == btn_delete;
 }

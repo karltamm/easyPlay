@@ -1,6 +1,7 @@
 #ifndef INTROPAGE_H
 #define INTROPAGE_H
 
+#include <artifactshandler.h>
 #include <firefoxhandler.h>
 #include <QLabel>
 #include <QMessageBox>
@@ -10,9 +11,10 @@
 class IntroPage : public QWizardPage {
   Q_OBJECT
  public:
-  explicit IntroPage(FirefoxHandler* firefoxHandler, QWidget* parent = nullptr);
+  explicit IntroPage(ArtifactsHandler* artifactsHandler, FirefoxHandler* firefoxHandler, QWidget* parent = nullptr);
 
  private:
+  ArtifactsHandler* artifactsHandler;
   FirefoxHandler* firefoxHandler;
   QVBoxLayout* layout;
   QLabel* label_intro;
@@ -23,6 +25,7 @@ class IntroPage : public QWizardPage {
   void setUpGui();
   bool validatePage();
   void showErrorMessage(QString message);
+  bool handlePrevInstallation();
 };
 
 #endif  // INTROPAGE_H

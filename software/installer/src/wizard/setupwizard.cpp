@@ -4,7 +4,7 @@ SetupWizard::SetupWizard(QWidget* parent)
     : QWizard{parent},
       firefoxHandler{new FirefoxHandler(this)},
       artifactsHandler{new ArtifactsHandler(this)},
-      introPage{new IntroPage(firefoxHandler, this)},
+      introPage{new IntroPage(artifactsHandler, firefoxHandler, this)},
       installationDestPage{new InstallationDestPage(this)},
       copyPage{new CopyPage(artifactsHandler, firefoxHandler, this)},
       endPage{new EndPage(this)} {
