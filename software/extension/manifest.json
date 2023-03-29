@@ -9,8 +9,7 @@
   "permissions": ["tabs", "nativeMessaging", "webNavigation", "activeTab", "scripting", "storage"],
   "browser_specific_settings": {
     "gecko": {
-      "id": "easyPlay@easyPlay",
-      "strict_min_version": "55.0"
+      "id": "easyPlay@easyPlay"
     }
   }
 }
