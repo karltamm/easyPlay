@@ -37,6 +37,7 @@ class ArtifactsHandler : public QObject {
   void setUpCopyHandler();
   void handleCopyRequest();
   void saveDestDirToReg(QString destDirPath);
+  void createAppManifest(QString destDirPath);
 };
 
 #endif  // ARTIFACTSHANDLER_H

@@ -82,7 +82,7 @@ bool IntroPage::handlePrevInstallation() {
     return false;
   }
   if (!artifactsHandler->deletePreviousInstallation()) {
-    showErrorMessage("Couldn't delete previous installation");
+    showErrorMessage("Couldn't delete previous installation. Close Firefox if open.");
     return false;
   }
   return true;

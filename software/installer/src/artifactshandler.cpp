@@ -2,6 +2,9 @@
 
 #include <logger.h>
 #include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 ArtifactsHandler::ArtifactsHandler(QObject* parent)
     : QObject{parent},
@@ -42,7 +45,8 @@ void ArtifactsHandler::setUpCopyHandler() {
 
 void ArtifactsHandler::handleCopyRequest() {
   connect(this, &ArtifactsHandler::copyArtifacts, this, [this](QString destDir) {
-    emit copyHandler->requestCopy({DRIVER_EXE_FILE_NAME, NATIVE_APP_MANIFEST_FILE_NAME}, destDir);
+    emit copyHandler->requestCopy({DRIVER_EXE_FILE_NAME}, destDir);
+    createAppManifest(destDir);
     saveDestDirToReg(destDir);
   });
 }
@@ -53,4 +57,24 @@ void ArtifactsHandler::saveDestDirToReg(QString destDirPath) {
     qWarning() << "Destination directory doesn't exist";
   }
   appRegistry->setValue(ARTIFACTS_DEST_DIR_REG_KEY, destDirPath);
+}
+
+void ArtifactsHandler::createAppManifest(QString destDirPath) {
+  QJsonObject manifest;
+  manifest.insert("name", "easyPlay");
+  manifest.insert("description", "EasyPlay");
+  manifest.insert("path", QDir::cleanPath(destDirPath + QDir::separator() + DRIVER_EXE_FILE_NAME));
+  manifest.insert("type", "stdio");
+  manifest.insert("allowed_extensions", QJsonArray({"easyPlay@easyPlay"}));
+
+  QString filePath = QDir::cleanPath(destDirPath + QDir::separator() + NATIVE_APP_MANIFEST_FILE_NAME);
+  QFile manifestFile(filePath);
+  if (!manifestFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    qWarning() << "Couldn't open native app manifest file";
+    return;
+  }
+  QString manifestText = QJsonDocument(manifest).toJson(QJsonDocument::Compact);
+  if (manifestFile.write(manifestText.toUtf8()) < 0) {
+    qWarning() << "Couldn't create native app manifest file:" << filePath;
+  }
 }

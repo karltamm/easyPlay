@@ -49,16 +49,6 @@ driver.commands = $(COPY_DIR) $$system_path($$DRIVER_PATH) $$system_path($$DESTD
 QMAKE_EXTRA_TARGETS += driver
 PRE_TARGETDEPS += EasyPlay.exe
 
-# Native app manifest
-APP_MANIFEST_PATH = $$ARTIFACTS_SRC_DIR/easyplay-native-app-manifest.json
-appManifest.depends = $$appManifest_PATH
-appManifest.target = easyplay-native-app-manifest.json
-appManifest.commands = $(COPY_DIR) $$system_path($$APP_MANIFEST_PATH) $$system_path($$DESTDIR)
-QMAKE_EXTRA_TARGETS += appManifest
-PRE_TARGETDEPS += easyplay-native-app-manifest.json
-
-
-
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target

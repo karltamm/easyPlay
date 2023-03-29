@@ -20,6 +20,7 @@ class InstallationDestPage : public QWizardPage {
   QLabel* label_selectedDirPath;
   QPushButton* btn_selectDestDir;
 
+  void initializePage();
   void setUpGui();
   void handleEvents();
   bool validatePage();

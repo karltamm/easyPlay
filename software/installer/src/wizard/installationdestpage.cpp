@@ -21,6 +21,10 @@ InstallationDestPage::InstallationDestPage(QWidget* parent)
   setCommitPage(true);
 }
 
+void InstallationDestPage::initializePage() {
+  wizard()->setButtonText(QWizard::CommitButton, "Install");
+}
+
 void InstallationDestPage::setUpGui() {
   setTitle("Installation destination");
 
