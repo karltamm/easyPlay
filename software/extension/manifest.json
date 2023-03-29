@@ -1,12 +1,11 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "EasyPlay",
-  "version": "1.0",
-
+  "version": "1.0.3.2",
   "background": {
     "scripts": ["dist/background.js"]
   },
-  "permissions": ["tabs", "nativeMessaging", "webNavigation", "activeTab", "scripting", "storage"],
+  "permissions": ["tabs", "nativeMessaging", "webNavigation", "activeTab", "scripting", "storage", "<all_urls>"],
   "browser_specific_settings": {
     "gecko": {
       "id": "easyPlay@easyPlay"
