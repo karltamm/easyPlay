@@ -23,6 +23,7 @@ export default class VideoHandler {
   }
 
   public async setUp() {
+    console.info("Setting up video handler");
     if (!(await this.findVideoElement())) {
       console.error("Couldn't set up VideoHandler");
       return;
@@ -32,6 +33,7 @@ export default class VideoHandler {
     this.handleMessages();
     this.addEventHandlers();
     NotificationsHandler.setUpPopup();
+    console.info("video handler setup complete");
   }
 
   private async findVideoElement(): Promise<boolean> {

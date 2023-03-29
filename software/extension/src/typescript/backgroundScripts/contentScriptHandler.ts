@@ -16,16 +16,20 @@ export default class ContentScriptHandler {
   }
 
   private handlePageLoad(e: browser.webNavigation._OnDOMContentLoadedDetails): void {
+    console.info("Handling page load");
     if (this.urlMatch(e.url, ContentScriptHandler.YOUTUBE_URL_REGEX)) {
       this.currentUrl = e.url;
+      console.info("Loading YouTube content script");
       browser.scripting.executeScript({ files: ["dist/youtubeHandler.js"], target: { tabId: e.tabId } });
     } else if (this.urlMatch(e.url, ContentScriptHandler.COURSERA_URL_REGEX)) {
       this.currentUrl = e.url;
+      console.info("Loading Coursera content script");
       browser.scripting.executeScript({ files: ["dist/courseraHandler.js"], target: { tabId: e.tabId } });
     }
   }
 
   private handleTabUpdate(tabId: number, changeInfo: browser.tabs._OnUpdatedChangeInfo): void {
+    console.info("Handling tab update");
     if (!changeInfo?.url) {
       return;
     }
@@ -37,6 +41,7 @@ export default class ContentScriptHandler {
     }
     this.currentUrl = changeInfo.url;
     browser.tabs.sendMessage(tabId, ContentScriptHandler.TAB_UPDATE_EVENT);
+    console.info("Notified tabs about tab update");
   }
 
   private urlMatch(url: string, regex: RegExp): boolean {
