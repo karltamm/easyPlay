@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "EasyPlay",
-  "version": "1.0.3.2",
+  "version": "1.0.4",
   "background": {
     "scripts": ["dist/background.js"]
   },
@@ -15,7 +15,7 @@
       "js": ["dist/courseraHandler.js"]
     }
   ],
-  "permissions": ["tabs", "nativeMessaging", "webNavigation", "activeTab", "scripting", "storage", "<all_urls>"],
+  "permissions": ["tabs", "nativeMessaging", "webNavigation", "activeTab", "scripting", "storage"],
   "browser_specific_settings": {
     "gecko": {
       "id": "easyPlay@easyPlay"
