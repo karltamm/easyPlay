@@ -1,4 +1,5 @@
 const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const DIRS = {
   typescript: path.join(__dirname, "src", "typescript"),
@@ -41,4 +42,9 @@ module.exports = {
   experiments: {
     topLevelAwait: true,
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [{ from: "scripts", to: "." }],
+    }),
+  ],
 };

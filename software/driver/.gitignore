@@ -1,6 +1,4 @@
-logs
 dist/logs
-dist/*.exe
 
 ### Auto generated ###
 target/
