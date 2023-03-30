@@ -79,7 +79,7 @@ bool IntroPage::handlePrevInstallation() {
   msgBox.setDefaultButton(QMessageBox::Yes);
 
   if (msgBox.exec() == QMessageBox::No) {
-    return false;
+    return true;
   }
   if (!artifactsHandler->deletePreviousInstallation()) {
     showErrorMessage("Couldn't delete previous installation. Close Firefox if open.");
