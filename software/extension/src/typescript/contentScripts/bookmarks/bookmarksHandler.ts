@@ -8,8 +8,6 @@ import NotificationsHandler from "../notifications/notificationsHandler";
 import ContentScriptHandler from "../../backgroundScripts/contentScriptHandler";
 import BookmarksList from "../../reactComponents/bookmarksList";
 
-// TODO: handle videos that are streamed
-
 export default class BookmarksHandler {
   private static readonly THUMBNAIL_WIDTH_PX = 300;
 

@@ -6,7 +6,10 @@ export default class ContentScriptHandler {
   }
 
   private handleTabUpdate(): void {
-    browser.tabs.onUpdated.addListener((tabId) => {
+    browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
+      if (!changeInfo?.url) {
+        return;
+      }
       browser.tabs.sendMessage(tabId, ContentScriptHandler.TAB_UPDATE_EVENT);
       console.info("Notified tabs about tab update");
     });

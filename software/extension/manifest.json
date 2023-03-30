@@ -7,7 +7,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.youtube.com/watch?v=*"],
+      "matches": ["*://*.youtube.com/*"],
       "js": ["dist/youtubeHandler.js"]
     },
     {
