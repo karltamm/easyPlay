@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "EasyPlay",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "background": {
     "scripts": ["dist/background.js"]
   },
