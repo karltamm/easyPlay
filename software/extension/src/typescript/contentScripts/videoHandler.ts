@@ -15,7 +15,7 @@ export default class VideoHandler {
 
   private videoElementPath: string;
   private video: HTMLVideoElement;
-  private videoSpeed = VideoSpeed.NORMAL;
+  private videoSpeed: VideoSpeed;
   private bookmarksHandler: BookmarksHandler;
 
   constructor(videoElementPath: string) {
@@ -29,7 +29,7 @@ export default class VideoHandler {
       return;
     }
     this.setUpBookmarksHandler();
-    this.setDeviceButtonsLights();
+    this.setVideoSpeed(VideoSpeed.NORMAL);
     this.handleMessages();
     this.addEventHandlers();
     NotificationsHandler.setUpPopup();
@@ -40,7 +40,9 @@ export default class VideoHandler {
     let cycleCount = 0;
     while (true) {
       if ((this.video = document.querySelector(this.videoElementPath))) {
-        return true;
+        if (this.video.getBoundingClientRect().width) {
+          return true;
+        }
       }
       await new Promise((r) => window.setTimeout(r, VideoHandler.VIDEO_FINDER_INTERVAL_MS));
       if (++cycleCount == VideoHandler.VIDEO_FINDER_MAX_CYCLES) {
@@ -60,10 +62,7 @@ export default class VideoHandler {
   }
 
   private handleMessages(): void {
-    browser.runtime.onMessage.addListener((message) => {
-      this.parseMessage(message);
-      return Promise.resolve("Message received from background script");
-    });
+    browser.runtime.onMessage.addListener(this.parseMessage.bind(this));
   }
 
   private parseMessage(message: string): void {
@@ -118,7 +117,7 @@ export default class VideoHandler {
         this.setDeviceButtonsLights();
         break;
       case ContentScriptHandler.TAB_UPDATE_EVENT:
-        EventHandler.emit(ContentScriptHandler.TAB_UPDATE_EVENT);
+        this.handleTabUpdate();
         break;
     }
   }
@@ -182,5 +181,18 @@ export default class VideoHandler {
 
   private sendMessageToDevice(msg: string): void {
     browser.runtime.sendMessage(msg);
+  }
+
+  private async handleTabUpdate(): Promise<void> {
+    console.info("Handling tab update");
+    if (!(await this.findVideoElement())) {
+      console.error("Couldn't find video element");
+      browser.runtime.onMessage.removeListener(this.parseMessage.bind(this));
+      console.info("Removed event handler thats parses messages from background script");
+      return;
+    }
+    this.setVideoSpeed(VideoSpeed.NORMAL);
+    EventHandler.emit(ContentScriptHandler.TAB_UPDATE_EVENT);
+    console.info("Tab update finished");
   }
 }

@@ -5,6 +5,16 @@
   "background": {
     "scripts": ["dist/background.js"]
   },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/watch?v=*"],
+      "js": ["dist/youtubeHandler.js"]
+    },
+    {
+      "matches": ["*://*.coursera.org/*"],
+      "js": ["dist/courseraHandler.js"]
+    }
+  ],
   "permissions": ["tabs", "nativeMessaging", "webNavigation", "activeTab", "scripting", "storage", "<all_urls>"],
   "browser_specific_settings": {
     "gecko": {
