@@ -1,11 +1,21 @@
 {
   "manifest_version": 2,
   "name": "EasyPlay",
-  "version": "1.0.3.2",
+  "version": "1.0.5",
   "background": {
     "scripts": ["dist/background.js"]
   },
-  "permissions": ["tabs", "nativeMessaging", "webNavigation", "activeTab", "scripting", "storage", "<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["dist/youtubeHandler.js"]
+    },
+    {
+      "matches": ["*://*.coursera.org/*"],
+      "js": ["dist/courseraHandler.js"]
+    }
+  ],
+  "permissions": ["tabs", "nativeMessaging", "webNavigation", "activeTab", "scripting", "storage"],
   "browser_specific_settings": {
     "gecko": {
       "id": "easyPlay@easyPlay"

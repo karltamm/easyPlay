@@ -6,8 +6,11 @@ import DeviceButton from "./deviceButton";
 import NotificationsHandler from "./notifications/notificationsHandler";
 import VideoSpeed from "./videoSpeed";
 
-// TODO: reset video speed on page load
-// TODO: use custom font
+class Status {
+  static readonly UNFINISHED = 0;
+  static readonly UNDERWAY = 1;
+  static readonly DONE = 2;
+}
 
 export default class VideoHandler {
   private static readonly VIDEO_FINDER_INTERVAL_MS = 250;
@@ -15,32 +18,74 @@ export default class VideoHandler {
 
   private videoElementPath: string;
   private video: HTMLVideoElement;
-  private videoSpeed = VideoSpeed.NORMAL;
+  private videoSpeed: VideoSpeed;
   private bookmarksHandler: BookmarksHandler;
+  private setupStatus: number;
 
   constructor(videoElementPath: string) {
     this.videoElementPath = videoElementPath;
+    this.setupStatus = Status.UNFINISHED;
+    this.handleTabUpdate();
   }
 
   public async setUp() {
-    console.info("Setting up video handler");
+    switch (this.setupStatus) {
+      case Status.DONE:
+        console.warn("VideoHandler is already set up");
+        return;
+      case Status.UNDERWAY:
+        console.warn("VideoHandler setup is underway");
+        return;
+    }
+    this.setupStatus = Status.UNDERWAY;
+    console.info("\nSetting up VideoHandler");
     if (!(await this.findVideoElement())) {
-      console.error("Couldn't set up VideoHandler");
+      console.error("Couldn't set up VideoHandler, because didn't find video element");
+      this.setupStatus = Status.UNFINISHED;
       return;
     }
     this.setUpBookmarksHandler();
-    this.setDeviceButtonsLights();
-    this.handleMessages();
+    this.setVideoSpeed(VideoSpeed.NORMAL);
     this.addEventHandlers();
     NotificationsHandler.setUpPopup();
-    console.info("video handler setup complete");
+    this.setupStatus = Status.DONE;
+    console.info("VideoHandler setup complete");
+  }
+
+  private handleTabUpdate(): void {
+    browser.runtime.onMessage.addListener(async (message) => {
+      if (message != ContentScriptHandler.TAB_UPDATE_EVENT) {
+        return;
+      }
+      console.info("\nHandling tab update");
+      if (this.setupStatus == Status.UNFINISHED) {
+        await this.setUp();
+      } else if (this.setupStatus == Status.DONE) {
+        await this.resetBrowserTab();
+      }
+      console.info("Tab update finished");
+    });
+  }
+
+  private async resetBrowserTab() {
+    console.info("Resetting browser tab");
+    if (!(await this.findVideoElement())) {
+      console.error("Couldn't find video element");
+      return;
+    }
+    this.setVideoSpeed(VideoSpeed.NORMAL);
+    EventHandler.emit(ContentScriptHandler.TAB_UPDATE_EVENT);
+    console.info("Browser tab reset done");
   }
 
   private async findVideoElement(): Promise<boolean> {
     let cycleCount = 0;
+
     while (true) {
       if ((this.video = document.querySelector(this.videoElementPath))) {
-        return true;
+        if (this.video.getBoundingClientRect().width) {
+          return true;
+        }
       }
       await new Promise((r) => window.setTimeout(r, VideoHandler.VIDEO_FINDER_INTERVAL_MS));
       if (++cycleCount == VideoHandler.VIDEO_FINDER_MAX_CYCLES) {
@@ -50,19 +95,17 @@ export default class VideoHandler {
   }
 
   private setUpBookmarksHandler(): void {
+    if (this.bookmarksHandler) {
+      console.warn("BookmarksHandler is already set up");
+      return;
+    }
     this.bookmarksHandler = new BookmarksHandler(this.video);
   }
 
   private addEventHandlers() {
+    browser.runtime.onMessage.addListener(this.parseMessage.bind(this));
     new EventHandler(BookmarksEvent.CLOSE_MENU, () => {
       this.setDeviceButtonsLights();
-    });
-  }
-
-  private handleMessages(): void {
-    browser.runtime.onMessage.addListener((message) => {
-      this.parseMessage(message);
-      return Promise.resolve("Message received from background script");
     });
   }
 
@@ -116,9 +159,6 @@ export default class VideoHandler {
         break;
       case "DEVICE_CONNECTED":
         this.setDeviceButtonsLights();
-        break;
-      case ContentScriptHandler.TAB_UPDATE_EVENT:
-        EventHandler.emit(ContentScriptHandler.TAB_UPDATE_EVENT);
         break;
     }
   }
