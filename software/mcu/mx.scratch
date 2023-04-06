@@ -36,6 +36,7 @@
           </LinkSettings>
           <heapSize>0x0</heapSize>
           <stackSize>0x0</stackSize>
+          <cpuclock>48</cpuclock>
           <board>custom</board>
           <debugprobe>swd</debugprobe>
           <optimization />
