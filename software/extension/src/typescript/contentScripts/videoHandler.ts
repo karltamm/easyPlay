@@ -25,7 +25,9 @@ export default class VideoHandler {
   constructor(videoElementPath: string) {
     this.videoElementPath = videoElementPath;
     this.setupStatus = Status.UNFINISHED;
+
     this.handleTabUpdate();
+    this.handleTabActivation();
   }
 
   public async setUp() {
@@ -50,6 +52,16 @@ export default class VideoHandler {
     NotificationsHandler.setUpPopup();
     this.setupStatus = Status.DONE;
     console.info("VideoHandler setup complete");
+  }
+
+  private handleTabActivation(): void {
+    browser.runtime.onMessage.addListener(async (message) => {
+      if (message != ContentScriptHandler.TAB_ACTIVATED_EVENT) {
+        return;
+      }
+      console.info("Handling tab activation");
+      this.setDeviceButtonsLights();
+    });
   }
 
   private handleTabUpdate(): void {
