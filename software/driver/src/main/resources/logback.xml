@@ -2,6 +2,9 @@
     <property name="LOG_DIR_PATH" value="./logs"/>
     <timestamp key="TIMESTAMP" datePattern="dd_MM_yyyy-HH_mm_ss"/>
     <property name="LOG_PATTERN" value="[%d{dd.MM.yyyy HH:mm:ss.SSS}] [%level] %logger{35}: %msg%n"/>
+    
+    <!--    Don't log Logback status info to STDOUT because driver uses STDOUT to communicate with the extension -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
 
     <appender name="LOG_FILE_APPENDER" class="ch.qos.logback.core.FileAppender">
         <file>${LOG_DIR_PATH}/${TIMESTAMP}.log</file>
@@ -10,14 +13,14 @@
         </encoder>
     </appender>
 
-    <!--    <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender"> Commented out because application uses STDOUT to communicate with the extension -->
-    <!--        <encoder>-->
-    <!--            <pattern>${LOG_PATTERN}</pattern>-->
-    <!--        </encoder>-->
-    <!--    </appender>-->
+    <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">Commented out because application uses STDOUT to communicate with the extension
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
 
     <root>
-        <!--        <appender-ref ref="CONSOLE_APPENDER"/> Commented out because application uses STDOUT to communicate with the extension -->
+        <!--        <appender-ref ref="CONSOLE_APPENDER"/> Commented out because driver uses STDOUT to communicate with the extension -->
         <appender-ref ref="LOG_FILE_APPENDER"/>
     </root>
 </configuration>
