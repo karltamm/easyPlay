@@ -229,7 +229,7 @@ export default class BookmarksList extends React.Component<Props, State> {
   }
 
   private setSelectedBookmarkIndex(index): void {
-    if (index > 0 && !this.props.bookmarks.length) {
+    if (index != 0 && !this.props.bookmarks.length) {
       this.setSelectedBookmarkIndex(0);
       return;
     }
