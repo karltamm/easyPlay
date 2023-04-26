@@ -1,13 +1,19 @@
 <configuration>
     <property name="LOG_DIR_PATH" value="./logs"/>
-    <timestamp key="TIMESTAMP" datePattern="dd_MM_yyyy-HH_mm_ss"/>
+    <timestamp key="TIMESTAMP" datePattern="dd-MM-yyyy"/>
     <property name="LOG_PATTERN" value="[%d{dd.MM.yyyy HH:mm:ss.SSS}] [%level] %logger{35}: %msg%n"/>
-    
+
     <!--    Don't log Logback status info to STDOUT because driver uses STDOUT to communicate with the extension -->
     <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
 
-    <appender name="LOG_FILE_APPENDER" class="ch.qos.logback.core.FileAppender">
+    <appender name="LOG_FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR_PATH}/${TIMESTAMP}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR_PATH}/%d{dd-MM-yyyy}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>3</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
         <encoder>
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
