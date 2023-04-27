@@ -45,10 +45,9 @@ bool sw_was_used(DebounceData* data, uint8_t sw_val) {
 
   if (sw_val == SW_ON) {
     debounce_sw(data, sw_val);
-    return true;
   }
 
-  return false;
+  return sw_val == SW_ON;
 }
 
 /* PRIVATE FUNCTIONS */
