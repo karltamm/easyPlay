@@ -38,16 +38,16 @@ USB_QueueStatus send_user_action_to_PC(const char* action_msg) {
 
 bool sw_was_used(DebounceData* data, uint8_t sw_val) {
   /* This function must be called every 1 ms to handle debounce correctly */
-  if (!data->debounce_happening && sw_val == SW_ON) {
-    debounce_sw(data, sw_val);
-    return true;
-  }
-
   if (data->debounce_happening) {
     debounce_sw(data, sw_val);
+    return false;
   }
 
-  return false;
+  if (sw_val == SW_ON) {
+    debounce_sw(data, sw_val);
+  }
+
+  return sw_val == SW_ON;
 }
 
 /* PRIVATE FUNCTIONS */

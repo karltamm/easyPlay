@@ -11,12 +11,13 @@ void init_queue(Queue* queue, uint8_t max_size, Msg* messages) {
 }
 
 Msg* get_queue_input_slot(Queue* queue) {
-  if (queue->cur_size == queue->max_size && !OVERWRITE_QUEUE) {
+  if (queue->cur_size < queue->max_size) {
+    queue->cur_size++;
+  } else if (!OVERWRITE_QUEUE) {
     return NULL;
   }
 
   Msg* input_slot = queue->messages + queue->in++;
-  queue->cur_size++;
   if (queue->in == queue->max_size) {
     queue->in = 0;
   }
@@ -25,12 +26,14 @@ Msg* get_queue_input_slot(Queue* queue) {
 }
 
 Msg* get_queue_output_slot(Queue* queue) {
-  if (queue->cur_size == 0) {
+  if (queue->cur_size > 0) {
+    queue->cur_size--;
+  } else {
     return NULL;
   }
 
   Msg* output_slot = queue->messages + queue->out++;
-  queue->cur_size--;
+
   if (queue->out == queue->max_size) {
     queue->out = 0;
   }

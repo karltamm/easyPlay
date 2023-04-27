@@ -15,7 +15,7 @@ extern "C" {
 #define SW_ON 0
 
 #define BTN_MIN_STABLE_PERIOD_MS 80
-#define KNOB_MIN_STABLE_PERIOD_MS 20
+#define KNOB_MIN_STABLE_PERIOD_MS 30
 
 /* STRUCTS */
 typedef struct DebounceData {
