@@ -19,14 +19,7 @@
         </encoder>
     </appender>
 
-    <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">Commented out because application uses STDOUT to communicate with the extension
-        <encoder>
-            <pattern>${LOG_PATTERN}</pattern>
-        </encoder>
-    </appender>
-
     <root>
-        <!--        <appender-ref ref="CONSOLE_APPENDER"/> Commented out because driver uses STDOUT to communicate with the extension -->
         <appender-ref ref="LOG_FILE_APPENDER"/>
     </root>
 </configuration>
