@@ -1,0 +1,5 @@
+# Qt Creator build folder
+software/build-*
+
+# macOS
+.DS_Store
