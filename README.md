@@ -19,7 +19,7 @@ manage video bookmarks using graphical user interface (GUI).
 - STM32F042C6T6 microcontroller (ARM Cortex-M0)
 - Illuminated mechanical switches (Cherry MX) and knob (incremental rotary encoder)
 - USB Type-C connector for communication and power delivery
-- Custom designed [printed circuit board](https://raw.githubusercontent.com/karltamm/EasyPlay/main/hardware/Outputs/PCB%203D%20Print/PCB%203D%20model%20top.png?token=GHSAT0AAAAAACCQFEIQWMR4IBDYY7HIEUHOZC5LKQA) (PCB) and enclosure ([exploded rendering]() & [finished]())
+- Custom designed [printed circuit board](https://raw.githubusercontent.com/karltamm/EasyPlay/main/hardware/Outputs/PCB%203D%20Print/PCB%203D%20model%20top.png?token=GHSAT0AAAAAACCQFEIQWMR4IBDYY7HIEUHOZC5LKQA) (PCB) and enclosure ([exploded rendering](https://github.com/karltamm/EasyPlay/blob/main/enclosure/images/device-exploded-view.png) & [finished](https://github.com/karltamm/EasyPlay/blob/main/enclosure/images/assembled-device.png))
 
 ## Device Firmware
 
