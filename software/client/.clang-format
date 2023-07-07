@@ -1,0 +1,5 @@
+{
+  BasedOnStyle: Chromium,
+  ColumnLimit: 0,
+  AlignConsecutiveMacros: true,
+}
