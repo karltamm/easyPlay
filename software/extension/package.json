@@ -6,8 +6,8 @@
     "clean": "rimraf ./dist/",
     "prebuild": "npm run clean",
     "build": "webpack --config webpack.config.js",
-    "postbuild": "cd dist && powershell.exe -ExecutionPolicy Bypass -File rmInnerHtmlStuff.ps1 youtubeHandler.js && powershell.exe -ExecutionPolicy Bypass -File rmInnerHtmlStuff.ps1 courseraHandler.js",
-    "ext": "web-ext run --keep-profile-changes --firefox-profile=ext --no-reload --start-url https://www.youtube.com/watch?v=tYeNtnxhZ74",
+    "postbuild": "cd dist && node rmInnerHtmlCode.js youtubeHandler.js && node rmInnerHtmlCode.js courseraHandler.js",
+    "ext": "web-ext run --keep-profile-changes --firefox-profile=ext --no-reload --start-url https://www.youtube.com/watch?v=tYeNtnxhZ74 --devtools",
     "all": "npm run build && npm run ext"
   },
   "devDependencies": {

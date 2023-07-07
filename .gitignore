@@ -1,4 +1,5 @@
 # Qt Creator build folder
+software/build-*
 build-*
 
 # macOS
