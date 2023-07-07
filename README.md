@@ -26,7 +26,7 @@ As a result of this, a custom-built hardware was designed and manufactured that 
 - Software based debounce for buttons and knob
 - Simple task manager
 
-# Device Client
+## Device Client
 
 - Written in C++
 - Uses [Qt framework](https://www.qt.io/product/framework)
