@@ -2,8 +2,7 @@
 
 The aim of this project was to create a gadget that facilitates watching recorded lectures that are in a form of HTML5 video.
 
-As a result of this, a custom-built hardware was designed and manufactured that communicates with a browser extension (_currently only on Firefox_) to control playback of HTML5 video and to
-manage video bookmarks using graphical user interface (GUI).
+As a result of this, a custom-built hardware was designed and manufactured that communicates with a browser extension (_currently only on Firefox_) to control playback of HTML5 video and to manage video bookmarks using graphical user interface (GUI).
 
 ## Demo Clips
 
@@ -27,21 +26,23 @@ manage video bookmarks using graphical user interface (GUI).
 - Software based debounce for buttons and knob
 - Simple task manager
 
-## Device Driver
+# Device Client
 
-- Written in Java
-- Uses [jSerialComm](https://fazecast.github.io/jSerialComm/) to communicate with the firmware
+- Written in C++
+- Uses [Qt framework](https://www.qt.io/product/framework)
+- Communicates with the device firmware using serial port
 - Communicates with the browser extension using [native messaging protocol](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging)
+- Uses Google Test library for unit tests
 
-## Browser extension
+## Browser Extension
 
 - Written in TypeScript
 - Controls HTML5 video playback
 - Allows to use video bookmarks using GUI (built with React)
 
-## Driver Installer
+## Client Installer
 
 - Written in C++
 - Uses [Qt framework](https://www.qt.io/product/framework)
-- Copies driver to chosen location
-- Sets up [app manifest](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging#app_manifest) to use browser native messaging for communication between the driver and browser extension
+- Copies client to chosen location
+- Sets up [app manifest](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Native_messaging#app_manifest) to use browser native messaging for communication between the device client and browser extension
