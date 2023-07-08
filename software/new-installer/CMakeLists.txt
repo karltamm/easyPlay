@@ -31,7 +31,7 @@ add_library(${PROJ_LIB} STATIC ${SRC_FILES} ${INCLUDE_FILES})
 target_link_libraries(${PROJ_LIB} Qt6::Core)
 target_link_libraries(${PROJECT_NAME} ${PROJ_LIB})
 
-# install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}) # TODO: enable
+install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # TESTING
 enable_testing()
@@ -41,7 +41,7 @@ set(TEST_SRC_FILES tests/manifestHandlerTest.cpp)
 
 add_subdirectory(tests/googletest)
 
-add_executable(${TEST_EXE} ${TEST_SRC_FILE})
+add_executable(${TEST_EXE} ${TEST_SRC_FILES})
 target_link_libraries(${TEST_EXE} gtest_main ${PROJ_LIB})
 
-add_test(${TEST_EXE} COMMAND ${TEST_EXE})
+add_test(NAME ${TEST_EXE} COMMAND ${TEST_EXE})
