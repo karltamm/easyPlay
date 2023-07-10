@@ -17,6 +17,8 @@ set(INCLUDE_FILES
     include/manifestHandler.h
     include/clientHandler.h)
 
+set(RESOURCE_FILES resources/resources.qrc)
+
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(DEBUG_BUILD)
 endif()
@@ -28,7 +30,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 include_directories(include)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
-add_library(${PROJ_LIB} STATIC ${SRC_FILES} ${INCLUDE_FILES})
+add_library(${PROJ_LIB} STATIC ${SRC_FILES} ${INCLUDE_FILES} ${RESOURCE_FILES})
 
 target_link_libraries(${PROJ_LIB} Qt6::Core)
 target_link_libraries(${PROJECT_NAME} ${PROJ_LIB})
