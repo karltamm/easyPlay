@@ -11,11 +11,15 @@ set(PROJ_LIB easyplay-installer-lib)
 
 set(SRC_FILES
     src/manifestHandler.cpp
-    src/clientHandler.cpp)
+    src/clientHandler.cpp
+    src/ui/setupWizard.cpp
+    src/ui/introPage.cpp)
 
 set(INCLUDE_FILES
     include/manifestHandler.h
-    include/clientHandler.h)
+    include/clientHandler.h
+    include/ui/setupWizard.h
+    include/ui/introPage.h)
 
 set(RESOURCE_FILES resources/resources.qrc)
 
@@ -25,14 +29,14 @@ endif()
 
 project(easyplay-installer LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Concurrent)
+find_package(Qt6 REQUIRED COMPONENTS Core Concurrent Widgets)
 
 include_directories(include)
 
 add_library(${PROJ_LIB} STATIC ${SRC_FILES} ${INCLUDE_FILES}) 
 add_executable(${PROJECT_NAME} src/main.cpp ${RESOURCE_FILES})
 
-target_link_libraries(${PROJ_LIB} Qt6::Core Qt6::Concurrent)
+target_link_libraries(${PROJ_LIB} Qt6::Core Qt6::Concurrent Qt6::Widgets)
 target_link_libraries(${PROJECT_NAME} ${PROJ_LIB})
 
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
