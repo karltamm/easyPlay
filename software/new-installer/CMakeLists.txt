@@ -10,10 +10,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(PROJ_LIB easyplay-installer-lib)
 
 set(SRC_FILES
-    src/manifestHandler.cpp)
+    src/manifestHandler.cpp
+    src/clientHandler.cpp)
 
 set(INCLUDE_FILES
-    include/manifestHandler.h)
+    include/manifestHandler.h
+    include/clientHandler.h)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(DEBUG_BUILD)
@@ -37,7 +39,9 @@ install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} RUNT
 enable_testing()
 
 set(TEST_EXE easyplay-installer-tests)
-set(TEST_SRC_FILES tests/manifestHandlerTest.cpp)
+set(TEST_SRC_FILES
+    tests/manifestHandlerTest.cpp
+    tests/clientHandlerTest.cpp)
 
 add_subdirectory(tests/googletest)
 
