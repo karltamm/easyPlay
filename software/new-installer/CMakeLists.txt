@@ -29,8 +29,9 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 
 include_directories(include)
 
-add_executable(${PROJECT_NAME} src/main.cpp)
-add_library(${PROJ_LIB} STATIC ${SRC_FILES} ${INCLUDE_FILES} ${RESOURCE_FILES})
+add_executable(${PROJECT_NAME} src/main.cpp ${RESOURCE_FILES})
+add_library(${PROJ_LIB} STATIC ${SRC_FILES} ${INCLUDE_FILES}) # TODO: rm?
+# add_library(${PROJ_LIB} STATIC ${SRC_FILES} ${INCLUDE_FILES} ${RESOURCE_FILES}) // TODO: enable?
 
 target_link_libraries(${PROJ_LIB} Qt6::Core)
 target_link_libraries(${PROJECT_NAME} ${PROJ_LIB})
@@ -47,7 +48,7 @@ set(TEST_SRC_FILES
 
 add_subdirectory(tests/googletest)
 
-add_executable(${TEST_EXE} ${TEST_SRC_FILES})
+add_executable(${TEST_EXE} ${TEST_SRC_FILES} ${RESOURCE_FILES})
 target_link_libraries(${TEST_EXE} gtest_main ${PROJ_LIB})
 
 add_test(NAME ${TEST_EXE} COMMAND ${TEST_EXE})
