@@ -1,31 +1,37 @@
 // TODO: add guard
+#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QFuture>
 #include <QString>
 #include <QtConcurrent>
 
+#define CLIENT_FILE_NAME "easyplay-device-client"
+
 class ClientHandler {
  public:
-  static QFuture<bool> copyClientFile(const QString& clientDestPath) {
+  static QFuture<bool> copyClientFile(const QString& clientDestDirPath) {
     // TODO: add definition to cpp
-    // TODO: add binary file to app as resource
 
-    // TODO: use threads for copy
-    // TODO: use future for output
+    return QtConcurrent::run([clientDestDirPath]() {
+      QFile clientFile{":/" CLIENT_FILE_NAME};
 
-    // QFile::copy("")
+      if (!clientFile.exists()) {
+        qWarning() << "Device client file doesn't exist";
+        return false;
+      }
 
-    return QtConcurrent::run([clientDestPath]() {
-      QFile clientFile{":/easyplay-device-client"};
+      if (!QDir{}.mkpath(clientDestDirPath)) {
+        qWarning() << "Couldn't create directory for client file";
+        return false;
+      }
 
-      // TODO: rm
-      // qDebug() << "clientFile.size:" << clientFile.size();
-      // qDebug() << "clientFile.exists:" << clientFile.exists();
+      const QString clientDestPath = clientDestDirPath + QDir::separator() + CLIENT_FILE_NAME;
 
-      QDir{}.mkpath(clientDestPath);  // TODO: check for outcome
-
-      clientFile.copy(clientDestPath + "/easyplay-device-client");  // TODO: use #define // TODO: check for outcome
+      if (!clientFile.copy(clientDestPath) and !QFile::exists(clientDestPath)) {
+        qWarning() << "Couldn't copy client file";
+        return false;
+      }
 
       return true;
     });
