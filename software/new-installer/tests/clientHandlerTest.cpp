@@ -6,9 +6,11 @@
 #include "clientHandler.h"
 
 TEST(ClientHandlerTest, CanCopyClientFile) {
+  const QString clientFilePath = CLIENT_FILE_NAME;
+
+  QFile::remove(clientFilePath);
   QFuture<bool> copyResult = ClientHandler::copyClientFile(QDir::currentPath());
-  //   copyResult.waitForFinished(); // TODO: rm
-  EXPECT_TRUE(copyResult.result());  // TODO: add message
-  //   EXPECT_TRUE(ClientHandler::copyClientFile(QDir::currentPath())); // TODO: rm                                      // TODO: add message
-  EXPECT_TRUE(QFile::exists(QDir::currentPath() + "/easyplay-device-client")) << "File wasn't copied";  // TODO: use #define
+
+  EXPECT_TRUE(copyResult.result()) << "ClientHandler::copyClientFile failed";
+  EXPECT_TRUE(QFile::exists(clientFilePath)) << "File wasn't copied";
 }
