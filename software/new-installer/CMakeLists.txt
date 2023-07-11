@@ -13,13 +13,15 @@ set(SRC_FILES
     src/manifestHandler.cpp
     src/clientHandler.cpp
     src/ui/setupWizard.cpp
-    src/ui/introPage.cpp)
+    src/ui/introPage.cpp
+    src/firefoxHandler.cpp)
 
 set(INCLUDE_FILES
     include/manifestHandler.h
     include/clientHandler.h
     include/ui/setupWizard.h
-    include/ui/introPage.h)
+    include/ui/introPage.h
+    include/firefoxHandler.h)
 
 set(RESOURCE_FILES resources/resources.qrc)
 
@@ -47,7 +49,8 @@ enable_testing()
 set(TEST_EXE easyplay-installer-tests)
 set(TEST_SRC_FILES
     tests/manifestHandlerTest.cpp
-    tests/clientHandlerTest.cpp)
+    tests/clientHandlerTest.cpp
+    tests/firefoxHandlerTest.cpp)
 
 add_subdirectory(tests/googletest)
 
