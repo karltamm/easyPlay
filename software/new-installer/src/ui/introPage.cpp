@@ -1,7 +1,9 @@
 #include "ui/introPage.h"
 
-// #include <logger.h> // TODO: enable
+#include <QDebug>
 #include <QPushButton>
+
+#include "firefoxHandler.h"
 
 IntroPage::IntroPage(QWidget* parent)
     : QWizardPage{parent},
@@ -34,11 +36,10 @@ void IntroPage::setUpGui() {
 }
 
 bool IntroPage::validatePage() {
-  // TODO: fix
-  //   if (!firefoxHandler->isFirefoxInstalled()) {
-  //     showErrorMessage("Install Firefox to continue");
-  //     return false;
-  //   }
+  if (!FirefoxHandler::isFirefoxInstalled()) {
+    showErrorMessage("Install Firefox to continue");
+    return false;
+  }
 
   if (!this->handlePrevInstallation()) {
     return false;

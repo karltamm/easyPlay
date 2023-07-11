@@ -1,11 +1,6 @@
 #ifndef INTRO_PAGE_H
 #define INTRO_PAGE_H
 
-// TODO:rm
-// #include <artifactshandler.h>
-// #include <firefoxhandler.h>
-// #include <javahandler.h>
-
 #include <QLabel>
 #include <QMessageBox>
 #include <QVBoxLayout>
@@ -17,11 +12,6 @@ class IntroPage : public QWizardPage {
   explicit IntroPage(QWidget* parent = nullptr);
 
  private:
-  // TODO: rm
-  //   JavaHandler* javaHandler;
-  //   ArtifactsHandler* artifactsHandler;
-  //   FirefoxHandler* firefoxHandler;
-
   QVBoxLayout* layout;
   QLabel* label_intro;
   QLabel* label_requirementsHeader;
