@@ -1,4 +1,4 @@
-#include "manifestHandler.h"
+#include "firefoxHandler.h"
 
 #include <QByteArray>
 #include <QDir>
@@ -7,13 +7,19 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-bool ManifestHandler::createManifest(const QString& directoryPath, const QString& clientExeAbsPath) {
+#define FIREFOX_PATH "/Applications/Firefox.app"
+
+bool FirefoxHandler::isFirefoxInstalled() {
+  return QDir{FIREFOX_PATH}.exists();
+}
+
+bool FirefoxHandler::createNativeManifest(const QString& directoryPath, const QString& clientExeAbsPath) {
   if (!QDir{directoryPath}.exists()) {
     qWarning("Manifest file directory doesn't exist");
     return false;
   }
 
-  QString manifestPath = QDir::cleanPath(directoryPath + QDir::separator() + MANIFEST_FILE_NAME);
+  QString manifestPath = QDir::cleanPath(directoryPath + QDir::separator() + NATIVE_MANIFEST_FILE_NAME);
   QFile manifestFile{manifestPath};
 
   if (!manifestFile.open(QFile::WriteOnly)) {
@@ -28,7 +34,7 @@ bool ManifestHandler::createManifest(const QString& directoryPath, const QString
 
   QJsonObject manifestJson;
   manifestJson.insert("name", EXTENSION_NAME);
-  manifestJson.insert("description", MANIFEST_DESCRIPTION);
+  manifestJson.insert("description", NATIVE_MANIFEST_DESCRIPTION);
   manifestJson.insert("path", QDir::cleanPath(clientExeAbsPath));
   manifestJson.insert("type", "stdio");
   manifestJson.insert("allowed_extensions", QJsonArray{{EXTENSION_ID}});

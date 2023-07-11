@@ -10,14 +10,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(PROJ_LIB easyplay-installer-lib)
 
 set(SRC_FILES
-    src/manifestHandler.cpp
     src/clientHandler.cpp
     src/ui/setupWizard.cpp
     src/ui/introPage.cpp
     src/firefoxHandler.cpp)
 
 set(INCLUDE_FILES
-    include/manifestHandler.h
     include/clientHandler.h
     include/ui/setupWizard.h
     include/ui/introPage.h
@@ -48,7 +46,6 @@ enable_testing()
 
 set(TEST_EXE easyplay-installer-tests)
 set(TEST_SRC_FILES
-    tests/manifestHandlerTest.cpp
     tests/clientHandlerTest.cpp
     tests/firefoxHandlerTest.cpp)
 
