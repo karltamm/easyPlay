@@ -29,3 +29,9 @@ QFuture<bool> ClientHandler::copyClientFile(const QString& clientDestDirPath) {
     return true;
   });
 }
+
+bool ClientHandler::deleteExistingClientFile() {
+}
+
+bool ClientHandler::doesClientFileExist() {
+}
