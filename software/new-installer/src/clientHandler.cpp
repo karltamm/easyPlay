@@ -6,9 +6,9 @@
 #include <QSettings>
 #include <QtConcurrent>
 
-#define REG_ORG_NAME        "easyPlay"
-#define REG_APP_NAME        "easyPlay-installer"
-#define REG_CLIENT_PATH_KEY "clientPath"
+#define REG_ORG_NAME            "easyPlay"
+#define REG_APP_NAME            "easyPlay-installer"
+#define REG_CLIENT_DIR_PATH_KEY "clientDirPath"
 
 QFuture<bool> ClientHandler::copyClientFile(const QString& clientDestDirPath) {
   return QtConcurrent::run([clientDestDirPath]() {
@@ -56,14 +56,13 @@ bool ClientHandler::deleteExistingClientDir() {
 }
 
 QString ClientHandler::getClientDirPathFromRegistry() {
-  QSettings installerRegistry{REG_ORG_NAME, REG_APP_NAME};                // TODO: use #define
-  QVariant clientDirPath = installerRegistry.value(REG_CLIENT_PATH_KEY);  // TODO: rename
+  QVariant clientDirPath = QSettings{REG_ORG_NAME, REG_APP_NAME}.value(REG_CLIENT_DIR_PATH_KEY);
 
   return clientDirPath.isNull() ? "" : clientDirPath.toString();
 }
 
 void ClientHandler::addClientDirPathToRegistry(const QString& clientDirPath) {
-  QSettings{REG_ORG_NAME, REG_APP_NAME}.setValue("clientPath", clientDirPath);  // TODO: use #define
+  QSettings{REG_ORG_NAME, REG_APP_NAME}.setValue(REG_CLIENT_DIR_PATH_KEY, clientDirPath);
 }
 
 bool ClientHandler::doesClientDirExist() {
