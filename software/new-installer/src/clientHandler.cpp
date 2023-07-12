@@ -6,6 +6,10 @@
 #include <QSettings>
 #include <QtConcurrent>
 
+#define REG_ORG_NAME        "easyPlay"
+#define REG_APP_NAME        "easyPlay-installer"
+#define REG_CLIENT_PATH_KEY "clientPath"
+
 QFuture<bool> ClientHandler::copyClientFile(const QString& clientDestDirPath) {
   return QtConcurrent::run([clientDestDirPath]() {
     QFile clientFile{":/" CLIENT_FILE_NAME};
@@ -39,25 +43,29 @@ bool ClientHandler::deleteExistingClientFile() {
   QString clientPath = ClientHandler::getClientPathFromRegistry();
 
   if (clientPath.isEmpty()) {
-    // TODO: log
+    qWarning() << "Can't delete existing client cause couldn't retrieve its path";
     return false;
   }
 
-  return QFile{clientPath}.remove();  // TODO: check return false
+  if (!QFile{clientPath}.remove()) {
+    qWarning() << "Couldn't remove client file";
+    return false;
+  }
+
+  return true;
 }
 
 QString ClientHandler::getClientPathFromRegistry() {
-  QSettings installerRegistry{"easyplay", "easyplay-installer"};  // TODO: use #define
-  QVariant clientPath = installerRegistry.value("clientPath");    // TODO: use #define
+  QSettings installerRegistry{REG_ORG_NAME, REG_APP_NAME};
+  QVariant clientPath = installerRegistry.value(REG_CLIENT_PATH_KEY);
 
-  return clientPath.isNull() ? "" : clientPath.toString();  // TODO: rm
+  return clientPath.isNull() ? "" : clientPath.toString();
 }
 
 void ClientHandler::addClientPathToRegistry(const QString& clientAbsPath) {
-  QSettings{"easyplay", "easyplay-installer"}.setValue("clientPath", clientAbsPath);  // TODO: use #define
+  QSettings{REG_ORG_NAME, REG_APP_NAME}.setValue("clientPath", clientAbsPath);
 }
 
-// TODO: create addClientPathToRegistry()
-
 bool ClientHandler::doesClientFileExist() {
+  return !ClientHandler::getClientPathFromRegistry().isEmpty();
 }
