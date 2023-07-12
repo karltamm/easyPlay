@@ -1,6 +1,6 @@
 #include "ui/introPage.h"
 
-#include <QDebug>
+#include <QDebug>  // TODO: change to logger
 #include <QPushButton>
 
 #include "clientHandler.h"
