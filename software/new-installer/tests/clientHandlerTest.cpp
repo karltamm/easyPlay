@@ -11,7 +11,6 @@
 void copyClientFile() {
   QFile::remove(CLIENT_FILE_NAME);
   QFuture<bool> copyResult = ClientHandler::copyClientFile(CLIENT_DIR_PATH);
-
   EXPECT_TRUE(copyResult.result()) << "ClientHandler::copyClientFile failed";
 }
 
@@ -23,6 +22,5 @@ TEST(ClientHandlerTest, CanCopyClientFile) {
 TEST(ClientHandlerTest, CanDeleteExistingClientDir) {
   copyClientFile();
   EXPECT_TRUE(ClientHandler::deleteExistingClientDir());
-
   EXPECT_FALSE(QFile::exists(CLIENT_PATH));
 }

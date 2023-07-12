@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QPushButton>
 
+#include "clientHandler.h"
 #include "firefoxHandler.h"
 
 IntroPage::IntroPage(QWidget* parent)
@@ -18,15 +19,15 @@ void IntroPage::setUpGui() {
   this->setTitle("Introduction");
 
   this->label_intro->setText(
-      "This installation wizard sets up EasyPlay driver.\n"
-      "Driver allows the Firefox extension to communicate with the device.\n");
+      "This installation wizard sets up EasyPlay client.\n"
+      "Client allows the Firefox extension to communicate with the device.\n");
   this->label_intro->setWordWrap(true);
 
   this->label_requirementsHeader->setText("Requirements");
   this->label_requirementsHeader->setStyleSheet("font-weight:bold");
 
   this->label_requirements->setTextFormat(Qt::RichText);
-  this->label_requirements->setText("<ul><li>Firefox Browser</li></ul>");  // TODO: if browser is present then show check mark
+  this->label_requirements->setText(QString{"%1 Firefox Browser"}.arg(FirefoxHandler::isFirefoxInstalled() ? "✅ " : "❌"));
 
   this->layout->addWidget(this->label_intro);
   this->layout->addWidget(this->label_requirementsHeader);
@@ -57,30 +58,31 @@ void IntroPage::showErrorMessage(QString message) {
 }
 
 bool IntroPage::handlePrevInstallation() {
-  // TODO: fix
-  //   QDir prevDir = artifactsHandler->getPreviousInstallationDir();
-  //   if (!prevDir.exists()) {
-  //     return true;
-  //   }
-  //   QMessageBox msgBox;
-  //   msgBox.setIcon(QMessageBox::Warning);
+  QDir prevDir = ClientHandler::getExistingClientDir();
 
-  //   msgBox.setTextFormat(Qt::RichText);
-  //   msgBox.setText("Detected previous installation");
-  //   msgBox.setDetailedText(QString("Installed at %1").arg(prevDir.path()));
-  //   msgBox.setInformativeText("<b>Delete previous installation?</b>");
+  if (!prevDir.exists()) {
+    return true;
+  }
 
-  //   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-  //   msgBox.setDefaultButton(QMessageBox::Yes);
+  QMessageBox msgBox;
+  msgBox.setIcon(QMessageBox::Warning);
 
-  //   if (msgBox.exec() == QMessageBox::No) {
-  //     return true;
-  //   }
+  msgBox.setTextFormat(Qt::RichText);
+  msgBox.setText("Detected previous installation");
+  msgBox.setDetailedText(QString("Installed at %1").arg(prevDir.path()));
+  msgBox.setInformativeText("<b>Delete previous installation?</b>");
 
-  //   if (!artifactsHandler->deletePreviousInstallation()) {
-  //     showErrorMessage("Couldn't delete previous installation. Close Firefox if open.");
-  //     return false;
-  //   }
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+  msgBox.setDefaultButton(QMessageBox::Yes);
+
+  if (msgBox.exec() == QMessageBox::No) {
+    return true;
+  }
+
+  if (!ClientHandler::deleteExistingClientDir()) {
+    showErrorMessage("Couldn't delete previous installation. Close Firefox if open.");
+    return false;
+  }
 
   return true;
 }

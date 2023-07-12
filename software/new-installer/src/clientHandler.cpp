@@ -40,14 +40,14 @@ QFuture<bool> ClientHandler::copyClientFile(const QString& clientDestDirPath) {
 }
 
 bool ClientHandler::deleteExistingClientDir() {
-  QString clientDirPath = ClientHandler::getClientDirPathFromRegistry();
+  QDir clientDir = ClientHandler::getExistingClientDir();
 
-  if (clientDirPath.isEmpty()) {
+  if (!clientDir.exists()) {
     qWarning() << "Can't delete existing client directory cause couldn't retrieve its path";
     return false;
   }
 
-  if (!QDir{clientDirPath}.removeRecursively()) {
+  if (!clientDir.removeRecursively()) {
     qWarning() << "Couldn't remove client directory";
     return false;
   }
@@ -55,16 +55,16 @@ bool ClientHandler::deleteExistingClientDir() {
   return true;
 }
 
-QString ClientHandler::getClientDirPathFromRegistry() {
+QDir ClientHandler::getExistingClientDir() {
   QVariant clientDirPath = QSettings{REG_ORG_NAME, REG_APP_NAME}.value(REG_CLIENT_DIR_PATH_KEY);
 
-  return clientDirPath.isNull() ? "" : clientDirPath.toString();
+  if (clientDirPath.isNull()) {
+    return {};
+  }
+
+  return QDir{clientDirPath.toString()};
 }
 
 void ClientHandler::addClientDirPathToRegistry(const QString& clientDirPath) {
   QSettings{REG_ORG_NAME, REG_APP_NAME}.setValue(REG_CLIENT_DIR_PATH_KEY, clientDirPath);
-}
-
-bool ClientHandler::doesClientDirExist() {
-  return !ClientHandler::getClientDirPathFromRegistry().isEmpty();
 }
