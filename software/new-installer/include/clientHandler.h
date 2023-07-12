@@ -11,6 +11,10 @@ class ClientHandler {
   static QFuture<bool> copyClientFile(const QString& clientDestDirPath);
   static bool deleteExistingClientFile();
   static bool doesClientFileExist();
+  static QString getClientPathFromRegistry();
+
+ private:
+  static void addClientPathToRegistry(const QString& clientAbsPath);
 };
 
 #endif  // CLIENT_HANDLER_H
