@@ -26,46 +26,46 @@ QFuture<bool> ClientHandler::copyClientFile(const QString& clientDestDirPath) {
       return false;
     }
 
-    const QString clientDestPath = clientDestDir.absoluteFilePath(CLIENT_FILE_NAME);
+    const QString clientDestPath = clientDestDir.filePath(CLIENT_FILE_NAME);
 
     if (!clientFile.copy(clientDestPath) and !QFile::exists(clientDestPath)) {
       qWarning() << "Couldn't copy client file";
       return false;
     }
 
-    ClientHandler::addClientPathToRegistry(clientDestPath);
+    ClientHandler::addClientDirPathToRegistry(clientDestDir.absolutePath());
 
     return true;
   });
 }
 
-bool ClientHandler::deleteExistingClientFile() {
-  QString clientPath = ClientHandler::getClientPathFromRegistry();
+bool ClientHandler::deleteExistingClientDir() {
+  QString clientDirPath = ClientHandler::getClientDirPathFromRegistry();
 
-  if (clientPath.isEmpty()) {
-    qWarning() << "Can't delete existing client cause couldn't retrieve its path";
+  if (clientDirPath.isEmpty()) {
+    qWarning() << "Can't delete existing client directory cause couldn't retrieve its path";
     return false;
   }
 
-  if (!QFile{clientPath}.remove()) {
-    qWarning() << "Couldn't remove client file";
+  if (!QDir{clientDirPath}.removeRecursively()) {
+    qWarning() << "Couldn't remove client directory";
     return false;
   }
 
   return true;
 }
 
-QString ClientHandler::getClientPathFromRegistry() {
-  QSettings installerRegistry{REG_ORG_NAME, REG_APP_NAME};
-  QVariant clientPath = installerRegistry.value(REG_CLIENT_PATH_KEY);
+QString ClientHandler::getClientDirPathFromRegistry() {
+  QSettings installerRegistry{REG_ORG_NAME, REG_APP_NAME};                // TODO: use #define
+  QVariant clientDirPath = installerRegistry.value(REG_CLIENT_PATH_KEY);  // TODO: rename
 
-  return clientPath.isNull() ? "" : clientPath.toString();
+  return clientDirPath.isNull() ? "" : clientDirPath.toString();
 }
 
-void ClientHandler::addClientPathToRegistry(const QString& clientAbsPath) {
-  QSettings{REG_ORG_NAME, REG_APP_NAME}.setValue("clientPath", clientAbsPath);
+void ClientHandler::addClientDirPathToRegistry(const QString& clientDirPath) {
+  QSettings{REG_ORG_NAME, REG_APP_NAME}.setValue("clientPath", clientDirPath);  // TODO: use #define
 }
 
-bool ClientHandler::doesClientFileExist() {
-  return !ClientHandler::getClientPathFromRegistry().isEmpty();
+bool ClientHandler::doesClientDirExist() {
+  return !ClientHandler::getClientDirPathFromRegistry().isEmpty();
 }
