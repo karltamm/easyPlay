@@ -15,14 +15,12 @@ InstallationPage::InstallationPage(QWidget* parent)
       label_selectedDirPath{new QLabel{this}},
       btn_selectDestDir{new QPushButton{this}} {
   this->clientDestDir = QDir::homePath() + "/EasyPlay";
-  this->setCommitPage(true);
-
   this->setUpGui();
   this->handleEvents();
 }
 
 void InstallationPage::initializePage() {
-  this->wizard()->setButtonText(QWizard::CommitButton, "Install");  // TODO: fix
+  this->wizard()->setButtonText(QWizard::FinishButton, "Install");
 }
 
 void InstallationPage::setUpGui() {

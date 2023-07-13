@@ -7,10 +7,7 @@ SetupWizard::SetupWizard(QWidget* parent)
   this->setWizardStyle(QWizard::ModernStyle);
   this->setWindowTitle("EasyPlay Device Client Installer");
   this->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
-  this->setOption(QWizard::NoCancelButtonOnLastPage);
   this->setOption(QWizard::NoBackButtonOnStartPage);
-  this->setOption(QWizard::NoBackButtonOnLastPage);
 
   this->addPage(this->introPage);
   this->addPage(this->installationPage);
