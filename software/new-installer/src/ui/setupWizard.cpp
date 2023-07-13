@@ -16,4 +16,5 @@ SetupWizard::SetupWizard(QWidget* parent)
   this->addPage(this->introPage);
   this->addPage(this->installationPage);
   this->addPage(this->filesCreationPage);
+  // this->addPage(this->introPage);  // TODO: replace
 }

@@ -41,7 +41,7 @@ void FilesCreationPage::setUpGui() {
   this->label_loader->setMovie(movie_loader);
   this->label_loader->setTextFormat(Qt::RichText);
 
-  this->movie_loader->setFileName(":/img/installation-loader.gif");  // TODO: add resource
+  this->movie_loader->setFileName(":/installation-loader.gif");  // TODO: add resource
   this->movie_loader->start();
 
   this->layout->addWidget(label_loader);
@@ -70,8 +70,11 @@ void FilesCreationPage::createFiles() {
 
     qDebug() << "Now create native manifest";  // TODO: rm
 
-    this->setField(INSTALLATION_FEEDBACK_FIELD,
-                   QVariant{FirefoxHandler::createNativeManifest(destDirPath, this->copyWatcher.result().second)});  // TODO: rename nativeAppManifest
+    qDebug() << "destDirPath" << destDirPath;  // TODO: rm
+
+    if (!FirefoxHandler::createNativeManifest("", this->copyWatcher.result().second)) {  // TODO: rename nativeAppManifest
+      this->setField(INSTALLATION_FEEDBACK_FIELD, QVariant{false});
+    }
 
     this->wizard()->next();
   });
