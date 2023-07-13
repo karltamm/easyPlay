@@ -16,6 +16,7 @@ class ClientHandler {
 
  private:
   static void addClientDirPathToRegistry(const QString& clientDir);
+  static void makeFileExecutable(const QString& filePath);
 };
 
 #endif  // CLIENT_HANDLER_H

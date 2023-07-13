@@ -3,7 +3,6 @@
 #include <QDebug>  // TODO: change to logger
 #include <QDir>
 #include <QFileDialog>
-#include <QMessageBox>
 
 #include "clientHandler.h"
 #include "firefoxHandler.h"
@@ -72,65 +71,41 @@ bool InstallationPage::validatePage() {
   QDir destDir{destDirPath};
 
   if (destDir.exists() and !destDir.isEmpty()) {
-    QMessageBox msgBox;
-    msgBox.setTextFormat(Qt::RichText);
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.setText("Selected folder is not empty");
-    msgBox.setInformativeText("<b>Select empty folder</b>");
-    msgBox.exec();
-
+    this->showPopup("Selected folder is not empty", QMessageBox::Critical, "<b>Select empty folder</b>");
     return false;
   }
 
   if (!destDir.mkpath(destDirPath)) {
-    // TODO: message
+    this->showPopup("Couldn't create installation folder", QMessageBox::Critical);
     return false;
   }
 
   QFuture<QPair<bool, QString>> copyResult = ClientHandler::copyClientFile(destDirPath);
   copyResult.waitForFinished();
-  // TODO: check copyresult return
 
-  qDebug() << "client path:" << copyResult.result().second;  // TODO: rm
+  if (!copyResult.result().first) {
+    this->showPopup("Couldn't create device client", QMessageBox::Critical);
+    return false;
+  }
 
-  FirefoxHandler::createNativeManifest(FirefoxHandler::getNativeAppManifestDir().path(), copyResult.result().second);
-  // TODO: check create native manifest return
+  if (!FirefoxHandler::createNativeManifest(FirefoxHandler::getNativeAppManifestDir().path(), copyResult.result().second)) {
+    this->showPopup("Couldn't create Firefox native app manifest", QMessageBox::Critical);
+    ClientHandler::deleteExistingClientDir();
+    return false;
+  }
 
-  // TODO: remove client file if process failed
-
-  // TODO: set file to be executable
+  this->showPopup("✅ Success", QMessageBox::Information);
 
   return true;
+}
 
-  // TODO: fix
-  // QDir destDir{destDirPath};
+void InstallationPage::showPopup(const QString& text, QMessageBox::Icon icon, const QString& informativeText) {
+  QMessageBox msgBox;
 
-  // // tODO: create method for msg box
+  msgBox.setTextFormat(Qt::RichText);
+  msgBox.setIcon(icon);
+  msgBox.setText(text);
+  msgBox.setInformativeText(informativeText);
 
-  // if (!destDir.exists()) {
-  //   if (!destDir.mkpath(label_selectedDirPath->text())) {
-  //     QMessageBox msgBox;
-  //     msgBox.setTextFormat(Qt::RichText);
-  //     msgBox.setIcon(QMessageBox::Critical);
-  //     msgBox.setText("<b>Couldn't create installation folder</b>");
-  //     msgBox.exec();
-
-  //     return false;
-  //   }
-
-  //   // return true; // TODO: rm
-  // }
-
-  // if (!destDir.isEmpty()) {
-  //   QMessageBox msgBox;
-  //   msgBox.setTextFormat(Qt::RichText);
-  //   msgBox.setIcon(QMessageBox::Critical);
-  //   msgBox.setText("Selected folder is not empty");
-  //   msgBox.setInformativeText("<b>Select empty folder</b>");
-  //   msgBox.exec();
-
-  //   return false;
-  // }
-
-  // return true;
+  msgBox.exec();
 }

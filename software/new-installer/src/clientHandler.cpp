@@ -3,7 +3,9 @@
 #include <QDebug>
 #include <QDir>
 #include <QFile>
+#include <QProcess>
 #include <QSettings>
+#include <QStringList>
 #include <QtConcurrent>
 
 #define REG_ORG_NAME            "easyPlay"
@@ -11,25 +13,32 @@
 #define REG_CLIENT_DIR_PATH_KEY "clientDirPath"
 
 QFuture<QPair<bool, QString>> ClientHandler::copyClientFile(const QString& clientDestDirPath) {
-  return QtConcurrent::run([clientDestDirPath]() {
+  return QtConcurrent::run([clientDestDirPath]() -> QPair<bool, QString> {
     QFile clientFile{":/" CLIENT_FILE_NAME};
 
     if (!clientFile.exists()) {
       qWarning() << "Device client file doesn't exist";
-      return QPair<bool, QString>{false, ""};
+      return {false, ""};
     }
 
     QDir clientDestDir{clientDestDirPath};
+
+    if (!clientDestDir.exists()) {
+      qWarning() << "Destination directory doesn't exist";
+      return {false, ""};
+    }
+
     const QString clientDestPath = clientDestDir.absoluteFilePath(CLIENT_FILE_NAME);
 
     if (!clientFile.copy(clientDestPath) and !QFile::exists(clientDestPath)) {
       qWarning() << "Couldn't copy client file";
-      return QPair<bool, QString>{false, ""};
+      return {false, ""};
     }
 
+    ClientHandler::makeFileExecutable(clientDestPath);
     ClientHandler::addClientDirPathToRegistry(clientDestDir.absolutePath());
 
-    return QPair<bool, QString>{true, clientDestPath};
+    return {true, clientDestPath};
   });
 }
 
@@ -61,4 +70,10 @@ QDir ClientHandler::getExistingClientDir() {
 
 void ClientHandler::addClientDirPathToRegistry(const QString& clientDirPath) {
   QSettings{REG_ORG_NAME, REG_APP_NAME}.setValue(REG_CLIENT_DIR_PATH_KEY, clientDirPath);
+}
+
+void ClientHandler::makeFileExecutable(const QString& filePath) {
+  QProcess chmod;
+  chmod.start("chmod", {"+x", filePath});
+  chmod.waitForFinished();
 }

@@ -3,6 +3,7 @@
 
 #include <QGridLayout>
 #include <QLabel>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QWizardPage>
 
@@ -21,6 +22,7 @@ class InstallationPage : public QWizardPage {
   void setUpGui();
   void handleEvents();
   bool validatePage();  // TODO: override
+  void showPopup(const QString& text, QMessageBox::Icon icon, const QString& informativeText = "");
 };
 
 #endif  // INSTALLATION_PAGE
