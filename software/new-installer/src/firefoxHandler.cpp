@@ -1,7 +1,6 @@
 #include "firefoxHandler.h"
 
 #include <QByteArray>
-#include <QDir>
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -19,7 +18,7 @@ bool FirefoxHandler::createNativeManifest(const QString& directoryPath, const QS
     return false;
   }
 
-  QString manifestPath = QDir::cleanPath(directoryPath + QDir::separator() + NATIVE_MANIFEST_FILE_NAME);
+  QString manifestPath = QDir::cleanPath(directoryPath + QDir::separator() + NATIVE_MANIFEST_FILE_NAME);  // TODO: use absoluteFilePath
   QFile manifestFile{manifestPath};
 
   if (!manifestFile.open(QFile::WriteOnly)) {
@@ -39,7 +38,7 @@ bool FirefoxHandler::createNativeManifest(const QString& directoryPath, const QS
   manifestJson.insert("type", "stdio");
   manifestJson.insert("allowed_extensions", QJsonArray{{EXTENSION_ID}});
 
-  QByteArray manifestContent = QJsonDocument{manifestJson}.toJson(QJsonDocument::Compact);
+  QByteArray manifestContent = QJsonDocument{manifestJson}.toJson(QJsonDocument::Compact);  // TODO: inline
 
   if (manifestFile.write(manifestContent) < 0) {
     qWarning() << "Couldn't write to manifest file";
@@ -47,4 +46,12 @@ bool FirefoxHandler::createNativeManifest(const QString& directoryPath, const QS
   }
 
   return true;
+}
+
+QDir FirefoxHandler::getNativeAppManifestDir() {
+  QString dirPath = QDir::homePath() + R"(/Library/Application Support/Mozilla/NativeMessagingHosts)";  // TODO: use #define
+
+  QDir{}.mkpath(dirPath);  // TODO: use #define; // TODO: check for return
+
+  return QDir{dirPath};
 }

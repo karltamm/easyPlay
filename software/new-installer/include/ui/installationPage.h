@@ -17,10 +17,10 @@ class InstallationPage : public QWizardPage {
   QLabel* label_selectedDirPath;
   QPushButton* btn_selectDestDir;
 
-  void initializePage();
+  void initializePage();  // TODO: override
   void setUpGui();
   void handleEvents();
-  bool validatePage();
+  bool validatePage();  // TODO: override
 };
 
 #endif  // INSTALLATION_PAGE

@@ -9,7 +9,9 @@
 #define CLIENT_PATH     CLIENT_DIR_PATH + CLIENT_FILE_NAME
 
 void copyClientFile() {
-  QFile::remove(CLIENT_FILE_NAME);
+  EXPECT_TRUE(QDir{CLIENT_DIR_PATH}.removeRecursively());
+  EXPECT_TRUE(QDir{}.mkpath(CLIENT_DIR_PATH)) << "Couldn't create directory for client file";
+
   QFuture<QPair<bool, QString>> copyResult = ClientHandler::copyClientFile(CLIENT_DIR_PATH);
   EXPECT_TRUE(copyResult.result().first) << "ClientHandler::copyClientFile failed";
 }

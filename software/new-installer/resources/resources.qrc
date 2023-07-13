@@ -1,6 +1,5 @@
 <RCC>
     <qresource>
         <file>easyplay-device-client</file>
-        <file>installation-loader.gif</file>
     </qresource>
 </RCC>

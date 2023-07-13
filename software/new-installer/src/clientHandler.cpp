@@ -20,12 +20,6 @@ QFuture<QPair<bool, QString>> ClientHandler::copyClientFile(const QString& clien
     }
 
     QDir clientDestDir{clientDestDirPath};
-
-    if (!clientDestDir.mkpath(clientDestDirPath)) {
-      qWarning() << "Couldn't create directory for client file";
-      return QPair<bool, QString>{false, ""};
-    }
-
     const QString clientDestPath = clientDestDir.absoluteFilePath(CLIENT_FILE_NAME);
 
     if (!clientFile.copy(clientDestPath) and !QFile::exists(clientDestPath)) {
@@ -36,7 +30,7 @@ QFuture<QPair<bool, QString>> ClientHandler::copyClientFile(const QString& clien
     ClientHandler::addClientDirPathToRegistry(clientDestDir.absolutePath());
 
     return QPair<bool, QString>{true, clientDestPath};
-    });
+  });
 }
 
 bool ClientHandler::deleteExistingClientDir() {

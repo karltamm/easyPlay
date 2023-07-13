@@ -3,10 +3,10 @@
 
 #include <QWizard>
 
-#include "ui/filesCreationPage.h"
-#include "ui/installationPage.h"  // TODO: rename to destinationSelectorPage
+#include "ui/installationPage.h"
 #include "ui/introPage.h"
 
+// TODO: rm
 #define SELECTED_DIR_PATH_FIELD     "selectedDirPath"
 #define INSTALLATION_FEEDBACK_FIELD "installationFeedback"
 
@@ -18,7 +18,6 @@ class SetupWizard : public QWizard {
  private:
   IntroPage* introPage;
   InstallationPage* installationPage;
-  FilesCreationPage* filesCreationPage;
 };
 
 #endif  // SETUP_WIZARD_H

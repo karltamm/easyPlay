@@ -1,6 +1,7 @@
 #ifndef FIREFOX_HANDLER_H
 #define FIREFOX_HANDLER_H
 
+#include <QDir>
 #include <QString>
 
 #define EXTENSION_NAME              "easyPlay"
@@ -11,7 +12,8 @@
 class FirefoxHandler {
  public:
   static bool isFirefoxInstalled();
-  static bool createNativeManifest(const QString& directoryPath, const QString& clientExePath);
+  static bool createNativeManifest(const QString& directoryPath, const QString& clientExePath);  // TODO: rename
+  static QDir getNativeAppManifestDir();
 };
 
 #endif  // FIREFOX_HANDLER_H
