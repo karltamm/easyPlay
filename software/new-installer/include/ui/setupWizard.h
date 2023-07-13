@@ -6,10 +6,6 @@
 #include "ui/installationPage.h"
 #include "ui/introPage.h"
 
-// TODO: rm
-#define SELECTED_DIR_PATH_FIELD     "selectedDirPath"
-#define INSTALLATION_FEEDBACK_FIELD "installationFeedback"
-
 class SetupWizard : public QWizard {
   Q_OBJECT
  public:

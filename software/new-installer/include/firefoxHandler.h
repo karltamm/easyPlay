@@ -12,7 +12,7 @@
 class FirefoxHandler {
  public:
   static bool isFirefoxInstalled();
-  static bool createNativeManifest(const QString& directoryPath, const QString& clientExePath);  // TODO: rename
+  static bool createNativeAppManifest(const QString& manifestDirPath, const QString& appAbsPath);
   static QDir getNativeAppManifestDir();
 };
 

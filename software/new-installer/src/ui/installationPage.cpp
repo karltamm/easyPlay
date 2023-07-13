@@ -8,28 +8,21 @@
 #include "firefoxHandler.h"
 #include "ui/setupWizard.h"
 
-#define DEFAULT_DEST_DIR_PATH      \
-  QString {                        \
-    QDir::homePath() + "/EasyPlay" \
-  }
-
 InstallationPage::InstallationPage(QWidget* parent)
     : QWizardPage{parent},
       layout{new QGridLayout{this}},
       label_dirPickerHeader{new QLabel{this}},
       label_selectedDirPath{new QLabel{this}},
       btn_selectDestDir{new QPushButton{this}} {
+  this->clientDestDir = QDir::homePath() + "/EasyPlay";
+  this->setCommitPage(true);
+
   this->setUpGui();
   this->handleEvents();
-
-  this->registerField(SELECTED_DIR_PATH_FIELD, label_selectedDirPath, "text");
-  this->setField(SELECTED_DIR_PATH_FIELD, QVariant(DEFAULT_DEST_DIR_PATH));
-
-  this->setCommitPage(true);
 }
 
 void InstallationPage::initializePage() {
-  this->wizard()->setButtonText(QWizard::CommitButton, "Install");
+  this->wizard()->setButtonText(QWizard::CommitButton, "Install");  // TODO: fix
 }
 
 void InstallationPage::setUpGui() {
@@ -38,7 +31,7 @@ void InstallationPage::setUpGui() {
   this->label_dirPickerHeader->setText("Selected folder");
   this->label_dirPickerHeader->setStyleSheet("font-weight:bold");
 
-  this->label_selectedDirPath->setText(DEFAULT_DEST_DIR_PATH);
+  this->label_selectedDirPath->setText(this->clientDestDir);
   this->label_selectedDirPath->setWordWrap(true);
 
   this->btn_selectDestDir->setText("Select Folder");
@@ -51,36 +44,34 @@ void InstallationPage::setUpGui() {
 
 void InstallationPage::handleEvents() {
   QObject::connect(this->btn_selectDestDir, &QPushButton::clicked, this, [this]() {
-    QString destDir = QFileDialog::getExistingDirectory(this,
+    QString dirPath = QFileDialog::getExistingDirectory(this,
                                                         "Select folder",
                                                         QDir::homePath(),
                                                         QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
-    if (!QDir{}.exists(destDir)) {
+    if (!QDir{}.exists(dirPath)) {
       return;
     }
 
-    this->label_selectedDirPath->setText(destDir);
-    this->setField(SELECTED_DIR_PATH_FIELD, QVariant{destDir});
+    this->clientDestDir = dirPath;
+    this->label_selectedDirPath->setText(this->clientDestDir);
   });
 }
 
 bool InstallationPage::validatePage() {
-  QString destDirPath = this->field(SELECTED_DIR_PATH_FIELD).toString();  // TODO: no need for field
-
-  QDir destDir{destDirPath};
+  QDir destDir{this->clientDestDir};
 
   if (destDir.exists() and !destDir.isEmpty()) {
     this->showPopup("Selected folder is not empty", QMessageBox::Critical, "<b>Select empty folder</b>");
     return false;
   }
 
-  if (!destDir.mkpath(destDirPath)) {
+  if (!destDir.mkpath(this->clientDestDir)) {
     this->showPopup("Couldn't create installation folder", QMessageBox::Critical);
     return false;
   }
 
-  QFuture<QPair<bool, QString>> copyResult = ClientHandler::copyClientFile(destDirPath);
+  QFuture<QPair<bool, QString>> copyResult = ClientHandler::copyClientFile(this->clientDestDir);
   copyResult.waitForFinished();
 
   if (!copyResult.result().first) {
@@ -88,7 +79,7 @@ bool InstallationPage::validatePage() {
     return false;
   }
 
-  if (!FirefoxHandler::createNativeManifest(FirefoxHandler::getNativeAppManifestDir().path(), copyResult.result().second)) {
+  if (!FirefoxHandler::createNativeAppManifest(FirefoxHandler::getNativeAppManifestDir().path(), copyResult.result().second)) {
     this->showPopup("Couldn't create Firefox native app manifest", QMessageBox::Critical);
     ClientHandler::deleteExistingClientDir();
     return false;

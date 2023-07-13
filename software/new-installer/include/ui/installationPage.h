@@ -17,11 +17,12 @@ class InstallationPage : public QWizardPage {
   QLabel* label_dirPickerHeader;
   QLabel* label_selectedDirPath;
   QPushButton* btn_selectDestDir;
+  QString clientDestDir;
 
-  void initializePage();  // TODO: override
+  void initializePage() override;
+  bool validatePage() override;
   void setUpGui();
   void handleEvents();
-  bool validatePage();  // TODO: override
   void showPopup(const QString& text, QMessageBox::Icon icon, const QString& informativeText = "");
 };
 

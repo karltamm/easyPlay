@@ -6,7 +6,7 @@
 #include <QPair>
 #include <QString>
 
-#define CLIENT_FILE_NAME "easyplay-device-client"  // TODO: rename
+#define CLIENT_FILE_NAME "easyPlay-client"
 
 class ClientHandler {
  public:

@@ -13,7 +13,7 @@ TEST(FirefoxHandlerTest, FirefoxIsInstalled) {
 }
 
 TEST(FirefoxHandlerTest, CanCreateManifestFile) {
-  ASSERT_TRUE(FirefoxHandler::createNativeManifest(QDir::currentPath(), CLIENT_EXE_PATH)) << "Manifest creation failed";
+  ASSERT_TRUE(FirefoxHandler::createNativeAppManifest(QDir::currentPath(), CLIENT_EXE_PATH)) << "Manifest creation failed";
 
   auto manifestFile = QFile{NATIVE_MANIFEST_FILE_NAME};
   ASSERT_TRUE(manifestFile.open(QFile::ReadOnly)) << "Couldn't open the manifest file";
