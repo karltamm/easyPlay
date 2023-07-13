@@ -14,14 +14,16 @@ set(SRC_FILES
     src/ui/setupWizard.cpp
     src/ui/introPage.cpp
     src/firefoxHandler.cpp
-    src/ui/installationPage.cpp)
+    src/ui/installationPage.cpp
+    src/ui/filesCreationPage.cpp)
 
 set(INCLUDE_FILES
     include/clientHandler.h
     include/ui/setupWizard.h
     include/ui/introPage.h
     include/firefoxHandler.h
-    include/ui/installationPage.h)
+    include/ui/installationPage.h
+    include/ui/filesCreationPage.h)
 
 set(RESOURCE_FILES resources/resources.qrc)
 

@@ -28,7 +28,7 @@ InstallationPage::InstallationPage(QWidget* parent)
 }
 
 void InstallationPage::initializePage() {
-  this->setButtonText(QWizard::CommitButton, "Install");
+  this->wizard()->setButtonText(QWizard::CommitButton, "Install");
 }
 
 void InstallationPage::setUpGui() {

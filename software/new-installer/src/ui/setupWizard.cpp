@@ -3,7 +3,8 @@
 SetupWizard::SetupWizard(QWidget* parent)
     : QWizard{parent},
       introPage{new IntroPage{this}},
-      installationPage{new InstallationPage{this}} {
+      installationPage{new InstallationPage{this}},
+      filesCreationPage{new FilesCreationPage{this}} {
   this->setWizardStyle(QWizard::ModernStyle);
   this->setWindowTitle("EasyPlay Device Client Installer");
   this->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -14,4 +15,5 @@ SetupWizard::SetupWizard(QWidget* parent)
 
   this->addPage(this->introPage);
   this->addPage(this->installationPage);
+  this->addPage(this->filesCreationPage);
 }
