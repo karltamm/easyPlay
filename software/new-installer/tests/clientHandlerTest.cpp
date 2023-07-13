@@ -10,8 +10,8 @@
 
 void copyClientFile() {
   QFile::remove(CLIENT_FILE_NAME);
-  QFuture<bool> copyResult = ClientHandler::copyClientFile(CLIENT_DIR_PATH);
-  EXPECT_TRUE(copyResult.result()) << "ClientHandler::copyClientFile failed";
+  QFuture<QPair<bool, QString>> copyResult = ClientHandler::copyClientFile(CLIENT_DIR_PATH);
+  EXPECT_TRUE(copyResult.result().first) << "ClientHandler::copyClientFile failed";
 }
 
 TEST(ClientHandlerTest, CanCopyClientFile) {

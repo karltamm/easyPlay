@@ -4,28 +4,29 @@
 #include <QDir>
 
 #include "clientHandler.h"
+#include "firefoxHandler.h"
 #include "ui/setupWizard.h"
+
+#define MIN_COPY_ANIMATION_DURATION_MS 3000
+#define COPY_TIMER_INTERVAL_MS         100
 
 FilesCreationPage::FilesCreationPage(QWidget* parent)
     : QWizardPage{parent},
       filesCopied{false},
       copyTimer{new QTimer{this}},
-      elapsedTime{0},
+      copyAnimationDurationMs{0},
       movie_loader{new QMovie{this}},
       label_loader{new QLabel{this}},
       layout{new QVBoxLayout{this}} {
   this->setUpGui();
-  this->handleEvents();
   this->registerField(INSTALLATION_FEEDBACK_FIELD, new QLabel{this}, "text");
 }
 
 void FilesCreationPage::initializePage() {
   this->setCommitPage(true);
   this->wizard()->setOption(QWizard::NoCancelButton);
-  this->setUpCopyTimer();
 
-  ClientHandler::copyClientFile(field(SELECTED_DIR_PATH_FIELD).toString());
-  // TODO: create manifest
+  this->createFiles();
 }
 
 bool FilesCreationPage::isComplete() const {
@@ -48,37 +49,33 @@ void FilesCreationPage::setUpGui() {
   this->setLayout(layout);
 }
 
-void FilesCreationPage::handleEvents() {
-  // TODO: fix; try to use QFuture
-  //   connect(artifactsHandler->copyHandler, &CopyHandler::copyResult, this, [this](bool success) {
-  //     if (success) {
-  //       filesCopied = true;
-  //       return;
-  //     }
-  //     emit copyFinished(false);
-  //   });
+void FilesCreationPage::createFiles() {
+  const auto destDirPath = this->field(SELECTED_DIR_PATH_FIELD).toString();
 
-  // TODO: fix
-  //   connect(this, &FilesCreationPage::copyFinished, this, [this](bool success) {
-  //     copyTimer->stop();
-  //     setField(INSTALLATION_FEEDBACK_FIELD, QVariant(success));
-  //     if (success) {
-  //       QString destDir = field(SELECTED_DIR_PATH_FIELD).toString();
-  //       QString manifestPath = QDir::cleanPath(destDir + QDir::separator() + NATIVE_APP_MANIFEST_FILE_NAME);
-  //       firefoxHandler->addNativeAppManifest(manifestPath);
-  //     }
-  //     wizard()->next();
-  //   });
-}
+  QObject::connect(this->copyTimer, &QTimer::timeout, this, [this, &destDirPath]() {
+    this->copyAnimationDurationMs += COPY_TIMER_INTERVAL_MS;
 
-void FilesCreationPage::setUpCopyTimer() {
-  // TODO: fix
-  //   connect(copyTimer, &QTimer::timeout, this, [this]() {
-  //     if (!filesCopied || elapsedTime < MIN_LOADER_ANIMATION_DURATION_MS) {
-  //       elapsedTime += COPY_TIMER_INTERVAL_MS;
-  //       return;
-  //     }
-  //     emit copyFinished(true);
-  //   });
-  //   copyTimer->start(COPY_TIMER_INTERVAL_MS);
+    if (this->copyWatcher.isRunning() or this->copyAnimationDurationMs < MIN_COPY_ANIMATION_DURATION_MS) {
+      qDebug() << "Increase copy timer";  // TODO: rm
+      return;
+    }
+
+    this->copyTimer->stop();
+
+    if (!this->copyWatcher.result().first) {
+      this->setField(INSTALLATION_FEEDBACK_FIELD, QVariant{false});
+      this->wizard()->next();
+      return;
+    }
+
+    qDebug() << "Now create native manifest";  // TODO: rm
+
+    this->setField(INSTALLATION_FEEDBACK_FIELD,
+                   QVariant{FirefoxHandler::createNativeManifest(destDirPath, this->copyWatcher.result().second)});  // TODO: rename nativeAppManifest
+
+    this->wizard()->next();
+  });
+
+  this->copyWatcher.setFuture(ClientHandler::copyClientFile(destDirPath));
+  this->copyTimer->start(COPY_TIMER_INTERVAL_MS);
 }

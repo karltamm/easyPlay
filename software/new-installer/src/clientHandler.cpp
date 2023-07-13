@@ -10,33 +10,33 @@
 #define REG_APP_NAME            "easyPlay-installer"
 #define REG_CLIENT_DIR_PATH_KEY "clientDirPath"
 
-QFuture<bool> ClientHandler::copyClientFile(const QString& clientDestDirPath) {
+QFuture<QPair<bool, QString>> ClientHandler::copyClientFile(const QString& clientDestDirPath) {
   return QtConcurrent::run([clientDestDirPath]() {
     QFile clientFile{":/" CLIENT_FILE_NAME};
 
     if (!clientFile.exists()) {
       qWarning() << "Device client file doesn't exist";
-      return false;
+      return QPair<bool, QString>{false, ""};
     }
 
     QDir clientDestDir{clientDestDirPath};
 
     if (!clientDestDir.mkpath(clientDestDirPath)) {
       qWarning() << "Couldn't create directory for client file";
-      return false;
+      return QPair<bool, QString>{false, ""};
     }
 
-    const QString clientDestPath = clientDestDir.filePath(CLIENT_FILE_NAME);
+    const QString clientDestPath = clientDestDir.absoluteFilePath(CLIENT_FILE_NAME);
 
     if (!clientFile.copy(clientDestPath) and !QFile::exists(clientDestPath)) {
       qWarning() << "Couldn't copy client file";
-      return false;
+      return QPair<bool, QString>{false, ""};
     }
 
     ClientHandler::addClientDirPathToRegistry(clientDestDir.absolutePath());
 
-    return true;
-  });
+    return QPair<bool, QString>{true, clientDestPath};
+    });
 }
 
 bool ClientHandler::deleteExistingClientDir() {
@@ -59,7 +59,7 @@ QDir ClientHandler::getExistingClientDir() {
   QVariant clientDirPath = QSettings{REG_ORG_NAME, REG_APP_NAME}.value(REG_CLIENT_DIR_PATH_KEY);
 
   if (clientDirPath.isNull()) {
-    return {};
+    return QString{};
   }
 
   return QDir{clientDirPath.toString()};

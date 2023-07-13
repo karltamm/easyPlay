@@ -1,15 +1,13 @@
 #ifndef FILES_CREATION_PAGE_H
 #define FILES_CREATION_PAGE_H
 
+#include <QFutureWatcher>
 #include <QLabel>
 #include <QMovie>
+#include <QPair>
 #include <QTimer>
 #include <QVBoxLayout>
 #include <QWizardPage>
-
-// TODO: mv
-#define MIN_LOADER_ANIMATION_DURATION_MS 3000
-#define COPY_TIMER_INTERVAL_MS           100
 
 class FilesCreationPage : public QWizardPage {
   Q_OBJECT
@@ -20,18 +18,18 @@ class FilesCreationPage : public QWizardPage {
   void copyFinished(bool success);
 
  private:
-  quint64 elapsedTime;
+  QFutureWatcher<QPair<bool, QString>> copyWatcher;
+  quint64 copyAnimationDurationMs;
   QTimer* copyTimer;
   QMovie* movie_loader;
   QLabel* label_loader;
   QVBoxLayout* layout;
   bool filesCopied;
 
-  void initializePage();
-  bool isComplete() const;
-  void handleEvents();
+  void initializePage();    // TODO: override
+  bool isComplete() const;  // TODO: override
   void setUpGui();
-  void setUpCopyTimer();
+  void createFiles();
 };
 
 #endif  // FILES_CREATION_PAGE_H
