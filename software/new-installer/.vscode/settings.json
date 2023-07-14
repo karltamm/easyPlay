@@ -76,6 +76,8 @@
     "concepts": "cpp",
     "algorithm": "cpp",
     "qcoreapplication": "cpp",
-    "filesystem": "cpp"
+    "filesystem": "cpp",
+    "qfile": "cpp",
+    "qdebug": "cpp"
   }
 }

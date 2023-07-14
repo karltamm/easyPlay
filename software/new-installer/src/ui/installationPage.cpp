@@ -1,11 +1,11 @@
 #include "ui/installationPage.h"
 
-#include <QDebug>  // TODO: change to logger
 #include <QDir>
 #include <QFileDialog>
 
 #include "clientHandler.h"
 #include "firefoxHandler.h"
+#include "logger.h"
 #include "ui/setupWizard.h"
 
 InstallationPage::InstallationPage(QWidget* parent)

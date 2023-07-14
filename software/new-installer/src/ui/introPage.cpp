@@ -1,10 +1,10 @@
 #include "ui/introPage.h"
 
-#include <QDebug>  // TODO: change to logger
 #include <QPushButton>
 
 #include "clientHandler.h"
 #include "firefoxHandler.h"
+#include "logger.h"
 
 IntroPage::IntroPage(QWidget* parent)
     : QWizardPage{parent},

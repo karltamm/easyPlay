@@ -1,12 +1,13 @@
 #include "clientHandler.h"
 
-#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QProcess>
 #include <QSettings>
 #include <QStringList>
 #include <QtConcurrent>
+
+#include "logger.h"
 
 #define REG_ORG_NAME            "easyPlay"
 #define REG_APP_NAME            "easyPlay-installer"
