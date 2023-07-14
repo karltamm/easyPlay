@@ -7,7 +7,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(PROJ_LIB easyplay-installer-lib)
+set(PROJ_LIB easyPlay-installer-lib)
 
 set(SRC_FILES
     src/clientHandler.cpp
@@ -31,7 +31,7 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(DEBUG_BUILD)
 endif()
 
-project(easyplay-installer LANGUAGES CXX)
+project(easyPlay-installer LANGUAGES CXX)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Concurrent Widgets)
 
@@ -44,6 +44,11 @@ target_link_libraries(${PROJ_LIB} Qt6::Core Qt6::Concurrent Qt6::Widgets)
 target_link_libraries(${PROJECT_NAME} ${PROJ_LIB})
 
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+# TODO: rm
+# add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_INSTALL_BINDIR}/"${PROJECT_NAME} "${CMAKE_SOURCE_DIR}/dist/"${PROJECT_NAME})
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND bash "${CMAKE_SOURCE_DIR}/scripts/copy-installer.sh" ${PROJECT_NAME})
 
 # TESTING
 enable_testing()
